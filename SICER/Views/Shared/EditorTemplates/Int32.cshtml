@@ -1,0 +1,9 @@
+﻿@model Int32?
+
+<div class="form-group col-md-6 col-sm-12">
+    @Html.LabelFor(x => x, new { @class = "form-label" })
+    @Html.TextBoxFor(x => x, ViewData["htmlAttributes"])
+    @Html.ValidationMessageFor(x => x)
+</div>
+
+

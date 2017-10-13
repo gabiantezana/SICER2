@@ -1,0 +1,34 @@
+﻿@model List<SICER.MODEL.SAPProveedor>
+
+@{
+    ViewBag.Title = "Listado de proveedores";
+    ViewBag.Icon = "list";
+
+}
+
+<div class="panel">
+    <div class="panel-body">
+        <br />
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>LictradNum</td>
+                        <td>CardName</td>
+                        <td>validFor</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.LictradNum</td>
+                            <td>@item.CardName</td>
+                            <td>@item.validFor</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

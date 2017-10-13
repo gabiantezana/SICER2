@@ -1,0 +1,2227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SICERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="idConcepto" />
+          </Key>
+          <Property Name="idConcepto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idAccount" Type="int" />
+          <Property Name="nombre" Type="nvarchar(max)" />
+          <Property Name="descripcion" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="idDocumento" />
+          </Key>
+          <Property Name="idDocumento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idTipoOrigen" Type="int" />
+          <Property Name="idSAPProveedorSolicitante" Type="int" />
+          <Property Name="idCentroCostos1" Type="int" />
+          <Property Name="idCentroCostos2" Type="int" />
+          <Property Name="idCentroCostos3" Type="int" />
+          <Property Name="idCentroCostos4" Type="int" />
+          <Property Name="idCentroCostos5" Type="int" />
+          <Property Name="idMetodoPago" Type="int" />
+          <Property Name="montoSolicitado" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="montoGastado" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="idMoneda" Type="int" />
+          <Property Name="asunto" Type="nvarchar(max)" />
+          <Property Name="comentario" Type="nvarchar(max)" />
+          <Property Name="motivoDetalle" Type="nvarchar(max)" />
+          <Property Name="fechaSolicitud" Type="datetime" />
+          <Property Name="estaAprobado" Type="int" />
+          <Property Name="estadoMigracion" Type="int" />
+          <Property Name="fechaContabilizacion" Type="datetime" />
+          <Property Name="idUsuarioCreacion" Type="int" />
+          <Property Name="fechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="idUsuarioUltimoUpdate" Type="int" />
+          <Property Name="fechaUltimoUpdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DocumentoDetalle">
+          <Key>
+            <PropertyRef Name="idDocumentoDetalle" />
+          </Key>
+          <Property Name="idDocumentoDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idDocumento" Type="int" />
+          <Property Name="idProveedor" Type="int" />
+          <Property Name="idConcepto" Type="int" />
+          <Property Name="idTipoDocumentoOrigen" Type="int" />
+          <Property Name="serieDoc" Type="nvarchar(max)" />
+          <Property Name="correlativoDoc" Type="nvarchar(max)" />
+          <Property Name="fechaDocumento" Type="datetime" />
+          <Property Name="idMonedaDoc" Type="int" />
+          <Property Name="idCentroCosto1" Type="int" />
+          <Property Name="idCentroCosto2" Type="int" />
+          <Property Name="idCentroCosto3" Type="int" />
+          <Property Name="idCentroCosto4" Type="int" />
+          <Property Name="idCentroCosto5" Type="int" />
+          <Property Name="idCentroCosto6" Type="int" />
+          <Property Name="montoDoc" Type="nvarchar(max)" />
+          <Property Name="tasaCambio" Type="nvarchar(max)" />
+          <Property Name="idMonedaOriginal" Type="int" />
+          <Property Name="montoNoAfecto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="montoAfecto" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="montoIGV" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="montoTotal" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="idUsuarioCreacion" Type="int" />
+          <Property Name="fechaCreacion" Type="datetime" />
+          <Property Name="idUsuarioUltimoUpdate" Type="int" />
+          <Property Name="fechaUltimoUpdate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Excepcion">
+          <Key>
+            <PropertyRef Name="idExcepcion" />
+          </Key>
+          <Property Name="idExcepcion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mensaje" Type="nvarchar(max)" />
+          <Property Name="tipo" Type="nvarchar(max)" />
+          <Property Name="pila" Type="nvarchar(max)" />
+          <Property Name="navegador" Type="nvarchar(max)" />
+          <Property Name="excepcionInterna" Type="nvarchar(max)" />
+          <Property Name="timeStamp" Type="nvarchar(max)" />
+          <Property Name="sessionKeys" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Motivo">
+          <Key>
+            <PropertyRef Name="idMotivo" />
+          </Key>
+          <Property Name="idMotivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="nvarchar(max)" />
+          <Property Name="dias" Type="int" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="idRol" />
+          </Key>
+          <Property Name="idRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar(max)" />
+          <Property Name="descripcion" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SAPAccount">
+          <Key>
+            <PropertyRef Name="idSAPAccount" />
+          </Key>
+          <Property Name="idSAPAccount" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AcctCode" Type="nvarchar(max)" />
+          <Property Name="AcctName" Type="nvarchar(max)" />
+          <Property Name="ValidFor" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAPCentroCostos">
+          <Key>
+            <PropertyRef Name="idSAPCentroCostos" />
+          </Key>
+          <Property Name="idSAPCentroCostos" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PrcCode" Type="nvarchar(max)" />
+          <Property Name="PrcName" Type="nvarchar(max)" />
+          <Property Name="Active" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAPCentroCostosUsuario">
+          <Key>
+            <PropertyRef Name="idSAPCentroCostosUsuario" />
+          </Key>
+          <Property Name="idSAPCentroCostosUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="idCentroCosto" Type="int" />
+        </EntityType>
+        <EntityType Name="SAPCuentasContables">
+          <Key>
+            <PropertyRef Name="idSAPCuentaContable" />
+          </Key>
+          <Property Name="idSAPCuentaContable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LictradNum" Type="nvarchar(max)" />
+          <Property Name="CardName" Type="nvarchar(max)" />
+          <Property Name="validFor" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAPMetodoPago">
+          <Key>
+            <PropertyRef Name="idSAPMetodoPago" />
+          </Key>
+          <Property Name="idSAPMetodoPago" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PayMethCod" Type="nvarchar(max)" />
+          <Property Name="Descript" Type="nvarchar(max)" />
+          <Property Name="Active" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAPMoneda">
+          <Key>
+            <PropertyRef Name="idSAPMoneda" />
+          </Key>
+          <Property Name="idSAPMoneda" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocCurrCod" Type="nvarchar(max)" />
+          <Property Name="CurrName" Type="nvarchar(max)" />
+          <Property Name="Locked" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAPProveedor">
+          <Key>
+            <PropertyRef Name="idSAPProveedor" />
+          </Key>
+          <Property Name="idSAPProveedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LictradNum" Type="nvarchar(max)" />
+          <Property Name="CardName" Type="nvarchar(max)" />
+          <Property Name="validFor" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SAPServicio">
+          <Key>
+            <PropertyRef Name="idSAPServicio" />
+          </Key>
+          <Property Name="idSAPServicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="itemCode" Type="nvarchar(max)" />
+          <Property Name="itemName" Type="nvarchar(max)" />
+          <Property Name="validFor" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="TipoDocumentoOrigen">
+          <Key>
+            <PropertyRef Name="idTipoDocumentoOrigen" />
+          </Key>
+          <Property Name="idTipoDocumentoOrigen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRol" Type="int" />
+          <Property Name="username" Type="nvarchar(max)" />
+          <Property Name="documento" Type="nvarchar(max)" />
+          <Property Name="password" Type="varbinary" MaxLength="200" />
+          <Property Name="nombres" Type="nvarchar(max)" />
+          <Property Name="telefono" Type="nvarchar(max)" />
+          <Property Name="correo" Type="nvarchar(max)" />
+          <Property Name="estado" Type="bit" />
+          <Property Name="userCreate" Type="nvarchar(max)" />
+          <Property Name="enviarCorreoMigracionDo,cumentos" Type="bit" />
+          <Property Name="esUsuarioSAP" Type="bit" />
+          <Property Name="cardCodeSAP" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UsuarioRol">
+          <Key>
+            <PropertyRef Name="idUsuarioRol" />
+          </Key>
+          <Property Name="idUsuarioRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="idRol" Type="int" />
+        </EntityType>
+        <EntityType Name="UsuarioTipoDocumento">
+          <Key>
+            <PropertyRef Name="idUsuarioTipoDocumento" />
+          </Key>
+          <Property Name="idUsuarioTipoDocumento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="idTipoDocumento" Type="int" />
+          <Property Name="cantidadDocumentos" Type="int" />
+          <Property Name="idUsuarioUsuariosAprobacion" Type="int" />
+        </EntityType>
+        <EntityType Name="UsuarioUsuariosAprobacion">
+          <Key>
+            <PropertyRef Name="idUsuarioUsuarioAprobacion" />
+          </Key>
+          <Property Name="idUsuarioUsuarioAprobacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idUsuario" Type="int" />
+          <Property Name="idUsuarioAprobacion" Type="int" />
+          <Property Name="idTipoDocumentoOrigen" Type="int" />
+        </EntityType>
+        <EntityType Name="Vistas">
+          <Key>
+            <PropertyRef Name="idVista" />
+          </Key>
+          <Property Name="idVista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar(max)" />
+          <Property Name="valor" Type="nvarchar(max)" />
+          <Property Name="idVistasGrupo" Type="int" />
+        </EntityType>
+        <EntityType Name="VistasGrupo">
+          <Key>
+            <PropertyRef Name="idVistasGrupo" />
+          </Key>
+          <Property Name="idVistasGrupo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar(max)" />
+          <Property Name="codigo" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="VistasRol">
+          <Key>
+            <PropertyRef Name="idVistaRol" />
+          </Key>
+          <Property Name="idVistaRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idVista" Type="int" />
+          <Property Name="idRol" Type="int" />
+          <Property Name="estado" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Concepto__idAcco__22751F6C">
+          <End Role="SAPAccount" Type="Self.SAPAccount" Multiplicity="0..1" />
+          <End Role="Concepto" Type="Self.Concepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPAccount">
+              <PropertyRef Name="idSAPAccount" />
+            </Principal>
+            <Dependent Role="Concepto">
+              <PropertyRef Name="idAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2CF2ADDF">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2DE6D218">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2EDAF651">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2FCF1A8A">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto4" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__30C33EC3">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto5" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__31B762FC">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto6" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__60A75C0F">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__619B8048">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__628FA481">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__6383C8BA">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos4" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__6477ECF3">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos5" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCon__2A164134">
+          <End Role="Concepto" Type="Self.Concepto" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Concepto">
+              <PropertyRef Name="idConcepto" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idConcepto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idDoc__282DF8C2">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="idDocumento" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMet__656C112C">
+          <End Role="SAPMetodoPago" Type="Self.SAPMetodoPago" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMetodoPago">
+              <PropertyRef Name="idSAPMetodoPago" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idMetodoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMon__2BFE89A6">
+          <End Role="SAPMoneda" Type="Self.SAPMoneda" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMoneda">
+              <PropertyRef Name="idSAPMoneda" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idMonedaDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMon__32AB8735">
+          <End Role="SAPMoneda" Type="Self.SAPMoneda" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMoneda">
+              <PropertyRef Name="idSAPMoneda" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idMonedaOriginal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMon__66603565">
+          <End Role="SAPMoneda" Type="Self.SAPMoneda" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMoneda">
+              <PropertyRef Name="idSAPMoneda" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idMoneda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idPro__29221CFB">
+          <End Role="SAPProveedor" Type="Self.SAPProveedor" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPProveedor">
+              <PropertyRef Name="idSAPProveedor" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idSAP__5FB337D6">
+          <End Role="SAPProveedor" Type="Self.SAPProveedor" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPProveedor">
+              <PropertyRef Name="idSAPProveedor" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idSAPProveedorSolicitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idTip__2B0A656D">
+          <End Role="TipoDocumentoOrigen" Type="Self.TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idTip__5EBF139D">
+          <End Role="TipoDocumentoOrigen" Type="Self.TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idTipoOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__339FAB6E">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__3493CFA7">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="DocumentoDetalle" Type="Self.DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idUsuarioUltimoUpdate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__6754599E">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__68487DD7">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idUsuarioUltimoUpdate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SAPCentro__idCen__239E4DCF">
+          <End Role="SAPCentroCostos" Type="Self.SAPCentroCostos" Multiplicity="0..1" />
+          <End Role="SAPCentroCostosUsuario" Type="Self.SAPCentroCostosUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="SAPCentroCostosUsuario">
+              <PropertyRef Name="idCentroCosto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SAPCentro__idUsu__22AA2996">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="SAPCentroCostosUsuario" Type="Self.SAPCentroCostosUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="SAPCentroCostosUsuario">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__idRol__1FCDBCEB">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioRo__idRol__4E88ABD4">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="UsuarioRol">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioRo__idUsu__4D94879B">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="UsuarioRol" Type="Self.UsuarioRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioRol">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioTi__idTip__2C3393D0">
+          <End Role="TipoDocumentoOrigen" Type="Self.TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Role="UsuarioTipoDocumento" Type="Self.UsuarioTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="UsuarioTipoDocumento">
+              <PropertyRef Name="idTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioTi__idUsu__2B3F6F97">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="UsuarioTipoDocumento" Type="Self.UsuarioTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioTipoDocumento">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioTi__idUsu__2D27B809">
+          <End Role="UsuarioUsuariosAprobacion" Type="Self.UsuarioUsuariosAprobacion" Multiplicity="0..1" />
+          <End Role="UsuarioTipoDocumento" Type="Self.UsuarioTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idUsuarioUsuarioAprobacion" />
+            </Principal>
+            <Dependent Role="UsuarioTipoDocumento">
+              <PropertyRef Name="idUsuarioUsuariosAprobacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioUs__idTip__286302EC">
+          <End Role="TipoDocumentoOrigen" Type="Self.TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Role="UsuarioUsuariosAprobacion" Type="Self.UsuarioUsuariosAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioUs__idUsu__267ABA7A">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="UsuarioUsuariosAprobacion" Type="Self.UsuarioUsuariosAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioUs__idUsu__276EDEB3">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="UsuarioUsuariosAprobacion" Type="Self.UsuarioUsuariosAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idUsuarioAprobacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vistas__idVistas__46E78A0C">
+          <End Role="VistasGrupo" Type="Self.VistasGrupo" Multiplicity="0..1" />
+          <End Role="Vistas" Type="Self.Vistas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VistasGrupo">
+              <PropertyRef Name="idVistasGrupo" />
+            </Principal>
+            <Dependent Role="Vistas">
+              <PropertyRef Name="idVistasGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VistasRol__idRol__5441852A">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+          <End Role="VistasRol" Type="Self.VistasRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="VistasRol">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VistasRol__idVis__534D60F1">
+          <End Role="Vistas" Type="Self.Vistas" Multiplicity="0..1" />
+          <End Role="VistasRol" Type="Self.VistasRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vistas">
+              <PropertyRef Name="idVista" />
+            </Principal>
+            <Dependent Role="VistasRol">
+              <PropertyRef Name="idVista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SP_SAPProveedor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="SICERModelStoreContainer">
+          <EntitySet Name="Concepto" EntityType="Self.Concepto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentoDetalle" EntityType="Self.DocumentoDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Excepcion" EntityType="Self.Excepcion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Motivo" EntityType="Self.Motivo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPAccount" EntityType="Self.SAPAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPCentroCostos" EntityType="Self.SAPCentroCostos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPCentroCostosUsuario" EntityType="Self.SAPCentroCostosUsuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPCuentasContables" EntityType="Self.SAPCuentasContables" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPMetodoPago" EntityType="Self.SAPMetodoPago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPMoneda" EntityType="Self.SAPMoneda" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPProveedor" EntityType="Self.SAPProveedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SAPServicio" EntityType="Self.SAPServicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDocumentoOrigen" EntityType="Self.TipoDocumentoOrigen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioRol" EntityType="Self.UsuarioRol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioTipoDocumento" EntityType="Self.UsuarioTipoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioUsuariosAprobacion" EntityType="Self.UsuarioUsuariosAprobacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vistas" EntityType="Self.Vistas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VistasGrupo" EntityType="Self.VistasGrupo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VistasRol" EntityType="Self.VistasRol" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Concepto__idAcco__22751F6C" Association="Self.FK__Concepto__idAcco__22751F6C">
+            <End Role="SAPAccount" EntitySet="SAPAccount" />
+            <End Role="Concepto" EntitySet="Concepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2CF2ADDF" Association="Self.FK__Documento__idCen__2CF2ADDF">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2DE6D218" Association="Self.FK__Documento__idCen__2DE6D218">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2EDAF651" Association="Self.FK__Documento__idCen__2EDAF651">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2FCF1A8A" Association="Self.FK__Documento__idCen__2FCF1A8A">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__30C33EC3" Association="Self.FK__Documento__idCen__30C33EC3">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__31B762FC" Association="Self.FK__Documento__idCen__31B762FC">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__60A75C0F" Association="Self.FK__Documento__idCen__60A75C0F">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__619B8048" Association="Self.FK__Documento__idCen__619B8048">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__628FA481" Association="Self.FK__Documento__idCen__628FA481">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__6383C8BA" Association="Self.FK__Documento__idCen__6383C8BA">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__6477ECF3" Association="Self.FK__Documento__idCen__6477ECF3">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCon__2A164134" Association="Self.FK__Documento__idCon__2A164134">
+            <End Role="Concepto" EntitySet="Concepto" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idDoc__282DF8C2" Association="Self.FK__Documento__idDoc__282DF8C2">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMet__656C112C" Association="Self.FK__Documento__idMet__656C112C">
+            <End Role="SAPMetodoPago" EntitySet="SAPMetodoPago" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMon__2BFE89A6" Association="Self.FK__Documento__idMon__2BFE89A6">
+            <End Role="SAPMoneda" EntitySet="SAPMoneda" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMon__32AB8735" Association="Self.FK__Documento__idMon__32AB8735">
+            <End Role="SAPMoneda" EntitySet="SAPMoneda" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMon__66603565" Association="Self.FK__Documento__idMon__66603565">
+            <End Role="SAPMoneda" EntitySet="SAPMoneda" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idPro__29221CFB" Association="Self.FK__Documento__idPro__29221CFB">
+            <End Role="SAPProveedor" EntitySet="SAPProveedor" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idSAP__5FB337D6" Association="Self.FK__Documento__idSAP__5FB337D6">
+            <End Role="SAPProveedor" EntitySet="SAPProveedor" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idTip__2B0A656D" Association="Self.FK__Documento__idTip__2B0A656D">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idTip__5EBF139D" Association="Self.FK__Documento__idTip__5EBF139D">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__339FAB6E" Association="Self.FK__Documento__idUsu__339FAB6E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__3493CFA7" Association="Self.FK__Documento__idUsu__3493CFA7">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__6754599E" Association="Self.FK__Documento__idUsu__6754599E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__68487DD7" Association="Self.FK__Documento__idUsu__68487DD7">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SAPCentro__idCen__239E4DCF" Association="Self.FK__SAPCentro__idCen__239E4DCF">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="SAPCentroCostosUsuario" EntitySet="SAPCentroCostosUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SAPCentro__idUsu__22AA2996" Association="Self.FK__SAPCentro__idUsu__22AA2996">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SAPCentroCostosUsuario" EntitySet="SAPCentroCostosUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__idRol__1FCDBCEB" Association="Self.FK__Usuario__idRol__1FCDBCEB">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioRo__idRol__4E88ABD4" Association="Self.FK__UsuarioRo__idRol__4E88ABD4">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioRo__idUsu__4D94879B" Association="Self.FK__UsuarioRo__idUsu__4D94879B">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioTi__idTip__2C3393D0" Association="Self.FK__UsuarioTi__idTip__2C3393D0">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioTi__idUsu__2B3F6F97" Association="Self.FK__UsuarioTi__idUsu__2B3F6F97">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioTi__idUsu__2D27B809" Association="Self.FK__UsuarioTi__idUsu__2D27B809">
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioUs__idTip__286302EC" Association="Self.FK__UsuarioUs__idTip__286302EC">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioUs__idUsu__267ABA7A" Association="Self.FK__UsuarioUs__idUsu__267ABA7A">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioUs__idUsu__276EDEB3" Association="Self.FK__UsuarioUs__idUsu__276EDEB3">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vistas__idVistas__46E78A0C" Association="Self.FK__Vistas__idVistas__46E78A0C">
+            <End Role="VistasGrupo" EntitySet="VistasGrupo" />
+            <End Role="Vistas" EntitySet="Vistas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VistasRol__idRol__5441852A" Association="Self.FK__VistasRol__idRol__5441852A">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="VistasRol" EntitySet="VistasRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VistasRol__idVis__534D60F1" Association="Self.FK__VistasRol__idVis__534D60F1">
+            <End Role="Vistas" EntitySet="Vistas" />
+            <End Role="VistasRol" EntitySet="VistasRol" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SICERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="SICEREntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="SP_SAPProveedor" ReturnType="Collection(SICERModel.SP_SAPProveedor_Result)" />
+          <EntitySet Name="Concepto" EntityType="SICERModel.Concepto" />
+          <EntitySet Name="Documento" EntityType="SICERModel.Documento" />
+          <EntitySet Name="DocumentoDetalle" EntityType="SICERModel.DocumentoDetalle" />
+          <EntitySet Name="Excepcion" EntityType="SICERModel.Excepcion" />
+          <EntitySet Name="Motivo" EntityType="SICERModel.Motivo" />
+          <EntitySet Name="Rol" EntityType="SICERModel.Rol" />
+          <EntitySet Name="SAPAccount" EntityType="SICERModel.SAPAccount" />
+          <EntitySet Name="SAPCentroCostos" EntityType="SICERModel.SAPCentroCostos" />
+          <EntitySet Name="SAPCentroCostosUsuario" EntityType="SICERModel.SAPCentroCostosUsuario" />
+          <EntitySet Name="SAPCuentasContables" EntityType="SICERModel.SAPCuentasContables" />
+          <EntitySet Name="SAPMetodoPago" EntityType="SICERModel.SAPMetodoPago" />
+          <EntitySet Name="SAPMoneda" EntityType="SICERModel.SAPMoneda" />
+          <EntitySet Name="SAPProveedor" EntityType="SICERModel.SAPProveedor" />
+          <EntitySet Name="SAPServicio" EntityType="SICERModel.SAPServicio" />
+          <EntitySet Name="TipoDocumentoOrigen" EntityType="SICERModel.TipoDocumentoOrigen" />
+          <EntitySet Name="Usuario" EntityType="SICERModel.Usuario" />
+          <EntitySet Name="UsuarioRol" EntityType="SICERModel.UsuarioRol" />
+          <EntitySet Name="UsuarioTipoDocumento" EntityType="SICERModel.UsuarioTipoDocumento" />
+          <EntitySet Name="UsuarioUsuariosAprobacion" EntityType="SICERModel.UsuarioUsuariosAprobacion" />
+          <EntitySet Name="Vistas" EntityType="SICERModel.Vistas" />
+          <EntitySet Name="VistasGrupo" EntityType="SICERModel.VistasGrupo" />
+          <EntitySet Name="VistasRol" EntityType="SICERModel.VistasRol" />
+          <AssociationSet Name="FK__Concepto__idAcco__22751F6C" Association="SICERModel.FK__Concepto__idAcco__22751F6C">
+            <End Role="SAPAccount" EntitySet="SAPAccount" />
+            <End Role="Concepto" EntitySet="Concepto" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCon__2A164134" Association="SICERModel.FK__Documento__idCon__2A164134">
+            <End Role="Concepto" EntitySet="Concepto" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__60A75C0F" Association="SICERModel.FK__Documento__idCen__60A75C0F">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__619B8048" Association="SICERModel.FK__Documento__idCen__619B8048">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__628FA481" Association="SICERModel.FK__Documento__idCen__628FA481">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__6383C8BA" Association="SICERModel.FK__Documento__idCen__6383C8BA">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__6477ECF3" Association="SICERModel.FK__Documento__idCen__6477ECF3">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idDoc__282DF8C2" Association="SICERModel.FK__Documento__idDoc__282DF8C2">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMet__656C112C" Association="SICERModel.FK__Documento__idMet__656C112C">
+            <End Role="SAPMetodoPago" EntitySet="SAPMetodoPago" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMon__66603565" Association="SICERModel.FK__Documento__idMon__66603565">
+            <End Role="SAPMoneda" EntitySet="SAPMoneda" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idSAP__5FB337D6" Association="SICERModel.FK__Documento__idSAP__5FB337D6">
+            <End Role="SAPProveedor" EntitySet="SAPProveedor" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idTip__5EBF139D" Association="SICERModel.FK__Documento__idTip__5EBF139D">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__6754599E" Association="SICERModel.FK__Documento__idUsu__6754599E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__68487DD7" Association="SICERModel.FK__Documento__idUsu__68487DD7">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2CF2ADDF" Association="SICERModel.FK__Documento__idCen__2CF2ADDF">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2DE6D218" Association="SICERModel.FK__Documento__idCen__2DE6D218">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2EDAF651" Association="SICERModel.FK__Documento__idCen__2EDAF651">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__2FCF1A8A" Association="SICERModel.FK__Documento__idCen__2FCF1A8A">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__30C33EC3" Association="SICERModel.FK__Documento__idCen__30C33EC3">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idCen__31B762FC" Association="SICERModel.FK__Documento__idCen__31B762FC">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMon__2BFE89A6" Association="SICERModel.FK__Documento__idMon__2BFE89A6">
+            <End Role="SAPMoneda" EntitySet="SAPMoneda" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idMon__32AB8735" Association="SICERModel.FK__Documento__idMon__32AB8735">
+            <End Role="SAPMoneda" EntitySet="SAPMoneda" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idPro__29221CFB" Association="SICERModel.FK__Documento__idPro__29221CFB">
+            <End Role="SAPProveedor" EntitySet="SAPProveedor" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idTip__2B0A656D" Association="SICERModel.FK__Documento__idTip__2B0A656D">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__339FAB6E" Association="SICERModel.FK__Documento__idUsu__339FAB6E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Documento__idUsu__3493CFA7" Association="SICERModel.FK__Documento__idUsu__3493CFA7">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="DocumentoDetalle" EntitySet="DocumentoDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__idRol__1FCDBCEB" Association="SICERModel.FK__Usuario__idRol__1FCDBCEB">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioRo__idRol__4E88ABD4" Association="SICERModel.FK__UsuarioRo__idRol__4E88ABD4">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VistasRol__idRol__5441852A" Association="SICERModel.FK__VistasRol__idRol__5441852A">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="VistasRol" EntitySet="VistasRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SAPCentro__idCen__239E4DCF" Association="SICERModel.FK__SAPCentro__idCen__239E4DCF">
+            <End Role="SAPCentroCostos" EntitySet="SAPCentroCostos" />
+            <End Role="SAPCentroCostosUsuario" EntitySet="SAPCentroCostosUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SAPCentro__idUsu__22AA2996" Association="SICERModel.FK__SAPCentro__idUsu__22AA2996">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SAPCentroCostosUsuario" EntitySet="SAPCentroCostosUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioTi__idTip__2C3393D0" Association="SICERModel.FK__UsuarioTi__idTip__2C3393D0">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioUs__idTip__286302EC" Association="SICERModel.FK__UsuarioUs__idTip__286302EC">
+            <End Role="TipoDocumentoOrigen" EntitySet="TipoDocumentoOrigen" />
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioRo__idUsu__4D94879B" Association="SICERModel.FK__UsuarioRo__idUsu__4D94879B">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioRol" EntitySet="UsuarioRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioTi__idUsu__2B3F6F97" Association="SICERModel.FK__UsuarioTi__idUsu__2B3F6F97">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioUs__idUsu__267ABA7A" Association="SICERModel.FK__UsuarioUs__idUsu__267ABA7A">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioUs__idUsu__276EDEB3" Association="SICERModel.FK__UsuarioUs__idUsu__276EDEB3">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioTi__idUsu__2D27B809" Association="SICERModel.FK__UsuarioTi__idUsu__2D27B809">
+            <End Role="UsuarioUsuariosAprobacion" EntitySet="UsuarioUsuariosAprobacion" />
+            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vistas__idVistas__46E78A0C" Association="SICERModel.FK__Vistas__idVistas__46E78A0C">
+            <End Role="VistasGrupo" EntitySet="VistasGrupo" />
+            <End Role="Vistas" EntitySet="Vistas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VistasRol__idVis__534D60F1" Association="SICERModel.FK__VistasRol__idVis__534D60F1">
+            <End Role="Vistas" EntitySet="Vistas" />
+            <End Role="VistasRol" EntitySet="VistasRol" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="SP_SAPProveedor_Result">
+          <Property Type="Int32" Name="idSAPProveedor" Nullable="false" />
+          <Property Type="String" Name="LictradNum" Nullable="true" />
+          <Property Type="String" Name="CardName" Nullable="true" />
+          <Property Type="String" Name="validFor" Nullable="true" MaxLength="1" />
+        </ComplexType>
+        <EntityType Name="Concepto">
+          <Key>
+            <PropertyRef Name="idConcepto" />
+          </Key>
+          <Property Name="idConcepto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idAccount" Type="Int32" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SAPAccount" Relationship="SICERModel.FK__Concepto__idAcco__22751F6C" FromRole="Concepto" ToRole="SAPAccount" />
+          <NavigationProperty Name="DocumentoDetalle" Relationship="SICERModel.FK__Documento__idCon__2A164134" FromRole="Concepto" ToRole="DocumentoDetalle" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="idDocumento" />
+          </Key>
+          <Property Name="idDocumento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idTipoOrigen" Type="Int32" />
+          <Property Name="idSAPProveedorSolicitante" Type="Int32" />
+          <Property Name="idCentroCostos1" Type="Int32" />
+          <Property Name="idCentroCostos2" Type="Int32" />
+          <Property Name="idCentroCostos3" Type="Int32" />
+          <Property Name="idCentroCostos4" Type="Int32" />
+          <Property Name="idCentroCostos5" Type="Int32" />
+          <Property Name="idMetodoPago" Type="Int32" />
+          <Property Name="montoSolicitado" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="montoGastado" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="idMoneda" Type="Int32" />
+          <Property Name="asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="motivoDetalle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fechaSolicitud" Type="DateTime" Precision="3" />
+          <Property Name="estaAprobado" Type="Int32" />
+          <Property Name="estadoMigracion" Type="Int32" />
+          <Property Name="fechaContabilizacion" Type="DateTime" Precision="3" />
+          <Property Name="idUsuarioCreacion" Type="Int32" />
+          <Property Name="fechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idUsuarioUltimoUpdate" Type="Int32" />
+          <Property Name="fechaUltimoUpdate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="SAPCentroCostos" Relationship="SICERModel.FK__Documento__idCen__60A75C0F" FromRole="Documento" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos1" Relationship="SICERModel.FK__Documento__idCen__619B8048" FromRole="Documento" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos2" Relationship="SICERModel.FK__Documento__idCen__628FA481" FromRole="Documento" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos3" Relationship="SICERModel.FK__Documento__idCen__6383C8BA" FromRole="Documento" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos4" Relationship="SICERModel.FK__Documento__idCen__6477ECF3" FromRole="Documento" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="DocumentoDetalle" Relationship="SICERModel.FK__Documento__idDoc__282DF8C2" FromRole="Documento" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="SAPMetodoPago" Relationship="SICERModel.FK__Documento__idMet__656C112C" FromRole="Documento" ToRole="SAPMetodoPago" />
+          <NavigationProperty Name="SAPMoneda" Relationship="SICERModel.FK__Documento__idMon__66603565" FromRole="Documento" ToRole="SAPMoneda" />
+          <NavigationProperty Name="SAPProveedor" Relationship="SICERModel.FK__Documento__idSAP__5FB337D6" FromRole="Documento" ToRole="SAPProveedor" />
+          <NavigationProperty Name="TipoDocumentoOrigen" Relationship="SICERModel.FK__Documento__idTip__5EBF139D" FromRole="Documento" ToRole="TipoDocumentoOrigen" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Documento__idUsu__6754599E" FromRole="Documento" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__Documento__idUsu__68487DD7" FromRole="Documento" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="DocumentoDetalle">
+          <Key>
+            <PropertyRef Name="idDocumentoDetalle" />
+          </Key>
+          <Property Name="idDocumentoDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idDocumento" Type="Int32" />
+          <Property Name="idProveedor" Type="Int32" />
+          <Property Name="idConcepto" Type="Int32" />
+          <Property Name="idTipoDocumentoOrigen" Type="Int32" />
+          <Property Name="serieDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="correlativoDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="fechaDocumento" Type="DateTime" Precision="3" />
+          <Property Name="idMonedaDoc" Type="Int32" />
+          <Property Name="idCentroCosto1" Type="Int32" />
+          <Property Name="idCentroCosto2" Type="Int32" />
+          <Property Name="idCentroCosto3" Type="Int32" />
+          <Property Name="idCentroCosto4" Type="Int32" />
+          <Property Name="idCentroCosto5" Type="Int32" />
+          <Property Name="idCentroCosto6" Type="Int32" />
+          <Property Name="montoDoc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tasaCambio" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idMonedaOriginal" Type="Int32" />
+          <Property Name="montoNoAfecto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="montoAfecto" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="montoIGV" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="montoTotal" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="idUsuarioCreacion" Type="Int32" />
+          <Property Name="fechaCreacion" Type="DateTime" Precision="3" />
+          <Property Name="idUsuarioUltimoUpdate" Type="Int32" />
+          <Property Name="fechaUltimoUpdate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Concepto" Relationship="SICERModel.FK__Documento__idCon__2A164134" FromRole="DocumentoDetalle" ToRole="Concepto" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__idDoc__282DF8C2" FromRole="DocumentoDetalle" ToRole="Documento" />
+          <NavigationProperty Name="SAPCentroCostos" Relationship="SICERModel.FK__Documento__idCen__2CF2ADDF" FromRole="DocumentoDetalle" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos1" Relationship="SICERModel.FK__Documento__idCen__2DE6D218" FromRole="DocumentoDetalle" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos2" Relationship="SICERModel.FK__Documento__idCen__2EDAF651" FromRole="DocumentoDetalle" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos3" Relationship="SICERModel.FK__Documento__idCen__2FCF1A8A" FromRole="DocumentoDetalle" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos4" Relationship="SICERModel.FK__Documento__idCen__30C33EC3" FromRole="DocumentoDetalle" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPCentroCostos5" Relationship="SICERModel.FK__Documento__idCen__31B762FC" FromRole="DocumentoDetalle" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="SAPMoneda" Relationship="SICERModel.FK__Documento__idMon__2BFE89A6" FromRole="DocumentoDetalle" ToRole="SAPMoneda" />
+          <NavigationProperty Name="SAPMoneda1" Relationship="SICERModel.FK__Documento__idMon__32AB8735" FromRole="DocumentoDetalle" ToRole="SAPMoneda" />
+          <NavigationProperty Name="SAPProveedor" Relationship="SICERModel.FK__Documento__idPro__29221CFB" FromRole="DocumentoDetalle" ToRole="SAPProveedor" />
+          <NavigationProperty Name="TipoDocumentoOrigen" Relationship="SICERModel.FK__Documento__idTip__2B0A656D" FromRole="DocumentoDetalle" ToRole="TipoDocumentoOrigen" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Documento__idUsu__339FAB6E" FromRole="DocumentoDetalle" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__Documento__idUsu__3493CFA7" FromRole="DocumentoDetalle" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Excepcion">
+          <Key>
+            <PropertyRef Name="idExcepcion" />
+          </Key>
+          <Property Name="idExcepcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="tipo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pila" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="navegador" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="excepcionInterna" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="timeStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sessionKeys" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Motivo">
+          <Key>
+            <PropertyRef Name="idMotivo" />
+          </Key>
+          <Property Name="idMotivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dias" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="idRol" />
+          </Key>
+          <Property Name="idRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Usuario__idRol__1FCDBCEB" FromRole="Rol" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioRol" Relationship="SICERModel.FK__UsuarioRo__idRol__4E88ABD4" FromRole="Rol" ToRole="UsuarioRol" />
+          <NavigationProperty Name="VistasRol" Relationship="SICERModel.FK__VistasRol__idRol__5441852A" FromRole="Rol" ToRole="VistasRol" />
+        </EntityType>
+        <EntityType Name="SAPAccount">
+          <Key>
+            <PropertyRef Name="idSAPAccount" />
+          </Key>
+          <Property Name="idSAPAccount" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AcctCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AcctName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ValidFor" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Concepto" Relationship="SICERModel.FK__Concepto__idAcco__22751F6C" FromRole="SAPAccount" ToRole="Concepto" />
+        </EntityType>
+        <EntityType Name="SAPCentroCostos">
+          <Key>
+            <PropertyRef Name="idSAPCentroCostos" />
+          </Key>
+          <Property Name="idSAPCentroCostos" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrcCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PrcName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__idCen__60A75C0F" FromRole="SAPCentroCostos" ToRole="Documento" />
+          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento__idCen__619B8048" FromRole="SAPCentroCostos" ToRole="Documento" />
+          <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento__idCen__628FA481" FromRole="SAPCentroCostos" ToRole="Documento" />
+          <NavigationProperty Name="Documento3" Relationship="SICERModel.FK__Documento__idCen__6383C8BA" FromRole="SAPCentroCostos" ToRole="Documento" />
+          <NavigationProperty Name="Documento4" Relationship="SICERModel.FK__Documento__idCen__6477ECF3" FromRole="SAPCentroCostos" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoDetalle" Relationship="SICERModel.FK__Documento__idCen__2CF2ADDF" FromRole="SAPCentroCostos" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="DocumentoDetalle1" Relationship="SICERModel.FK__Documento__idCen__2DE6D218" FromRole="SAPCentroCostos" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="DocumentoDetalle2" Relationship="SICERModel.FK__Documento__idCen__2EDAF651" FromRole="SAPCentroCostos" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="DocumentoDetalle3" Relationship="SICERModel.FK__Documento__idCen__2FCF1A8A" FromRole="SAPCentroCostos" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="DocumentoDetalle4" Relationship="SICERModel.FK__Documento__idCen__30C33EC3" FromRole="SAPCentroCostos" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="DocumentoDetalle5" Relationship="SICERModel.FK__Documento__idCen__31B762FC" FromRole="SAPCentroCostos" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="SAPCentroCostosUsuario" Relationship="SICERModel.FK__SAPCentro__idCen__239E4DCF" FromRole="SAPCentroCostos" ToRole="SAPCentroCostosUsuario" />
+        </EntityType>
+        <EntityType Name="SAPCentroCostosUsuario">
+          <Key>
+            <PropertyRef Name="idSAPCentroCostosUsuario" />
+          </Key>
+          <Property Name="idSAPCentroCostosUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="idCentroCosto" Type="Int32" />
+          <NavigationProperty Name="SAPCentroCostos" Relationship="SICERModel.FK__SAPCentro__idCen__239E4DCF" FromRole="SAPCentroCostosUsuario" ToRole="SAPCentroCostos" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__SAPCentro__idUsu__22AA2996" FromRole="SAPCentroCostosUsuario" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="SAPCuentasContables">
+          <Key>
+            <PropertyRef Name="idSAPCuentaContable" />
+          </Key>
+          <Property Name="idSAPCuentaContable" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LictradNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CardName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="validFor" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SAPMetodoPago">
+          <Key>
+            <PropertyRef Name="idSAPMetodoPago" />
+          </Key>
+          <Property Name="idSAPMetodoPago" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PayMethCod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descript" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__idMet__656C112C" FromRole="SAPMetodoPago" ToRole="Documento" />
+        </EntityType>
+        <EntityType Name="SAPMoneda">
+          <Key>
+            <PropertyRef Name="idSAPMoneda" />
+          </Key>
+          <Property Name="idSAPMoneda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocCurrCod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CurrName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Locked" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__idMon__66603565" FromRole="SAPMoneda" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoDetalle" Relationship="SICERModel.FK__Documento__idMon__2BFE89A6" FromRole="SAPMoneda" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="DocumentoDetalle1" Relationship="SICERModel.FK__Documento__idMon__32AB8735" FromRole="SAPMoneda" ToRole="DocumentoDetalle" />
+        </EntityType>
+        <EntityType Name="SAPProveedor">
+          <Key>
+            <PropertyRef Name="idSAPProveedor" />
+          </Key>
+          <Property Name="idSAPProveedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LictradNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CardName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="validFor" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__idSAP__5FB337D6" FromRole="SAPProveedor" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoDetalle" Relationship="SICERModel.FK__Documento__idPro__29221CFB" FromRole="SAPProveedor" ToRole="DocumentoDetalle" />
+        </EntityType>
+        <EntityType Name="SAPServicio">
+          <Key>
+            <PropertyRef Name="idSAPServicio" />
+          </Key>
+          <Property Name="idSAPServicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="itemName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="validFor" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TipoDocumentoOrigen">
+          <Key>
+            <PropertyRef Name="idTipoDocumentoOrigen" />
+          </Key>
+          <Property Name="idTipoDocumentoOrigen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__idTip__5EBF139D" FromRole="TipoDocumentoOrigen" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoDetalle" Relationship="SICERModel.FK__Documento__idTip__2B0A656D" FromRole="TipoDocumentoOrigen" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="UsuarioTipoDocumento" Relationship="SICERModel.FK__UsuarioTi__idTip__2C3393D0" FromRole="TipoDocumentoOrigen" ToRole="UsuarioTipoDocumento" />
+          <NavigationProperty Name="UsuarioUsuariosAprobacion" Relationship="SICERModel.FK__UsuarioUs__idTip__286302EC" FromRole="TipoDocumentoOrigen" ToRole="UsuarioUsuariosAprobacion" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="idUsuario" />
+          </Key>
+          <Property Name="idUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRol" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="documento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="Binary" MaxLength="200" FixedLength="false" />
+          <Property Name="nombres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="telefono" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="correo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Boolean" />
+          <Property Name="userCreate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="enviarCorreoMigracionDo_cumentos" Type="Boolean" />
+          <Property Name="esUsuarioSAP" Type="Boolean" />
+          <Property Name="cardCodeSAP" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento__idUsu__6754599E" FromRole="Usuario" ToRole="Documento" />
+          <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento__idUsu__68487DD7" FromRole="Usuario" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoDetalle" Relationship="SICERModel.FK__Documento__idUsu__339FAB6E" FromRole="Usuario" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="DocumentoDetalle1" Relationship="SICERModel.FK__Documento__idUsu__3493CFA7" FromRole="Usuario" ToRole="DocumentoDetalle" />
+          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__Usuario__idRol__1FCDBCEB" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="SAPCentroCostosUsuario" Relationship="SICERModel.FK__SAPCentro__idUsu__22AA2996" FromRole="Usuario" ToRole="SAPCentroCostosUsuario" />
+          <NavigationProperty Name="UsuarioRol" Relationship="SICERModel.FK__UsuarioRo__idUsu__4D94879B" FromRole="Usuario" ToRole="UsuarioRol" />
+          <NavigationProperty Name="UsuarioTipoDocumento" Relationship="SICERModel.FK__UsuarioTi__idUsu__2B3F6F97" FromRole="Usuario" ToRole="UsuarioTipoDocumento" />
+          <NavigationProperty Name="UsuarioUsuariosAprobacion" Relationship="SICERModel.FK__UsuarioUs__idUsu__267ABA7A" FromRole="Usuario" ToRole="UsuarioUsuariosAprobacion" />
+          <NavigationProperty Name="UsuarioUsuariosAprobacion1" Relationship="SICERModel.FK__UsuarioUs__idUsu__276EDEB3" FromRole="Usuario" ToRole="UsuarioUsuariosAprobacion" />
+        </EntityType>
+        <EntityType Name="UsuarioRol">
+          <Key>
+            <PropertyRef Name="idUsuarioRol" />
+          </Key>
+          <Property Name="idUsuarioRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="idRol" Type="Int32" />
+          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__UsuarioRo__idRol__4E88ABD4" FromRole="UsuarioRol" ToRole="Rol" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__UsuarioRo__idUsu__4D94879B" FromRole="UsuarioRol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="UsuarioTipoDocumento">
+          <Key>
+            <PropertyRef Name="idUsuarioTipoDocumento" />
+          </Key>
+          <Property Name="idUsuarioTipoDocumento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="idTipoDocumento" Type="Int32" />
+          <Property Name="cantidadDocumentos" Type="Int32" />
+          <Property Name="idUsuarioUsuariosAprobacion" Type="Int32" />
+          <NavigationProperty Name="TipoDocumentoOrigen" Relationship="SICERModel.FK__UsuarioTi__idTip__2C3393D0" FromRole="UsuarioTipoDocumento" ToRole="TipoDocumentoOrigen" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__UsuarioTi__idUsu__2B3F6F97" FromRole="UsuarioTipoDocumento" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioUsuariosAprobacion" Relationship="SICERModel.FK__UsuarioTi__idUsu__2D27B809" FromRole="UsuarioTipoDocumento" ToRole="UsuarioUsuariosAprobacion" />
+        </EntityType>
+        <EntityType Name="UsuarioUsuariosAprobacion">
+          <Key>
+            <PropertyRef Name="idUsuarioUsuarioAprobacion" />
+          </Key>
+          <Property Name="idUsuarioUsuarioAprobacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idUsuario" Type="Int32" />
+          <Property Name="idUsuarioAprobacion" Type="Int32" />
+          <Property Name="idTipoDocumentoOrigen" Type="Int32" />
+          <NavigationProperty Name="TipoDocumentoOrigen" Relationship="SICERModel.FK__UsuarioUs__idTip__286302EC" FromRole="UsuarioUsuariosAprobacion" ToRole="TipoDocumentoOrigen" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__UsuarioUs__idUsu__267ABA7A" FromRole="UsuarioUsuariosAprobacion" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__UsuarioUs__idUsu__276EDEB3" FromRole="UsuarioUsuariosAprobacion" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioTipoDocumento" Relationship="SICERModel.FK__UsuarioTi__idUsu__2D27B809" FromRole="UsuarioUsuariosAprobacion" ToRole="UsuarioTipoDocumento" />
+        </EntityType>
+        <EntityType Name="Vistas">
+          <Key>
+            <PropertyRef Name="idVista" />
+          </Key>
+          <Property Name="idVista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="valor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idVistasGrupo" Type="Int32" />
+          <NavigationProperty Name="VistasGrupo" Relationship="SICERModel.FK__Vistas__idVistas__46E78A0C" FromRole="Vistas" ToRole="VistasGrupo" />
+          <NavigationProperty Name="VistasRol" Relationship="SICERModel.FK__VistasRol__idVis__534D60F1" FromRole="Vistas" ToRole="VistasRol" />
+        </EntityType>
+        <EntityType Name="VistasGrupo">
+          <Key>
+            <PropertyRef Name="idVistasGrupo" />
+          </Key>
+          <Property Name="idVistasGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Vistas" Relationship="SICERModel.FK__Vistas__idVistas__46E78A0C" FromRole="VistasGrupo" ToRole="Vistas" />
+        </EntityType>
+        <EntityType Name="VistasRol">
+          <Key>
+            <PropertyRef Name="idVistaRol" />
+          </Key>
+          <Property Name="idVistaRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idVista" Type="Int32" />
+          <Property Name="idRol" Type="Int32" />
+          <Property Name="estado" Type="Boolean" />
+          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__VistasRol__idRol__5441852A" FromRole="VistasRol" ToRole="Rol" />
+          <NavigationProperty Name="Vistas" Relationship="SICERModel.FK__VistasRol__idVis__534D60F1" FromRole="VistasRol" ToRole="Vistas" />
+        </EntityType>
+        <Association Name="FK__Concepto__idAcco__22751F6C">
+          <End Type="SICERModel.SAPAccount" Role="SAPAccount" Multiplicity="0..1" />
+          <End Type="SICERModel.Concepto" Role="Concepto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPAccount">
+              <PropertyRef Name="idSAPAccount" />
+            </Principal>
+            <Dependent Role="Concepto">
+              <PropertyRef Name="idAccount" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCon__2A164134">
+          <End Type="SICERModel.Concepto" Role="Concepto" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Concepto">
+              <PropertyRef Name="idConcepto" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idConcepto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__60A75C0F">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__619B8048">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__628FA481">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__6383C8BA">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos4" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__6477ECF3">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idCentroCostos5" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idDoc__282DF8C2">
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="idDocumento" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMet__656C112C">
+          <End Type="SICERModel.SAPMetodoPago" Role="SAPMetodoPago" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMetodoPago">
+              <PropertyRef Name="idSAPMetodoPago" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idMetodoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMon__66603565">
+          <End Type="SICERModel.SAPMoneda" Role="SAPMoneda" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMoneda">
+              <PropertyRef Name="idSAPMoneda" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idMoneda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idSAP__5FB337D6">
+          <End Type="SICERModel.SAPProveedor" Role="SAPProveedor" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPProveedor">
+              <PropertyRef Name="idSAPProveedor" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idSAPProveedorSolicitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idTip__5EBF139D">
+          <End Type="SICERModel.TipoDocumentoOrigen" Role="TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idTipoOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__6754599E">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__68487DD7">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="idUsuarioUltimoUpdate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2CF2ADDF">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2DE6D218">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2EDAF651">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto3" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__2FCF1A8A">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto4" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__30C33EC3">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto5" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idCen__31B762FC">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idCentroCosto6" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMon__2BFE89A6">
+          <End Type="SICERModel.SAPMoneda" Role="SAPMoneda" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMoneda">
+              <PropertyRef Name="idSAPMoneda" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idMonedaDoc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idMon__32AB8735">
+          <End Type="SICERModel.SAPMoneda" Role="SAPMoneda" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPMoneda">
+              <PropertyRef Name="idSAPMoneda" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idMonedaOriginal" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idPro__29221CFB">
+          <End Type="SICERModel.SAPProveedor" Role="SAPProveedor" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPProveedor">
+              <PropertyRef Name="idSAPProveedor" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idProveedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idTip__2B0A656D">
+          <End Type="SICERModel.TipoDocumentoOrigen" Role="TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__339FAB6E">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Documento__idUsu__3493CFA7">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.DocumentoDetalle" Role="DocumentoDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="DocumentoDetalle">
+              <PropertyRef Name="idUsuarioUltimoUpdate" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__idRol__1FCDBCEB">
+          <End Type="SICERModel.Rol" Role="Rol" Multiplicity="0..1" />
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioRo__idRol__4E88ABD4">
+          <End Type="SICERModel.Rol" Role="Rol" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioRol" Role="UsuarioRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="UsuarioRol">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VistasRol__idRol__5441852A">
+          <End Type="SICERModel.Rol" Role="Rol" Multiplicity="0..1" />
+          <End Type="SICERModel.VistasRol" Role="VistasRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="idRol" />
+            </Principal>
+            <Dependent Role="VistasRol">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SAPCentro__idCen__239E4DCF">
+          <End Type="SICERModel.SAPCentroCostos" Role="SAPCentroCostos" Multiplicity="0..1" />
+          <End Type="SICERModel.SAPCentroCostosUsuario" Role="SAPCentroCostosUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SAPCentroCostos">
+              <PropertyRef Name="idSAPCentroCostos" />
+            </Principal>
+            <Dependent Role="SAPCentroCostosUsuario">
+              <PropertyRef Name="idCentroCosto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SAPCentro__idUsu__22AA2996">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.SAPCentroCostosUsuario" Role="SAPCentroCostosUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="SAPCentroCostosUsuario">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioTi__idTip__2C3393D0">
+          <End Type="SICERModel.TipoDocumentoOrigen" Role="TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioTipoDocumento" Role="UsuarioTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="UsuarioTipoDocumento">
+              <PropertyRef Name="idTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioUs__idTip__286302EC">
+          <End Type="SICERModel.TipoDocumentoOrigen" Role="TipoDocumentoOrigen" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioUsuariosAprobacion" Role="UsuarioUsuariosAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumentoOrigen">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Principal>
+            <Dependent Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idTipoDocumentoOrigen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioRo__idUsu__4D94879B">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioRol" Role="UsuarioRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioRol">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioTi__idUsu__2B3F6F97">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioTipoDocumento" Role="UsuarioTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioTipoDocumento">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioUs__idUsu__267ABA7A">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioUsuariosAprobacion" Role="UsuarioUsuariosAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioUs__idUsu__276EDEB3">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioUsuariosAprobacion" Role="UsuarioUsuariosAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="idUsuario" />
+            </Principal>
+            <Dependent Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idUsuarioAprobacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioTi__idUsu__2D27B809">
+          <End Type="SICERModel.UsuarioUsuariosAprobacion" Role="UsuarioUsuariosAprobacion" Multiplicity="0..1" />
+          <End Type="SICERModel.UsuarioTipoDocumento" Role="UsuarioTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsuarioUsuariosAprobacion">
+              <PropertyRef Name="idUsuarioUsuarioAprobacion" />
+            </Principal>
+            <Dependent Role="UsuarioTipoDocumento">
+              <PropertyRef Name="idUsuarioUsuariosAprobacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vistas__idVistas__46E78A0C">
+          <End Type="SICERModel.VistasGrupo" Role="VistasGrupo" Multiplicity="0..1" />
+          <End Type="SICERModel.Vistas" Role="Vistas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VistasGrupo">
+              <PropertyRef Name="idVistasGrupo" />
+            </Principal>
+            <Dependent Role="Vistas">
+              <PropertyRef Name="idVistasGrupo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VistasRol__idVis__534D60F1">
+          <End Type="SICERModel.Vistas" Role="Vistas" Multiplicity="0..1" />
+          <End Type="SICERModel.VistasRol" Role="VistasRol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vistas">
+              <PropertyRef Name="idVista" />
+            </Principal>
+            <Dependent Role="VistasRol">
+              <PropertyRef Name="idVista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SICERModelStoreContainer" CdmEntityContainer="SICEREntities">
+          <FunctionImportMapping FunctionImportName="SP_SAPProveedor" FunctionName="SICERModel.Store.SP_SAPProveedor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="SICERModel.SP_SAPProveedor_Result">
+                <ScalarProperty Name="idSAPProveedor" ColumnName="idSAPProveedor" />
+                <ScalarProperty Name="LictradNum" ColumnName="LictradNum" />
+                <ScalarProperty Name="CardName" ColumnName="CardName" />
+                <ScalarProperty Name="validFor" ColumnName="validFor" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Concepto">
+            <EntityTypeMapping TypeName="SICERModel.Concepto">
+              <MappingFragment StoreEntitySet="Concepto">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idAccount" ColumnName="idAccount" />
+                <ScalarProperty Name="idConcepto" ColumnName="idConcepto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documento">
+            <EntityTypeMapping TypeName="SICERModel.Documento">
+              <MappingFragment StoreEntitySet="Documento">
+                <ScalarProperty Name="fechaUltimoUpdate" ColumnName="fechaUltimoUpdate" />
+                <ScalarProperty Name="idUsuarioUltimoUpdate" ColumnName="idUsuarioUltimoUpdate" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="idUsuarioCreacion" ColumnName="idUsuarioCreacion" />
+                <ScalarProperty Name="fechaContabilizacion" ColumnName="fechaContabilizacion" />
+                <ScalarProperty Name="estadoMigracion" ColumnName="estadoMigracion" />
+                <ScalarProperty Name="estaAprobado" ColumnName="estaAprobado" />
+                <ScalarProperty Name="fechaSolicitud" ColumnName="fechaSolicitud" />
+                <ScalarProperty Name="motivoDetalle" ColumnName="motivoDetalle" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="asunto" ColumnName="asunto" />
+                <ScalarProperty Name="idMoneda" ColumnName="idMoneda" />
+                <ScalarProperty Name="montoGastado" ColumnName="montoGastado" />
+                <ScalarProperty Name="montoSolicitado" ColumnName="montoSolicitado" />
+                <ScalarProperty Name="idMetodoPago" ColumnName="idMetodoPago" />
+                <ScalarProperty Name="idCentroCostos5" ColumnName="idCentroCostos5" />
+                <ScalarProperty Name="idCentroCostos4" ColumnName="idCentroCostos4" />
+                <ScalarProperty Name="idCentroCostos3" ColumnName="idCentroCostos3" />
+                <ScalarProperty Name="idCentroCostos2" ColumnName="idCentroCostos2" />
+                <ScalarProperty Name="idCentroCostos1" ColumnName="idCentroCostos1" />
+                <ScalarProperty Name="idSAPProveedorSolicitante" ColumnName="idSAPProveedorSolicitante" />
+                <ScalarProperty Name="idTipoOrigen" ColumnName="idTipoOrigen" />
+                <ScalarProperty Name="idDocumento" ColumnName="idDocumento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentoDetalle">
+            <EntityTypeMapping TypeName="SICERModel.DocumentoDetalle">
+              <MappingFragment StoreEntitySet="DocumentoDetalle">
+                <ScalarProperty Name="fechaUltimoUpdate" ColumnName="fechaUltimoUpdate" />
+                <ScalarProperty Name="idUsuarioUltimoUpdate" ColumnName="idUsuarioUltimoUpdate" />
+                <ScalarProperty Name="fechaCreacion" ColumnName="fechaCreacion" />
+                <ScalarProperty Name="idUsuarioCreacion" ColumnName="idUsuarioCreacion" />
+                <ScalarProperty Name="montoTotal" ColumnName="montoTotal" />
+                <ScalarProperty Name="montoIGV" ColumnName="montoIGV" />
+                <ScalarProperty Name="montoAfecto" ColumnName="montoAfecto" />
+                <ScalarProperty Name="montoNoAfecto" ColumnName="montoNoAfecto" />
+                <ScalarProperty Name="idMonedaOriginal" ColumnName="idMonedaOriginal" />
+                <ScalarProperty Name="tasaCambio" ColumnName="tasaCambio" />
+                <ScalarProperty Name="montoDoc" ColumnName="montoDoc" />
+                <ScalarProperty Name="idCentroCosto6" ColumnName="idCentroCosto6" />
+                <ScalarProperty Name="idCentroCosto5" ColumnName="idCentroCosto5" />
+                <ScalarProperty Name="idCentroCosto4" ColumnName="idCentroCosto4" />
+                <ScalarProperty Name="idCentroCosto3" ColumnName="idCentroCosto3" />
+                <ScalarProperty Name="idCentroCosto2" ColumnName="idCentroCosto2" />
+                <ScalarProperty Name="idCentroCosto1" ColumnName="idCentroCosto1" />
+                <ScalarProperty Name="idMonedaDoc" ColumnName="idMonedaDoc" />
+                <ScalarProperty Name="fechaDocumento" ColumnName="fechaDocumento" />
+                <ScalarProperty Name="correlativoDoc" ColumnName="correlativoDoc" />
+                <ScalarProperty Name="serieDoc" ColumnName="serieDoc" />
+                <ScalarProperty Name="idTipoDocumentoOrigen" ColumnName="idTipoDocumentoOrigen" />
+                <ScalarProperty Name="idConcepto" ColumnName="idConcepto" />
+                <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+                <ScalarProperty Name="idDocumento" ColumnName="idDocumento" />
+                <ScalarProperty Name="idDocumentoDetalle" ColumnName="idDocumentoDetalle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Excepcion">
+            <EntityTypeMapping TypeName="SICERModel.Excepcion">
+              <MappingFragment StoreEntitySet="Excepcion">
+                <ScalarProperty Name="sessionKeys" ColumnName="sessionKeys" />
+                <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
+                <ScalarProperty Name="excepcionInterna" ColumnName="excepcionInterna" />
+                <ScalarProperty Name="navegador" ColumnName="navegador" />
+                <ScalarProperty Name="pila" ColumnName="pila" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="idExcepcion" ColumnName="idExcepcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Motivo">
+            <EntityTypeMapping TypeName="SICERModel.Motivo">
+              <MappingFragment StoreEntitySet="Motivo">
+                <ScalarProperty Name="dias" ColumnName="dias" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="idMotivo" ColumnName="idMotivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rol">
+            <EntityTypeMapping TypeName="SICERModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPAccount">
+            <EntityTypeMapping TypeName="SICERModel.SAPAccount">
+              <MappingFragment StoreEntitySet="SAPAccount">
+                <ScalarProperty Name="ValidFor" ColumnName="ValidFor" />
+                <ScalarProperty Name="AcctName" ColumnName="AcctName" />
+                <ScalarProperty Name="AcctCode" ColumnName="AcctCode" />
+                <ScalarProperty Name="idSAPAccount" ColumnName="idSAPAccount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPCentroCostos">
+            <EntityTypeMapping TypeName="SICERModel.SAPCentroCostos">
+              <MappingFragment StoreEntitySet="SAPCentroCostos">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="PrcName" ColumnName="PrcName" />
+                <ScalarProperty Name="PrcCode" ColumnName="PrcCode" />
+                <ScalarProperty Name="idSAPCentroCostos" ColumnName="idSAPCentroCostos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPCentroCostosUsuario">
+            <EntityTypeMapping TypeName="SICERModel.SAPCentroCostosUsuario">
+              <MappingFragment StoreEntitySet="SAPCentroCostosUsuario">
+                <ScalarProperty Name="idCentroCosto" ColumnName="idCentroCosto" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idSAPCentroCostosUsuario" ColumnName="idSAPCentroCostosUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPCuentasContables">
+            <EntityTypeMapping TypeName="SICERModel.SAPCuentasContables">
+              <MappingFragment StoreEntitySet="SAPCuentasContables">
+                <ScalarProperty Name="validFor" ColumnName="validFor" />
+                <ScalarProperty Name="CardName" ColumnName="CardName" />
+                <ScalarProperty Name="LictradNum" ColumnName="LictradNum" />
+                <ScalarProperty Name="idSAPCuentaContable" ColumnName="idSAPCuentaContable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPMetodoPago">
+            <EntityTypeMapping TypeName="SICERModel.SAPMetodoPago">
+              <MappingFragment StoreEntitySet="SAPMetodoPago">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Descript" ColumnName="Descript" />
+                <ScalarProperty Name="PayMethCod" ColumnName="PayMethCod" />
+                <ScalarProperty Name="idSAPMetodoPago" ColumnName="idSAPMetodoPago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPMoneda">
+            <EntityTypeMapping TypeName="SICERModel.SAPMoneda">
+              <MappingFragment StoreEntitySet="SAPMoneda">
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
+                <ScalarProperty Name="CurrName" ColumnName="CurrName" />
+                <ScalarProperty Name="DocCurrCod" ColumnName="DocCurrCod" />
+                <ScalarProperty Name="idSAPMoneda" ColumnName="idSAPMoneda" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPProveedor">
+            <EntityTypeMapping TypeName="SICERModel.SAPProveedor">
+              <MappingFragment StoreEntitySet="SAPProveedor">
+                <ScalarProperty Name="validFor" ColumnName="validFor" />
+                <ScalarProperty Name="CardName" ColumnName="CardName" />
+                <ScalarProperty Name="LictradNum" ColumnName="LictradNum" />
+                <ScalarProperty Name="idSAPProveedor" ColumnName="idSAPProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SAPServicio">
+            <EntityTypeMapping TypeName="SICERModel.SAPServicio">
+              <MappingFragment StoreEntitySet="SAPServicio">
+                <ScalarProperty Name="validFor" ColumnName="validFor" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="itemCode" ColumnName="itemCode" />
+                <ScalarProperty Name="idSAPServicio" ColumnName="idSAPServicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDocumentoOrigen">
+            <EntityTypeMapping TypeName="SICERModel.TipoDocumentoOrigen">
+              <MappingFragment StoreEntitySet="TipoDocumentoOrigen">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idTipoDocumentoOrigen" ColumnName="idTipoDocumentoOrigen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="SICERModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="cardCodeSAP" ColumnName="cardCodeSAP" />
+                <ScalarProperty Name="esUsuarioSAP" ColumnName="esUsuarioSAP" />
+                <ScalarProperty Name="enviarCorreoMigracionDo_cumentos" ColumnName="enviarCorreoMigracionDo,cumentos" />
+                <ScalarProperty Name="userCreate" ColumnName="userCreate" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="documento" ColumnName="documento" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioRol">
+            <EntityTypeMapping TypeName="SICERModel.UsuarioRol">
+              <MappingFragment StoreEntitySet="UsuarioRol">
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idUsuarioRol" ColumnName="idUsuarioRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioTipoDocumento">
+            <EntityTypeMapping TypeName="SICERModel.UsuarioTipoDocumento">
+              <MappingFragment StoreEntitySet="UsuarioTipoDocumento">
+                <ScalarProperty Name="idUsuarioUsuariosAprobacion" ColumnName="idUsuarioUsuariosAprobacion" />
+                <ScalarProperty Name="cantidadDocumentos" ColumnName="cantidadDocumentos" />
+                <ScalarProperty Name="idTipoDocumento" ColumnName="idTipoDocumento" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idUsuarioTipoDocumento" ColumnName="idUsuarioTipoDocumento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioUsuariosAprobacion">
+            <EntityTypeMapping TypeName="SICERModel.UsuarioUsuariosAprobacion">
+              <MappingFragment StoreEntitySet="UsuarioUsuariosAprobacion">
+                <ScalarProperty Name="idTipoDocumentoOrigen" ColumnName="idTipoDocumentoOrigen" />
+                <ScalarProperty Name="idUsuarioAprobacion" ColumnName="idUsuarioAprobacion" />
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idUsuarioUsuarioAprobacion" ColumnName="idUsuarioUsuarioAprobacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vistas">
+            <EntityTypeMapping TypeName="SICERModel.Vistas">
+              <MappingFragment StoreEntitySet="Vistas">
+                <ScalarProperty Name="idVistasGrupo" ColumnName="idVistasGrupo" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idVista" ColumnName="idVista" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VistasGrupo">
+            <EntityTypeMapping TypeName="SICERModel.VistasGrupo">
+              <MappingFragment StoreEntitySet="VistasGrupo">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idVistasGrupo" ColumnName="idVistasGrupo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VistasRol">
+            <EntityTypeMapping TypeName="SICERModel.VistasRol">
+              <MappingFragment StoreEntitySet="VistasRol">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idVista" ColumnName="idVista" />
+                <ScalarProperty Name="idVistaRol" ColumnName="idVistaRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

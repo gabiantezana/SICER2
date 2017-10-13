@@ -1,0 +1,60 @@
+﻿@model SICER.VIEWMODEL.Administracion.Concepto.ConceptoViewModel
+@{
+    ViewBag.Title = (Model.IdConcepto.HasValue ? "Editar" : "Crear") + " Concepto";
+    ViewBag.Icon = Model.IdConcepto.HasValue ? "edit" : "plus";
+    var isEdit = Model.IdConcepto.HasValue ? "true" : "false";
+}
+@section Styles{
+    <link href="~/Content/vendor/clockpicker/clockpicker.min.css" rel="stylesheet" />
+}
+
+@using (Html.BeginForm("AddUpdateConcepto", "Concepto", FormMethod.Post))
+{
+    <div class="panel-footer text-right">
+        <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Guardar</button>
+    </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h5 class="panel-title">Datos generales</h5>
+            </div>
+            @if (Model.IdConcepto.HasValue)
+            {
+                @Html.HiddenFor(x => Model.IdConcepto)
+            }
+            <div class="panel-body">
+                <div class=" col-md-6">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.Nombre, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(x => Model.Nombre, new { @class = "form-control " })
+                                @Html.ValidationMessageFor(x => x.Nombre)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.Descripcion, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(x => Model.Descripcion, new { @class = "form-control " })
+                                @Html.ValidationMessageFor(x => x.Descripcion)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.IdAccount, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.DropDownListFor(x => Model.IdAccount, new SelectList(Model.ListSAPAccounts, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "false" })
+                                @Html.ValidationMessageFor(x => x.IdAccount)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
+            </div>
+        </div>
+}
+
+@section Scripts
+{
+
+}

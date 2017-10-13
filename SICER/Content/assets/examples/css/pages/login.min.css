@@ -1,0 +1,69 @@
+/*!
+ * Comité Acreditacion UPC 
+ * Copyright 2016
+ * Licensed under the Standard Licenses
+ */
+
+.page-login-v3:before {
+    position: fixed;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-position: center top;
+    -webkit-background-size: cover;
+    background-size: cover;
+    z-index: -1;
+    background: #337ab7;
+    background-repeat: repeat;
+}
+
+.page-login-v3 .panel {
+    width: 400px;
+    margin-bottom: 45px;
+    background: #fff;
+    border-radius: 4px;
+}
+
+    .page-login-v3 .panel .panel-body {
+        padding: 50px 40px 40px;
+        box-shadow: 0 1px 3px 1px rgba(0,0,0,.3);
+        border-radius: 3px;
+    }
+
+    .page-login-v3 .panel .brand-text {
+        margin-top: 8px;
+    }
+
+.page-login-v3 form {
+    margin: 45px 0 30px;
+}
+
+    .page-login-v3 form a {
+        margin-left: 20px;
+    }
+
+    .page-login-v3 form .form-material.floating + .page-login-v3 form .form-material.floating {
+        margin-top: 30px;
+    }
+
+    .page-login-v3 form .form-material label {
+        color: #a3afb7;
+        font-weight: 300;
+    }
+
+@media (max-width:480px) {
+    .page-login-v3 .page-content {
+        padding: 30px 20px;
+    }
+
+    .page-login-v3 .panel {
+        width: auto;
+        padding: 10px;
+    }
+
+        .page-login-v3 .panel .panel-body {
+            padding: 35px 25px 35px;
+        }
+}

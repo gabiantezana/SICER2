@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.GUID = ViewBag.GUID ?? Guid.NewGuid().ToString();
+    var buttonSaveId = ViewBag.GUID + "buttonSave";
+}
+@RenderSection("Styles", false)
+<div id="@ViewBag.GUID">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title"><i class="fa fa-@ViewBag.Icon contrast">&nbsp;</i> @ViewBag.Title </h4>
+    </div>
+
+    @*@if (TempData["FlashMessage"] != null)
+        {
+            @Html.AlertDark((MessageType)TempData["MessageType"], TempData["FlashMessage"].ToSafeString())
+        }*@
+    @if (ViewBag.Form != null)
+    {
+        Html.BeginForm();
+    }
+    <div class="modal-body" style="overflow:hidden;">
+        @RenderBody()
+    </div>
+
+    <div class="modal-footer">
+        @if (ViewBag.DeshabilitarCerrarFooter == null || !ViewBag.DeshabilitarCerrarFooter)
+        {
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+        }
+        @if (ViewBag.Form != null)
+        {
+            <button type="button" class="btn btn-primary" id="@buttonSaveId"><i class="fa fa-check"></i> Aceptar</button>
+        }
+        @RenderSection("ModalFooter", false)
+    </div>
+    @if (ViewBag.Form != null)
+    {
+        Html.EndForm();
+    }
+</div>
+<!-- Stylesheets -->
+<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap-extend.min.css" rel="stylesheet" />
+<link href="~/Content/css/site.min.css" rel="stylesheet" />
+
+
+@if (ViewBag.Response == null)
+{
+   <script>
+        var urlModalRedirect = '';
+        var urlValidation = '@ViewBag.UrlValidation';
+
+
+        $(function () {
+            debugger;
+            $('#@buttonSaveId').click(function (e) {
+                debugger;
+                e.preventDefault();
+                var $form = $('#@ViewBag.GUID form');
+
+                //Validate form
+                $form.validate();
+
+                //Generate lines
+                var _ListDetalle = [];
+                var rows = $('#tableDetalle tbody tr').length;
+                for (var i = 0; i < rows; i++)
+                {
+                    var _object = getDocumentoDetalleObject(i);
+                    _ListDetalle.push(ConvertSerializedArrayToObject(_object));
+                }
+                //Generate model
+                var _model = ConvertSerializedArrayToObject($form.serializeArray());
+
+                //Send by ajax
+                if ($form.valid())
+                {
+                    $.ajax({
+                        type: 'POST',
+                        url: urlValidation,
+                        data: { "model": _model, "ListDetalle": _ListDetalle },
+                        success: function (value) {
+                            debugger;
+                            $form.append(value);
+                            $("#_PartialDetalleDocumentos").html(value);
+                            $form.closest('.modal').modal('hide');
+                        },
+                        error: function (error) {
+                            ShowMessage("SUCCESS", error);
+                            debugger;
+                            return false;
+                        },
+                        finally: function(err)
+                        {
+                            debugger;
+                        }
+                    });
+                }
+            })
+        });
+
+            console.log('modal');
+            $('*[data-plugin="select2"]').select2({
+                language: 'es',
+                placeholder: "[ -- Seleccione -- ]",
+                allowClear: true
+            });
+
+            $('*[data-plugin="select2"]').next('.select2').find('.select2-selection').one('focus', select2Focus).on('blur', function () {
+                $(this).one('focus', select2Focus)
+            })
+
+        $(".modal").on('hidden.bs.modal', function () {
+            $(this).remove();
+            $('.pac-container').remove();
+            $('iframe[name=gm-master]').remove();
+            console.log('modal close');
+        });
+    </script>
+}
+@RenderSection("Scripts", false)
+@*@Scripts.Render("~/bundles/jqueryval");*@

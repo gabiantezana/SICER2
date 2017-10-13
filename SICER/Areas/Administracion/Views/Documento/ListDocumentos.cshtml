@@ -1,0 +1,47 @@
+﻿@model SICER.VIEWMODEL.Administracion.Documento.ListDocumentoViewModel
+  @{
+      string tipoDocumento = String.Empty;
+      switch ((DocumentType)ViewBag.DocumentType)
+      {
+          case DocumentType.CajaChica:
+              tipoDocumento = "caja chica";
+              break;
+          case DocumentType.EntregaARendir:
+              tipoDocumento = "entregas a rendir";
+              break;
+          case DocumentType.Reembolso:
+              tipoDocumento = "reembolsos";
+              break;
+
+      }
+      ViewBag.Title = "Listado de " + tipoDocumento;
+      ViewBag.Icon = "list";
+
+}
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="panel-footer text-right">
+                <a class="btn btn-primary animsition-link" id="btn-crear" href="@Url.Action("AddUpdateDocumento", "Documento", new { Area = "Administracion", documentType = (DocumentType)ViewBag.DocumentType})"
+                <i class="fa fa-plus"></i>
+                Nuevo
+            </a>
+            </div>
+            <div class="table-responsive">
+                @using (Html.BeginForm("ListDocumentos", "Documento", FormMethod.Post, new { Area = ConstantHelper.Area.ADMINISTRACION }))
+            {
+                    <div class="form-group col-md-6">
+                        <div class="col-sm-11" style="padding-right:0px">
+                           @* @Html.DropDownListFor(x => Model.campoBuscar, new SelectList(Model.LstMovilDefault, "idMovil", "codigo"), new { @class = "form-control form-group-margin select2-clientes" })*@
+                        </div>
+                        <div class="col-sm-1" style="padding:0px">
+                            <button type="button" class="btn btn-icon btn-primary"><i class="icon wb-search" aria-hidden="true"></i></button>
+                        </div>
+                    </div>
+                }
+                <div id="lstMovil" style="padding: 30px;">
+                    @Html.Partial("PartialView/_ListDocumentosPartialView", Model.ListDocumentos)
+                </div>
+            </div>
+        </div>
+    </div> 

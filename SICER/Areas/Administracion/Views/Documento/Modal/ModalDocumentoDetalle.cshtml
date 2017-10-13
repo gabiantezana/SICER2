@@ -1,0 +1,141 @@
+﻿@model SICER.VIEWMODEL.Administracion.Documento.DocumentoDetalleViewModel
+@{
+    Layout = "~/Views/Shared/_ModalLayout.cshtml";
+    ViewBag.Title = "Agregar rendición";
+    ViewBag.Form = true;
+    ViewBag.UrlValidation = Url.Action("_PartialDetalleDocumentos", "Documento");
+}
+   
+    <div class="form-horizontal">
+        @if (Model.IdDocumentoDetalle.HasValue)
+        {
+            @Html.HiddenFor(x => Model.IdDocumentoDetalle)
+        }
+        @Html.HiddenFor(x => Model.IdDocumentoDetalle)
+
+
+        <div class="form-group">
+            @Html.LabelFor(x => Model.Serie, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => Model.Serie, new { @class = "form-control " })
+                @Html.ValidationMessageFor(x => x.Serie)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.Correlativo, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => Model.Correlativo, new { @class = "form-control " })
+                @Html.ValidationMessageFor(x => x.Correlativo)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.Fecha, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                <div class="input-group date">
+                    @Html.TextBoxFor(x => Model.Fecha, "{0:dd/MM/yyyy}", new { @class = "form-control fecha", @type = "text" })
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                @Html.ValidationMessageFor(x => Model.Fecha)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdConcepto, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdConcepto, new SelectList(Model.ListConceptos, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdConcepto)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdMonedaDocumento, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdMonedaDocumento, new SelectList(Model.ListMonedas, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdMonedaDocumento)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdMonedaDocumentoSAP, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdMonedaDocumentoSAP, new SelectList(Model.ListMonedas, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdMonedaDocumentoSAP)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.ImporteAfecta, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => Model.ImporteAfecta, new { @class = "form-control  text-right moneda" })
+                @Html.ValidationMessageFor(x => x.ImporteAfecta)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.ImporteNoAfecta, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => Model.ImporteNoAfecta, new { @class = "form-control  text-right moneda" })
+                @Html.ValidationMessageFor(x => x.ImporteNoAfecta)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.ImporteIGV, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => Model.ImporteIGV, new { @class = "form-control  text-right moneda" })
+                @Html.ValidationMessageFor(x => x.ImporteIGV)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.TasaDeCambio, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => Model.TasaDeCambio, new { @class = "form-control  text-right moneda" })
+                @Html.ValidationMessageFor(x => x.TasaDeCambio)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.ImporteTotal, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => Model.ImporteTotal, new { @class = "form-control   text-right moneda" })
+                @Html.ValidationMessageFor(x => x.ImporteTotal)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdCentroCosto1, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdCentroCosto1, new SelectList(Model.ListCentrosCosto, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdCentroCosto1)s
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdCentroCosto2, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdCentroCosto2, new SelectList(Model.ListCentrosCosto, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdCentroCosto2)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdCentroCosto3, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdCentroCosto3, new SelectList(Model.ListCentrosCosto, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdCentroCosto3)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdCentroCosto4, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdCentroCosto4, new SelectList(Model.ListCentrosCosto, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdCentroCosto4)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => Model.IdCentroCosto5, new { @class = "col-sm-3 control-label" })
+            <div class="col-sm-9">
+                @Html.DropDownListFor(x => Model.IdCentroCosto5, new SelectList(Model.ListCentrosCosto, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                @Html.ValidationMessageFor(x => x.IdCentroCosto5)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $(".fecha").datepicker();
+        });
+        $(".moneda").change(function () {
+            OnChangeDecimal(null, this, null)
+        });
+    </script>

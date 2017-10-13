@@ -1,0 +1,34 @@
+﻿@model List<SICER.MODEL.SAPMoneda>
+
+@{
+    ViewBag.Title = "Listado de monedas";
+    ViewBag.Icon = "list";
+
+}
+
+<div class="panel">
+    <div class="panel-body">
+        <br />
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>DocCurrCod</td>
+                        <td>CurrName</td>
+                        <td>Locked</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DocCurrCod</td>
+                            <td>@item.CurrName</td>
+                            <td>@item.Locked</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

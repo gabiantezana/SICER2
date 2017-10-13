@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+<html class="no-js css-menubar">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="bootstrap admin template">
+    <meta name="author" content="">
+
+
+    <!-- Stylesheets -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-extend.min.css" rel="stylesheet" />
+    <link href="~/Content/css/site.min.css" rel="stylesheet" />
+
+    <!-- Plugins -->
+    <link href="~/Content/vendor/animsition/animsition.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/asscrollable/asScrollable.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/switchery/switchery.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/intro-js/introjs.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="~/Content/vendor/switchery/switchery.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/alertify-js/alertify.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/toastr/toastr.min.css" rel="stylesheet" />
+    <!-- Custom Styles -->
+    <link href="~/Content/css/custom-styles.css" rel="stylesheet" />
+    <link href="~/Content/assets/examples/css/structure/alerts.min.css" rel="stylesheet" />
+    <!-- Fonts -->
+    <link href="~/Content/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts/web-icons/web-icons.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts/material-design/css/materialdesignicons.min.css" rel='stylesheet' />
+    @*<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' />*@
+
+    <!--[if lt IE 9]>
+    <script src="../global/vendor/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+    <!--[if lt IE 10]>
+    <script src="../global/vendor/media-match/media.match.min.js"></script>
+    <script src="../global/vendor/respond/respond.min.js"></script>
+    <![endif]-->
+    <!-- Scripts -->
+    @RenderSection("Styles", false)
+
+    <!-- Scripts -->
+    <script>var urlRoute = '@Url.Action("KeepAlive", "Home", new { Area = ""})';</script>
+    <script src="~/Content/vendor/modernizr/modernizr.min.js"></script>
+    <script src="~/Content/vendor/breakpoints/breakpoints.min.js"></script>
+    <script>
+        Breakpoints();
+    </script>
+</head>
+<body class="page-aside-fixed ">
+    <!-- Main Navigation section -->
+
+    <nav class="site-navbar navbar navbar-default navbar-fixed-top navbar-mega" role="navigation">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle hamburger hamburger-close navbar-toggle-left hided" data-toggle="menubar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="hamburger-bar"></span>
+            </button>
+            <button type="button" class="navbar-toggle collapsed" data-target="#site-navbar-collapse" data-toggle="collapse">
+                <i class="icon wb-more-horizontal" aria-hidden="true"></i>
+            </button>
+            <div class="navbar-brand navbar-brand-center site-gridmenu-toggle" data-toggle="gridmenu">
+            </div>
+        </div>
+
+        <div class="navbar-container container-fluid">
+            <!-- Navbar Collapse -->
+            <div class="collapse navbar-collapse navbar-collapse-toolbar" id="site-navbar-collapse">
+                <!-- Navbar Toolbar -->
+                <ul class="nav navbar-toolbar">
+                    <li class="hidden-float" id="toggleMenubar">
+                        <a data-toggle="menubar" href="#" role="button">
+                            <i class="icon hamburger hamburger-arrow-left">
+                                <span class="sr-only">Toggle menubar</span>
+                                <span class="hamburger-bar"></span>
+                            </i>
+                        </a>
+                    </li>
+                    <li class="hidden-xs" id="toggleFullscreen">
+                        <a class="icon icon-fullscreen" data-toggle="fullscreen" href="#" role="button">
+                            <span class="sr-only">Toggle fullscreen</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <!-- End Navbar Toolbar -->
+                <!-- Navbar Title Page Toolbar -->
+                <ul class="nav navbar-toolbar">
+                    <li class="dropdown">
+                        <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="">
+                            <h1 class="page-title" style="padding:2px"><i class="fa fa-@ViewBag.Icon"></i> @ViewBag.Title</h1>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Navbar Title Page Toolbar -->
+                <!-- Navbar Toolbar Right -->
+                <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+                    <li class="dropdown">
+                        <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="button">
+                            <span class="avatar avatar-online">
+                                <img src="~/Content/recursos/icon_user.svg" alt="..." />
+                                <i></i>
+                            </span>
+                            <span>@Session.GetNombresUsuario()</span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="divider" role="presentation"></li>
+                            <li role="presentation">
+                                <a class="animsition-link" id="btnLogOut" href="@Url.Action("Logout", "Home", new { Area = String.Empty})" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Salir</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- End Navbar Toolbar Right -->
+            </div>
+            <!-- End Navbar Collapse -->
+        </div>
+    </nav>
+
+
+    <div class="site-menubar">
+        <div class="site-menubar-body" style="height: 100% !important;">
+            <div>
+                @{Html.RenderPartial("_Sidebar");}
+            </div>
+        </div>
+    </div>
+
+    <div class="page animsition">
+        @if (IsSectionDefined("SecondSidebar"))
+        {
+            @RenderSection("SecondSidebar", false)
+        }
+        <div class="page-main">
+            @if (TempData["Message"] != null)
+            {
+                var list = (List<TempDataEntity>)TempData["Message"];
+                foreach (var item in list)
+                {
+                    @Html.Alert(item)
+                }
+            }
+            @if (TempData["Exception"] != null)
+            {
+                var list = (List<CustomException>)TempData["Exception"];
+                foreach (var item in list)
+                {
+                    @Html.Alert(item)
+                }
+            }
+            @if (IsSectionDefined("Breadcrumbs"))
+            {
+                <ol class="breadcrumb">
+                    <li><a class="animsition-link" href="@Url.Action("Index", "Home", new { Area = ""})"><i class="fa fa-home"></i> Inicio</a></li>
+                    @RenderSection("Breadcrumbs", false)
+                    <li class="active">
+                        @ViewBag.Title
+                    </li>
+                </ol>
+            }
+
+            @if (@ViewBag.Title != null)
+            {
+                @*<div class="page-header">
+                        <h1 class="page-title"><i class="fa fa-@ViewBag.Icon"></i> @ViewBag.Title</h1>
+
+                    </div>*@
+            }
+            <div class="page-content">
+                @RenderBody()
+            </div>
+
+            <div class="loader-background" id="main-loader">
+                <div class="loader-container">
+                    <div class="loader loader-round-circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="site-footer-right">
+            <i class="red-600 wb wb-power"></i> <a href="http://cmvtaxi.pe/">CMVtaxi  remisse ejecutivo</a>
+        </div>
+    </footer>
+
+    <div class="row-fluid" id="default-modal-container">
+        <div class="hide" id="default-modal-loading">
+            <div class="modal-body" style="color: #465bd4">
+                <div style="background: url('../../Content/assets/images/loading.svg') no-repeat;height:44px;width:44px;margin: 10px auto 0;"></div>
+                <h4 style="text-align:center">Cargando</h4>
+            </div>
+        </div>
+        <div class="hide" id="default-modal-loading-error">
+            <div class="modal-body">
+                <h3 style="margin: 22px 0;"><i class="fa fa-warning text-danger"></i> Ha ocurrido un error</h3>
+            </div>
+        </div>
+    </div>
+    <!-- End Page -->
+    <!-- Core  -->
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Content/vendor/animsition/animsition.min.js"></script>
+    <script src="~/Content/vendor/asscroll/jquery-asScroll.min.js"></script>
+    <script src="~/Content/vendor/mousewheel/jquery.mousewheel.min.js"></script>
+    <script src="~/Content/vendor/asscrollable/jquery.asScrollable.all.min.js"></script>
+    <script src="~/Content/vendor/ashoverscroll/jquery-asHoverScroll.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="~/Content/vendor/switchery/switchery.min.js"></script>
+    <script src="~/Content/vendor/intro-js/intro.min.js"></script>
+    <script src="~/Content/vendor/screenfull/screenfull.min.js"></script>
+
+    <!-- Aditional Plugins -->
+    <script src="~/Content/vendor/select2/select2.min.js"></script>
+    <script src="~/Content/vendor/select2/es.js"></script>
+    <script src="~/Content/vendor/switchery/switchery.min.js"></script>
+    <script src="~/Content/vendor/alertify-js/alertify.js"></script>
+    <script src="~/Content/vendor/toastr/toastr.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="~/Content/js/core.min.js"></script>
+    <script src="~/Content/js/core.min.js"></script>
+    <script src="~/Content/js/site.min.js"></script>
+    <script src="~/Content/assets/js/sections/gridmenu.min.js"></script>
+    <script src="~/Content/assets/js/sections/menu.min.js"></script>
+    <script src="~/Content/assets/js/sections/menubar.min.js"></script>
+    <script src="~/Content/assets/js/sections/sidebar.min.js"></script>
+
+    <script src="~/Content/js/components/asscrollable.min.js"></script>
+    <script src="~/Content/js/components/animsition.min.js"></script>
+    <script src="~/Content/js/components/switchery.min.js"></script>
+    <script src="~/Content/js/components/panel.min.js"></script>
+
+    <script src="~/Content/assets/js/jquery.validate.min.js"></script>
+    <script src="~/Content/assets/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Content/assets/js/jquery.unobtrusive-ajax.min.js"></script>
+ @*   <script src="~/Scripts/messages_es_PE.js"></script>*@
+    <script src="~/Content/js/bootstrap-datepicker.js"></script>
+
+    <script>
+        //Para agregar listado de modals agregados.
+        var modalList = [];
+
+        (function (document, window, $) {
+            'use strict';
+            var site = window.Site;
+            $(function () { site.run(); });
+        })(document, window, jQuery);
+
+        $(function () {
+
+            var today = new Date();
+
+            $('.input-group.date').datepicker({
+                orientation: "bottom auto",
+                language: 'es',
+                changeYear: true,
+                todayHighlight: true,
+            });
+
+            jQuery.validator.methods["date"] = function (value, element) { return true; }
+
+
+            $('*[data-plugin="select2"]').select2({
+
+                language: 'es',
+                placeholder: "[ -- Seleccione -- ]",
+                allowClear: true
+
+            });
+            setPlaceHolderToSelect2();
+        });
+        function setPlaceHolderToSelect2(ispartial) {
+            var select2InPage = $('*[data-plugin="select2"]');//.val('').trigger('change');
+            select2InPage.each(function (i, e) {
+                var $this = $(e);
+                if ($this.data('isedit') != null)
+                    if ($this.data('isedit') == false) {
+                        $this.val('').trigger('change');
+                    }
+            });
+        }
+
+    </script>
+    <script src="~/Content/js/modalhelper.js"></script>
+    @*<script src="~/Scripts/Global.js"></script>*@
+    @RenderSection("scripts", required: false)
+
+
+    <script>
+        $(document).on("click", "table tbody tr", function (e) {
+            $(this).addClass("active").siblings().removeClass("active");
+        });
+        $(function () {
+            $('.select2').css('width', '');
+        })
+
+       
+
+        function OnChangeDecimal(e, input, decimals) {
+            var $this = $(input);
+            var value = $this.val();
+            var convert = convertToDecimal_(value, decimals);
+            $this.val(convert);
+        }
+
+        function convertToDecimal_(value, decimals) {
+            //var twoPlacedFloat = parseFloat(yourString).toFixed(2);
+            value = String(value);
+            var number = parseFloat(value.replace(",", ""));
+            if (number || number == 0) {
+                if (decimals) {
+                    decimals = parseInt(decimals);
+                    return parseFloat(value).toFixed(decimals);
+                }
+                else
+                    return parseFloat(value).toFixed(2);
+            }
+            else {
+                return "0.00";
+            }
+        }
+
+        function formatJsonDate(date) {
+            if (date) {
+                var newDate = new Date(parseInt(date.replace(/\/Date\((.*?)\)\//gi, "$1")));
+                var dd = newDate.getDate();
+                var mm = newDate.getMonth() + 1; //January is 0!
+
+                var yyyy = newDate.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd
+                }
+                if (mm < 10) {
+                    mm = '0' + mm
+                }
+                var today = dd + '/' + mm + '/' + yyyy;
+                return today;
+            }
+            else
+                return "";
+        }
+        function select2Focus() {
+            var select2 = $(this).closest('.select2').prev('select');
+
+            setTimeout(function () {
+                if (!select2.opened()) {
+                    select2.open();
+                }
+            }, 0);
+        }
+
+        $(".title_").each(function () {
+            var x = $(this).find("li").length;
+            if (!x) {
+                $(this).hide();
+            }
+        });
+
+        //Confirm LogOut
+        $("#btnLogOut").click(function () {
+            if (confirm('Se cerrará la sesión. ¿Desea continuar?')) {
+                return true;
+            } else {
+                return false;
+            }
+        })
+
+        function ShowMessage(type, message) {
+            toastr.options.closeButton = true;
+            //toastr.options.timeOut = 0;
+            //toastr.options.extendedTimeOut = 0;
+            if (type == 'Success')
+                toastr.success(message);
+            else if (type == 'Error')
+                toastr.error(message);
+            else if (type == 'Warning')
+                toastr.warning(message);
+            else
+                toastr.info(message);
+        }
+        //close tabs after close session:
+
+
+        //Convert serialized array to Object (Format JSON)
+        function ConvertSerializedArrayToObject(formArray) {//serialize data function
+            var returnArray = {};
+            for (var i = 0; i < formArray.length; i++) {
+                returnArray[formArray[i]['name']] = formArray[i]['value'];
+            }
+            return returnArray;
+        }
+
+    </script>
+</body>
+
+</html>

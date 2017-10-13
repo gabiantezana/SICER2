@@ -1,0 +1,8 @@
+﻿@model String
+
+<div class="form-group">
+    @Html.LabelFor(x => x, new { @class = "col-sm-3 control-label" })
+    <div class="col-sm-9">
+        @Html.TextBoxFor(x => x, ViewData["htmlAttributes"])
+    </div>
+</div>

@@ -1,0 +1,7 @@
+/*!
+ * Comité Acreditacion UPC 
+ * Copyright 2016
+ * Licensed under the Standard Licenses
+ */
+
+.page-locked:before{background-image:url(../../images/lockscreen.jpg)}.page-locked .avatar{margin-bottom:15px}.page-locked .locked-user{margin-bottom:35px}.page-locked form{width:300px;margin:22px auto}

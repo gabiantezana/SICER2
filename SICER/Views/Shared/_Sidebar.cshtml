@@ -1,0 +1,139 @@
+﻿<div>
+
+    <br />
+    @{
+        var homeController = new SICER.Areas.Administracion.Controllers.UsuarioController();
+    }
+    <ul class="site-menu">
+
+        <li class="site-menu-item has-sub">
+            <a href="~/Views_aspx/MapaMoviles/index.html">
+                <i class="site-menu-icon wb-map" aria-hidden="true"></i>
+                <span class="site-menu-title">Link 1</span>
+            </a>
+        </li>
+        <li class="site-menu-item has-sub title_">
+            <a href="javascript:void(0)">
+                <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
+                <span class="site-menu-title">Administración</span>
+            </a>
+            <ul class="site-menu-sub">
+                @if (Session.GetRol() == AppRol.SuperAdministrador)
+                {
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("LstRoles", "Rol", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Roles</span>
+                    </a>
+                </li>
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListSAPCentrosCosto", "Sync", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Centros de costo</span>
+                    </a>
+                </li>
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListSAPAccount", "Sync", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Cuentas contables</span>
+                    </a>
+                </li>
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListSAPMetodoPago", "Sync", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Métodos de pago</span>
+                    </a>
+                </li>
+
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListSAPMoneda", "Sync", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Monedas</span>
+                    </a>
+                </li>
+
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListSAPProveedor", "Sync", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Proveedor</span>
+                    </a>
+                </li>
+
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListSAPServicio", "Sync", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Servicios</span>
+                    </a>
+                </li>
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListConceptoa", "Concepto", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Conceptoa</span>
+                    </a>
+                </li>
+                }
+
+
+
+                @if (Session.GetPermisosVista().Intersect(new String[] { ""/*ConstantHelper.Administracion.Cliente.LISTAR */}).Count() > 0)
+                {
+                }
+
+            </ul>
+        </li>
+
+        <li class="site-menu-item has-sub title_">
+            <a href="javascript:void(0)">
+                <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
+                <span class="site-menu-title">Documentos</span>
+            </a>
+            <ul class="site-menu-sub">
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListDocumentos", "Documento", new { Area = "Administracion", documentType = DocumentType.CajaChica})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Caja Chica</span>
+                    </a>
+                </li>
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListDocumentos", "Documento", new { Area = "Administracion", documentType = DocumentType.EntregaARendir})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Entrega a rendir</span>
+                    </a>
+                </li>
+
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("ListDocumentos", "Documento", new { Area = "Administracion", documentType = DocumentType.Reembolso})"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Reembolso</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+    </ul>
+</div>
+
+<script>
+
+</script>

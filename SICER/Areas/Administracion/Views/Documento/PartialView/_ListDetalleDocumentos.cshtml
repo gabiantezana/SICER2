@@ -1,0 +1,83 @@
+﻿@model SICER.VIEWMODEL.Administracion.Documento.DocumentoViewModel
+
+<table id="tableDetalle" class="table">
+    <thead>
+        <tr style="font-weight:bold">
+            <td class=" text-right">#</td>
+            <td>Proveedor</td>
+            <td>Serie</td>
+            <td>Correlativo</td>
+            <td>Fecha</td>
+            <td>Concepto</td>
+            <td>Moneda doc</td>
+            <td>Moneda SAP</td>
+            <td>Total</td>
+            <td>Opciones</td>
+        </tr>
+        @if (Model.ListDetalle.Count == 0)
+        {
+            <tr><td colspan="18">No existen registros aún</td></tr>
+        }
+    </thead>
+    <tbody>
+        @{
+            for (int i = 0; i < Model.ListDetalle.Count; i++)
+            {
+                <tr>
+                    @Html.HiddenFor(model => Model.ListDetalle[i].IdDocumentoDetalle)
+                    <td class=" text-right">@(i + 1)</td>
+
+                    @Html.HiddenFor(model => Model.ListDetalle[i].IdProveedor)
+                    <td>@Model.ListDetalle[i].Proveedor</td>
+
+                    @Html.HiddenFor(x => Model.ListDetalle[i].Serie)
+                    <td>@Model.ListDetalle[i].Serie</td>
+
+                    @Html.HiddenFor(x => Model.ListDetalle[i].Correlativo)
+                    <td>@Model.ListDetalle[i].Correlativo</td>
+
+                    @Html.HiddenFor(x => Model.ListDetalle[i].Fecha)
+                    <td>@Model.ListDetalle[i].Fecha</td>
+
+                    @Html.HiddenFor(x => Model.ListDetalle[i].IdConcepto)
+                    <td>@Model.ListDetalle[i].Concepto</td>
+
+                    @Html.HiddenFor(x => Model.ListDetalle[i].IdMonedaDocumento)
+                    <td>@Model.ListDetalle[i].MonedaDocumento</td>
+
+                    @Html.HiddenFor(x => Model.ListDetalle[i].IdMonedaDocumentoSAP)
+                    <td>@Model.ListDetalle[i].MonedaDocumentoSAP</td>
+
+                    @Html.HiddenFor(x => Model.ListDetalle[i].ImporteTotal)
+                    <td>@Model.ListDetalle[i].ImporteTotal</td>
+
+                    <td class="text-nowrap text-center">
+                        <button  type="button"
+                                class="btn btn-outline btn-default btn-xs btnModalDetalle"
+                                 @Url.ModalHelperFor("ModalDocumentoDetalle", "Documento")
+                                data-toggle="tooltip"
+                                data-original-title="Modificar"
+                                data-index="@i"
+                                data-id="@Model.ListDetalle[i].IdDocumentoDetalle">
+                            <i class="icon wb-pencil" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@section Scripts
+{
+   
+}
+<style>
+    .table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+        padding: 4px;
+    }
+
+    /*div[role='tooltip'] {
+        position:relative;
+        z-index:1;
+    }*/
+</style>

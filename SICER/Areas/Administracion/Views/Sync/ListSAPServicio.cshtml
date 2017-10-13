@@ -1,0 +1,34 @@
+﻿@model List<SICER.MODEL.SAPServicio>
+
+@{
+    ViewBag.Title = "Listado de servicios";
+    ViewBag.Icon = "list";
+
+}
+
+<div class="panel">
+    <div class="panel-body">
+        <br />
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>itemCode</td>
+                        <td>itemName</td>
+                        <td>validFor</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.itemCode</td>
+                            <td>@item.itemName</td>
+                            <td>@item.validFor</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

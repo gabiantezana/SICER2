@@ -1,0 +1,53 @@
+﻿@model IPagedList<SICER.MODEL.Documento>
+
+<div class="panel">
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>IdDocumento</td>
+                        <td>Asunto</td>
+                        <td>DocumentState</td>
+                        <td>DocumentType</td>
+                        <td>CentroCosto1</td>
+                        <td>CentroCosto2</td>
+                        <td>CentroCosto3</td>
+                        <td>CentroCosto4</td>
+                        <td>CentroCosto5</td>
+                        <td>MetodoPago</td>
+                        <td>Moneda</td>
+                        <td>ProveedorSolicitante</td>
+                        <td>Motivo</td>
+                        <td>Opciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(item.idDocumento)</td>
+                            <td>@item.asunto</td>
+                            <td>@item.estaAprobado</td>
+                            <td>@(item.TipoDocumentoOrigen?.nombre)</td>
+                            <td>@(item.SAPCentroCostos?.PrcName)</td>
+                            <td>@(item.SAPCentroCostos1?.PrcCode)</td>
+                            <td>@(item.SAPCentroCostos2?.PrcCode)</td>
+                            <td>@(item.SAPCentroCostos3?.PrcCode)</td>
+                            <td>@(item.SAPCentroCostos4?.PrcCode)</td>
+                            <td>@(item.SAPMetodoPago?.PayMethCod)</td>
+                            <td>@(item.SAPMoneda?.DocCurrCod)</td>
+                            <td>@(item.SAPProveedor?.CardName)</td>
+                            <td>@item.motivoDetalle</td>
+                            <td class="text-nowrap text-center">
+                                <a href="@Url.Action("AddUpdateDocumento", "Documento", new { Area = "Administracion", documentType = (DocumentType)item.idTipoOrigen, idDocumento = item.idDocumento })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+                                    <i class="icon wb-wrench" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

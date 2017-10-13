@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1423b138f17d4b4d905e3f6e678c1d2a" Name="Diagram1" ZoomLevel="76" ShowGrid="true">
+        <EntityTypeShape EntityType="SICERModel.Concepto" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="SICERModel.Documento" Width="1.5" PointX="6" PointY="4" />
+        <EntityTypeShape EntityType="SICERModel.DocumentoDetalle" Width="1.5" PointX="8.25" PointY="3.5" />
+        <EntityTypeShape EntityType="SICERModel.Excepcion" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="SICERModel.Motivo" Width="1.5" PointX="10.75" PointY="1.5" />
+        <EntityTypeShape EntityType="SICERModel.Rol" Width="1.5" PointX="1.5" PointY="21.375" />
+        <EntityTypeShape EntityType="SICERModel.SAPAccount" Width="1.5" PointX="3.75" PointY="3.625" />
+        <EntityTypeShape EntityType="SICERModel.SAPCentroCostos" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="SICERModel.SAPCentroCostosUsuario" Width="1.5" PointX="3" PointY="6.875" />
+        <EntityTypeShape EntityType="SICERModel.SAPCuentasContables" Width="1.5" PointX="0.75" PointY="11.5" />
+        <EntityTypeShape EntityType="SICERModel.SAPMetodoPago" Width="1.5" PointX="3.75" PointY="25.875" />
+        <EntityTypeShape EntityType="SICERModel.SAPMoneda" Width="1.5" PointX="3.75" PointY="16.625" />
+        <EntityTypeShape EntityType="SICERModel.SAPProveedor" Width="1.5" PointX="3.75" PointY="10.75" />
+        <EntityTypeShape EntityType="SICERModel.SAPServicio" Width="1.5" PointX="10.75" PointY="4.5" />
+        <EntityTypeShape EntityType="SICERModel.TipoDocumentoOrigen" Width="1.5" PointX="3.75" PointY="13.625" />
+        <EntityTypeShape EntityType="SICERModel.Usuario" Width="1.5" PointX="3.75" PointY="19.75" />
+        <EntityTypeShape EntityType="SICERModel.UsuarioRol" Width="1.5" PointX="6" PointY="21.5" />
+        <EntityTypeShape EntityType="SICERModel.UsuarioTipoDocumento" Width="1.5" PointX="6" PointY="18.125" />
+        <EntityTypeShape EntityType="SICERModel.UsuarioUsuariosAprobacion" Width="1.5" PointX="9" PointY="18.125" />
+        <EntityTypeShape EntityType="SICERModel.Vistas" Width="1.5" PointX="4.5" PointY="29.375" />
+        <EntityTypeShape EntityType="SICERModel.VistasGrupo" Width="1.5" PointX="2.25" PointY="29.5" />
+        <EntityTypeShape EntityType="SICERModel.VistasRol" Width="1.5" PointX="6.75" PointY="24.375" />
+        <AssociationConnector Association="SICERModel.FK__Concepto__idAcco__22751F6C" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCon__2A164134" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__60A75C0F" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__619B8048" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__628FA481" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__6383C8BA" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__6477ECF3" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idDoc__282DF8C2" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idMet__656C112C" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idMon__66603565" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idSAP__5FB337D6" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idTip__5EBF139D" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idUsu__6754599E" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idUsu__68487DD7" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__2CF2ADDF" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__2DE6D218" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__2EDAF651" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__2FCF1A8A" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__30C33EC3" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idCen__31B762FC" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idMon__2BFE89A6" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idMon__32AB8735" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idPro__29221CFB" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idTip__2B0A656D" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idUsu__339FAB6E" />
+        <AssociationConnector Association="SICERModel.FK__Documento__idUsu__3493CFA7" />
+        <AssociationConnector Association="SICERModel.FK__Usuario__idRol__1FCDBCEB" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__idRol__4E88ABD4" />
+        <AssociationConnector Association="SICERModel.FK__VistasRol__idRol__5441852A" />
+        <AssociationConnector Association="SICERModel.FK__SAPCentro__idCen__239E4DCF" />
+        <AssociationConnector Association="SICERModel.FK__SAPCentro__idUsu__22AA2996" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioTi__idTip__2C3393D0" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioUs__idTip__286302EC" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__idUsu__4D94879B" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioTi__idUsu__2B3F6F97" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioUs__idUsu__267ABA7A" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioUs__idUsu__276EDEB3" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioTi__idUsu__2D27B809" />
+        <AssociationConnector Association="SICERModel.FK__Vistas__idVistas__46E78A0C" />
+        <AssociationConnector Association="SICERModel.FK__VistasRol__idVis__534D60F1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

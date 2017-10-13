@@ -1,0 +1,44 @@
+﻿@model List<SICER.MODEL.Rol>
+
+@{
+    ViewBag.Title = "Lista de roles";
+    ViewBag.Icon = "list";
+
+}
+
+<div class="panel">
+    <div class="panel-body">
+        @*<div class="panel-footer text-right">
+            <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddEditRol", "Roles"))">
+                <i class="fa fa-plus"></i>
+                Nuevo
+            </a>
+        </div>*@
+        <br />
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Descripcion</td>
+                        <td>Opciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.nombre</td>
+                            <td>@item.descripcion</td>
+                            <td class="text-nowrap">
+                                <a href="@Url.Action("EditPermisosPorRoles", "Rol", new { Area = "Administracion", idRol = item.idRol })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Permisos">
+                                    <i class="icon wb-link" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

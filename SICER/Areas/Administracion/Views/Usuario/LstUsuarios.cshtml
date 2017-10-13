@@ -1,0 +1,59 @@
+﻿@model List<SICER.VIEWMODEL.Administracion.Usuario.UsuarioViewModel>
+
+@{
+    ViewBag.Title = "Listado de usuarios";
+    ViewBag.Icon = "list";
+
+}
+
+@section Breadcrumbs{
+
+}
+
+<div class="panel">
+    <div class="panel-body">
+
+        <div class="panel-footer text-right">
+            <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddUpdateUsuario", "Usuario"))">
+                <i class="fa fa-plus"></i>
+                Nuevo
+            </a>
+        </div>
+        <br />
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>Usuario</td>
+                        <td>Nombres</td>
+                        <td>Rol</td>
+                        <td>Documento</td>
+                        <td>Correo</td>
+                        <td>Telefono</td>
+                        <td>Estado</td>
+                        <td>Opciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Usuario</td>
+                            <td>@item.Nombres</td>
+                            <td>@item.IdRol</td>
+                            <td>@item.Documento</td>
+                            <td>@item.Correo</td>
+                            <td>@item.Telefono</td>
+                            <td>@item.Estado</td>
+                            <td class="text-nowrap text-center">
+                                <a href="@Url.Action("AddUpdateUsuario", "Usuario", new { Area = "Administracion", UsuarioId = item.IdUsuario })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+                                    <i class="icon wb-wrench" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

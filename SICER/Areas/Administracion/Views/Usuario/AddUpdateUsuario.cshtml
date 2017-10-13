@@ -1,0 +1,43 @@
+﻿@model SICER.VIEWMODEL.Administracion.Usuario.UsuarioViewModel
+@{
+    ViewBag.Title = Model.IdUsuario.HasValue ? "Editar Usuario" : "Crear Usuario";
+    ViewBag.Icon = Model.IdUsuario.HasValue ? "edit" : "plus";
+    var isEdit = Model.IdUsuario.HasValue ? "true" : "false";
+}
+<div class="panel">
+
+    <div class="panel-heading">
+        <h5 class="panel-title">Datos del usuario</h5>
+    </div>
+
+    @using (Html.BeginForm("AddUpdateUsuario", "Usuario", FormMethod.Post))
+    {
+        if (Model.IdUsuario.HasValue)
+        {
+            @Html.HiddenFor(x => Model.IdUsuario)
+        }
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(x => Model.Estado, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.CheckBoxFor(x => Model.Estado, new { @data_plugin = "switchery" })
+                </div>
+            </div>
+            @Html.EditorFor(x => Model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => Model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => Model.Documento, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => Model.Correo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => Model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+
+            <div class="form-group col-md-6 col-sm-12">
+                @Html.LabelFor(x => Model.IdRol, new { @class = "form-label" })
+                @Html.DropDownListFor(x => Model.IdRol, new SelectList(Model.LstRol, "id", "text", 0), new { @class = "form-control form-group-margin", @data_plugin = "select2", @data_isedit = isEdit })
+                @Html.ValidationMessageFor(x => Model.IdRol)
+            </div>
+        </div>
+
+        <div class="panel-footer text-right">
+            <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,142 @@
+﻿
+@{
+    Layout = null;
+    
+}
+
+<!DOCTYPE html>
+<html class="no-js css-menubar" lang="en">
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="bootstrap admin template">
+    <meta name="author" content="">
+    <title>Acceso no autorizado</title>
+    <link rel="apple-touch-icon" href="../assets/images/apple-touch-icon.png">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico">
+    <!-- Stylesheets -->
+    <link href="~/Content/css/bootstrap-extend.min.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/css/custom-styles.css" rel="stylesheet" />
+    <link href="~/Content/css/site.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../global/css/skintools.min09a2.css?v2.1.0">
+    <script src="../assets/js/sections/skintools.min.js"></script>
+    <!-- Plugins -->
+    <link href="~/Content/vendor/animsition/animsition.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/asscrollable/asScrollable.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/switchery/switchery.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/intro-js/introjs.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/flag-icon-css/css/flag-icon.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!-- Page -->
+    <link href="~/Content/assets/examples/css/pages/errors.min.css" rel="stylesheet" />
+
+    <!-- Fonts -->
+    <link href="~/Content/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts/web-icons/web-icons.min.css" rel="stylesheet" />
+    <link href="~/Content/fonts/material-design/css/materialdesignicons.min.css" rel='stylesheet' />
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' />
+
+    <!--[if lt IE 9]>
+      <script src="../../global/vendor/html5shiv/html5shiv.min.js"></script>
+      <![endif]-->
+    <!--[if lt IE 10]>
+      <script src="../../global/vendor/media-match/media.match.min.js"></script>
+      <script src="../../global/vendor/respond/respond.min.js"></script>
+      <![endif]-->
+    <!-- Scripts -->
+    <script src="~/Content/vendor/modernizr/modernizr.min.js"></script>
+    <script src="~/Content/vendor/breakpoints/breakpoints.min.js"></script>
+    <script>
+        Breakpoints();
+    </script>
+</head>
+<body class="page-error page-error-505 layout-full">
+    <!--[if lt IE 8]>
+          <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+    <!-- Page -->
+    <div class="page animsition vertical-align text-center" data-animsition-in="fade-in"
+         data-animsition-out="fade-out">
+        <div class="page-content vertical-align-middle">
+            <header>
+                <h1 class="animation-slide-top">401</h1>
+                <p>No autorizado</p>
+            </header>
+            <p class="error-advise">Su usuario no esta autorizado para acceder a esta página</p>
+            <a class="btn btn-primary btn-round" href="@Url.Action("Index","Home")">Regresar al inicio</a>
+            <footer class="page-copyright">
+                <p>Portal SMS</p>
+                <p>© MAQUISISTEMAS SA.</p>
+            </footer>
+        </div>
+    </div>
+    <!-- End Page -->
+    <!-- Core  -->
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Content/vendor/animsition/animsition.min.js"></script>
+    <script src="~/Content/vendor/asscroll/jquery-asScroll.min.js"></script>
+    <script src="~/Content/vendor/mousewheel/jquery.mousewheel.min.js"></script>
+    <script src="~/Content/vendor/asscrollable/jquery.asScrollable.all.min.js"></script>
+    <script src="~/Content/vendor/ashoverscroll/jquery-asHoverScroll.min.js"></script>
+
+    <!-- Plugins -->
+    <script src="~/Content/vendor/switchery/switchery.min.js"></script>
+    <script src="~/Content/vendor/intro-js/intro.min.js"></script>
+    <script src="~/Content/vendor/screenfull/screenfull.min.js"></script>
+    <script src="~/Content/vendor/slidepanel/jquery-slidePanel.min.js"></script>
+    
+    <!-- Scripts -->
+    <script src="~/Content/js/core.min.js"></script>
+    <script src="~/Content/js/core.min.js"></script>
+    <script src="~/Content/js/site.min.js"></script>
+    <script src="~/Content/assets/js/sections/gridmenu.min.js"></script>
+    <script src="~/Content/assets/js/sections/menu.min.js"></script>
+    <script src="~/Content/assets/js/sections/menubar.min.js"></script>
+    <script src="~/Content/assets/js/sections/sidebar.min.js"></script>
+
+    <script src="~/Content/js/components/asscrollable.min.js"></script>
+    <script src="~/Content/js/components/animsition.min.js"></script>
+    <script src="~/Content/js/components/switchery.min.js"></script>
+    <script src="~/Content/js/components/panel.min.js"></script>
+
+    <script>
+        (function (document, window, $) {
+            'use strict';
+
+            var Site = window.Site;
+            $(document).ready(function () {
+                Site.run();
+            });
+        })(document, window, jQuery);
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+              m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '../../../../www.google-analytics.com/analytics.js',
+          'ga');
+
+        ga('create', 'UA-65522665-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

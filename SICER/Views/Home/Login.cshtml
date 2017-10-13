@@ -1,0 +1,43 @@
+﻿@model SICER.VIEWMODEL.General.LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<div class="page-content vertical-align-middle" style="width:400px">
+    <div class="page-login-v3 panel">
+        <div class="panel-body">
+            <div class="brand">
+                @{String PORTAL_NAME = System.Configuration.ConfigurationManager.AppSettings[ConstantHelper.WEBCONFIG.PORTAL_NAME].ToString();}
+                <img src="~/Content/recursos/logo_CMV.png" />
+            </div>
+
+            @if (TempData["Message"] != null)
+            {
+                var list = (List<TempDataEntity>)TempData["Message"];
+                foreach (var item in list)
+                {
+                    @Html.Alert(item)
+                }
+            }
+            <form method="post" action="@Url.Action("Login","Home",FormMethod.Post)">
+                <div class="form-group form-material floating">
+                    @Html.TextBoxFor(x => Model.Codigo, new { @class = "form-control empty" })
+                    @Html.LabelFor(x => Model.Codigo, new { @class = "floating-label" })
+                    @Html.ValidationMessageFor(x => Model.Codigo)
+                </div>
+                <div class="form-group form-material floating">
+                    @Html.TextBoxFor(x => Model.Password, new { @class = "form-control empty", @type = "password" })
+                    @Html.LabelFor(x => Model.Password, new { @class = "floating-label" })
+                    @Html.ValidationMessageFor(x => Model.Codigo)
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg margin-top-40">Sign in</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    //Para REservas
+</script>
+

@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    ViewBag.Section = "Admin";
+    ViewBag.Subsection = "Dashboard";
+    ViewBag.Icon = "tachometer";
+}
+
+<div>
+
+    <h5>Bienvenido, @Session.GetNombresUsuario()</h5>
+    @*<a class="btn btn-primary" @Url.ModalHelperFor("EditComentario", "Home")><i class="fa fa-wpforms" aria-hidden="true"></i> Ejemplo de Modal</a>
+        <a class="btn btn-primary" data-mensaje="Desea guardar la solicitud X" id="btnConfirm" onclick="onClickConfirm(this)"> Ejemplo Mensaje de confirmación</a>*@
+</div>
+
+@section Scripts{
+    <script src="~/Content/vendor/alertify-js/alertify.js"></script>
+
+    <script>
+
+        function onClickConfirm(button) {
+
+            var $this = $(button);
+            var message = $this.data('mensaje');
+
+            alertify.okBtn("Aceptar").cancelBtn("Cancelar").confirm(message, function () {
+                //se clickeo ok
+                alert('Aceptar');
+            }, function () {
+                //se clickeo cancelar
+                alert('Canceñar');
+            });
+
+            $('.cancel').addClass('btn');
+            $('.cancel').addClass('btn-default');
+
+            $('.ok').addClass('btn');
+            $('.ok').addClass('btn-primary');
+
+        }
+
+    </script>
+}
