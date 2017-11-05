@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using SICER.DATAACCESS.Administracion;
+using SICER.LOGIC.Administracion;
 
 namespace SICER.Controllers
 {
@@ -15,7 +16,7 @@ namespace SICER.Controllers
     {
         public ActionResult Index()
         {
-            new SyncDataAccess().SyncTables(GetDataContext());
+            //new SyncDataAccess().SyncTables(GetDataContext());
             return View();
         }
 
@@ -30,62 +31,52 @@ namespace SICER.Controllers
             try
             {
                 //-----------------------TEST---------------------------
-                /*
-                Usuario _usuario = GetDataContext().Context.Usuario.Include(x => x.Rol.VistasRol.Select(y => y.Vistas)).FirstOrDefault(x => x.username == model.Codigo);
-                Session.Set(SessionKey.NombresUsuario, _usuario.nombres);
-                Session.Set(SessionKey.UserName, _usuario.username);
-                Session.Set(SessionKey.IdUsuario, _usuario.idUsuario);
-                Session.Set(SessionKey.Rol, (AppRol)Enum.Parse(typeof(AppRol), _usuario.Rol.nombre));
-                Session.Set(SessionKey.Vistas, context.Vistas.Select(x => x.nombre).ToArray());
-                return RedirectToAction(nameof(this.ChangePassword));*/
+
+                /*Usuario _usuario = GetDataContext().Context.Usuario.Include(x => x.Rol.VistaRol.Select(y => y.Vista)).FirstOrDefault(x => x.UserName == model.Codigo);
+                Session.Set(SessionKey.NombresUsuario, _usuario.Nombres);
+                Session.Set(SessionKey.IdUsuario, _usuario.UsuarioId);
+                Session.Set(SessionKey.Rol, (AppRol)Enum.Parse(typeof(AppRol), _usuario.Rol.Codigo));
+                Session.Set(SessionKey.Vistas, context.Vista.Select(x => x.Codigo).ToArray());
+                return RedirectToAction(nameof(ChangePassword));*/
                 //-----------------------TEST---------------------------
 
-
-                Usuario usuario = GetDataContext().Context.Usuario.Include(x => x.Rol.VistasRol.Select(y => y.Vistas)).FirstOrDefault(x => x.username == model.Codigo);
-
+                Usuario usuario = GetDataContext().Context.Usuario.Include(x => x.Rol.VistaRol.Select(y => y.Vista)).FirstOrDefault(x => x.UserName == model.Codigo);
                 if (usuario != null)
                 {
                     var byteArrayPassword = EncryptionHelper.EncryptTextToMemory(model.Password, ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);
-
-                    if (!byteArrayPassword.SequenceEqual(usuario.password))
+                    if (!byteArrayPassword.SequenceEqual(usuario.Password))
                     {
                         PostMessage(MessageType.Error, "Contraseña incorrecta");
                         return RedirectToAction(nameof(this.Login));
                     }
-                    else if (!(usuario.estado ?? false))
+                    if (!usuario.Estado)
                     {
                         PostMessage(MessageType.Error, "Su usuario no se encuentra activo");
                         return RedirectToAction(nameof(this.Login));
                     }
-                    else
+                    Session.Set(SessionKey.NombresUsuario, usuario.Nombres);
+                    Session.Set(SessionKey.UserName, usuario.UserName);
+                    Session.Set(SessionKey.IdUsuario, usuario.UsuarioId);
+                    Session.Set(SessionKey.Vistas, usuario.Rol.VistaRol.Where(x => x.Estado).Select(x => x.Vista.Codigo).ToArray());
+
+                    if (usuario.Rol.Codigo == ConstantHelper.CODIGOROLSUPERADMINISTRADOR)
+                        Session.Set(SessionKey.Rol, AppRol.Superadmin);
+
+                    switch (Session.GetRol())
                     {
-                        Session.Set(SessionKey.NombresUsuario, usuario.nombres);
-                        Session.Set(SessionKey.UserName, usuario.username);
-                        Session.Set(SessionKey.IdUsuario, usuario.idUsuario);
-                        Session.Set(SessionKey.Rol, (AppRol)Enum.Parse(typeof(AppRol), usuario.Rol.nombre));
-                        Session.Set(SessionKey.Vistas, usuario.Rol.VistasRol.Where(x => x.estado == true).Select(x => x.Vistas.valor).ToArray());
-
-                        switch (Session.GetRol())
-                        {
-                            case AppRol.SuperAdministrador:
-                                Session.Set(SessionKey.Vistas, context.Vistas.Select(x => x.valor).ToArray());
-                                break;
-                        }
-
-                        var DefaultEncryptPassword = EncryptionHelper.EncryptTextToMemory(ConstantHelper.DEFAULT_PASSWORD, ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);
-                        if (DefaultEncryptPassword.SequenceEqual(usuario.password))
-                            return RedirectToAction(nameof(this.ChangePassword));
-                        else
-                        {
-                            return RedirectToAction(nameof(this.Index));
-                        }
+                        case AppRol.Superadmin:
+                            Session.Set(SessionKey.Vistas, GetDataContext().Context.Vista.Select(x => x.Codigo).ToArray());
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
+
+                    var defaultEncryptPassword = EncryptionHelper.EncryptTextToMemory(ConstantHelper.DEFAULT_PASSWORD, ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);
+                    return RedirectToAction(defaultEncryptPassword.SequenceEqual(usuario.Password) ? nameof(this.ChangePassword) : nameof(this.Index));
                 }
-                else
-                {
-                    PostMessage(MessageType.Error, "Su usuario no existe");
-                    return RedirectToAction(nameof(this.Login));
-                }
+
+                PostMessage(MessageType.Error, "Su usuario no existe");
+                return RedirectToAction(nameof(this.Login));
             }
             catch (Exception ex)
             {
@@ -112,8 +103,8 @@ namespace SICER.Controllers
         {
             try
             {
-                UsuarioDataAccess dataAccess = new UsuarioDataAccess();
-                dataAccess.ChangePassword(GetDataContext(), model);
+                UsuarioLogic.ChangePassword(GetDataContext(), model);
+
                 PostMessage(MessageType.Success, "Su contraseña se cambio exitosamente");
                 return RedirectToAction("Index");
             }
@@ -136,5 +127,11 @@ namespace SICER.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
+
+        public ActionResult PermisoInsuficiente()
+        {
+            return View();
+        }
+
     }
 }

@@ -12,29 +12,24 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SAPCentroCostos
+    public partial class SapCentroCosto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SAPCentroCostos()
+        public SapCentroCosto()
         {
             this.Documento = new HashSet<Documento>();
             this.Documento1 = new HashSet<Documento>();
             this.Documento2 = new HashSet<Documento>();
             this.Documento3 = new HashSet<Documento>();
             this.Documento4 = new HashSet<Documento>();
-            this.DocumentoDetalle = new HashSet<DocumentoDetalle>();
-            this.DocumentoDetalle1 = new HashSet<DocumentoDetalle>();
-            this.DocumentoDetalle2 = new HashSet<DocumentoDetalle>();
-            this.DocumentoDetalle3 = new HashSet<DocumentoDetalle>();
-            this.DocumentoDetalle4 = new HashSet<DocumentoDetalle>();
-            this.DocumentoDetalle5 = new HashSet<DocumentoDetalle>();
-            this.SAPCentroCostosUsuario = new HashSet<SAPCentroCostosUsuario>();
+            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
+            this.DocumentoRendicion1 = new HashSet<DocumentoRendicion>();
+            this.DocumentoRendicion2 = new HashSet<DocumentoRendicion>();
+            this.DocumentoRendicion3 = new HashSet<DocumentoRendicion>();
+            this.DocumentoRendicion4 = new HashSet<DocumentoRendicion>();
         }
     
-        public int idSAPCentroCostos { get; set; }
-        public string PrcCode { get; set; }
-        public string PrcName { get; set; }
-        public string Active { get; set; }
+        public string SapCentroCostoOcrCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento { get; set; }
@@ -47,18 +42,14 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento4 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle1 { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle2 { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle3 { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle4 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle5 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SAPCentroCostosUsuario> SAPCentroCostosUsuario { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion4 { get; set; }
     }
 }

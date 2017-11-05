@@ -1,71 +1,71 @@
-﻿using SICER.MODEL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SICER.MODEL;
 
 namespace SICER.HELPER
 {
     public class QueryHelper
     {
-        private SAPDbServerType sAPDbServerType { get; set; }
-        private String SQLQuery { get; set; }
-        private String HanaQuery { get; set; }
+        private SapDbServerType SApDbServerType { get; }
+        private string SqlQuery { get; set; }
+        private string HanaQuery { get; set; }
 
-        public QueryHelper(SAPDbServerType dBServerType)
+        public QueryHelper(SapDbServerType dBServerType)
         {
-            this.sAPDbServerType = dBServerType;
-            this.SQLQuery = String.Empty;
-            this.HanaQuery = String.Empty;
+            this.SApDbServerType = dBServerType;
+            this.SqlQuery = string.Empty;
+            this.HanaQuery = string.Empty;
         }
 
-        public String QuerySapProveedor()
+        public string QuerySapProveedor()
         {
-            SQLQuery = "SELECT LicTradNum, CardName, validFor FROM [SBODemoCL].[dbo].OCRD WHERE CARDTYPE='S'";
+            SqlQuery = "SELECT LicTradNum, CardName, validFor FROM [SBODemoCL].[dbo].OCRD WHERE CARDTYPE='S'";
             return ReturnQuery();
         }
 
-        public String QuerySAPMoneda()
+        public string QuerySapMoneda()
         {
-            SQLQuery = "SELECT DocCurrCod, CurrName, Locked from [SBODemoCL].[dbo].OCRN";
+            SqlQuery = "SELECT DocCurrCod, CurrName, Locked from [SBODemoCL].[dbo].OCRN";
             return ReturnQuery();
         }
 
-        public String QuerySAPMetodosPago()
+        public string QuerySapMetodosPago()
         {
-            SQLQuery = "SELECT PayMethCod, Descript, Active from  [SBODemoCL].[dbo].OPYM";
+            SqlQuery = "SELECT PayMethCod, Descript, Active from  [SBODemoCL].[dbo].OPYM";
             return ReturnQuery();
         }
 
-        public String QuerySAPCentroCostos()
+        public string QuerySapCentroCostos()
         {
-            SQLQuery = "SELECT PrcCode, PrcName, Active from  [SBODemoCL].[dbo].OPRC";
+            SqlQuery = "SELECT PrcCode, PrcName, Active from  [SBODemoCL].[dbo].OPRC";
             return ReturnQuery();
         }
 
-        public String QuerySAPServicios()
+        public string QuerySapServicios()
         {
-            SQLQuery = "SELECT ItemCode, ItemName, validFor from [SBODemoCL].[dbo].OITM";
+            SqlQuery = "SELECT ItemCode, ItemName, validFor from [SBODemoCL].[dbo].OITM";
             return ReturnQuery();
         }
 
-        public String QuerySAPAccounts()
+        public string QuerySapAccounts()
         {
-            SQLQuery = "SELECT AcctCode, AcctName, ValidFor  FROM [SBODemoCL].[dbo].OACT";
+            SqlQuery = "SELECT AcctCode, AcctName, ValidFor  FROM [SBODemoCL].[dbo].OACT";
             return ReturnQuery();
         }
 
-        private String ReturnQuery()
+        private string ReturnQuery()
         {
-            switch (sAPDbServerType)
+            switch (SApDbServerType)
             {
-                case SAPDbServerType.SQL:
-                    return SQLQuery;
-                case SAPDbServerType.HANA:
+                case SapDbServerType.Sql:
+                    return SqlQuery;
+                case SapDbServerType.Hana:
                     return HanaQuery;
                 default:
-                    throw new Exception("DBServerType not supported");
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

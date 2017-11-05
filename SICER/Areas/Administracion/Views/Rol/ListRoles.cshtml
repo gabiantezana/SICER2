@@ -1,4 +1,4 @@
-﻿@model List<SICER.MODEL.Rol>
+﻿@model List<SICER.VIEWMODEL.Administracion.Rol.RolViewModel>
 
 @{
     ViewBag.Title = "Lista de roles";
@@ -8,18 +8,18 @@
 
 <div class="panel">
     <div class="panel-body">
-        @*<div class="panel-footer text-right">
-            <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddEditRol", "Roles"))">
+        <div class="panel-footer text-right">
+            <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddUpdateRol", "Rol"))">
                 <i class="fa fa-plus"></i>
                 Nuevo
             </a>
-        </div>*@
+        </div>
         <br />
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <td>Nombre</td>
+                        <td>Código</td>
                         <td>Descripcion</td>
                         <td>Opciones</td>
                     </tr>
@@ -28,10 +28,10 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.nombre</td>
-                            <td>@item.descripcion</td>
+                            <td>@item.Codigo</td>
+                            <td>@item.Descripcion</td>
                             <td class="text-nowrap">
-                                <a href="@Url.Action("EditPermisosPorRoles", "Rol", new { Area = "Administracion", idRol = item.idRol })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Permisos">
+                                <a href="@Url.Action("EditPermisosPorRoles", "Rol", new { Area = ConstantHelper.Area.ADMINISTRACION, rolId = item.RolId })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Permisos">
                                     <i class="icon wb-link" aria-hidden="true"></i>
                                 </a>
                             </td>

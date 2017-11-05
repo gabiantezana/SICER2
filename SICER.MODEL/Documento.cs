@@ -17,45 +17,42 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Documento()
         {
-            this.DocumentoDetalle = new HashSet<DocumentoDetalle>();
+            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
         }
     
-        public int idDocumento { get; set; }
-        public Nullable<int> idTipoOrigen { get; set; }
-        public Nullable<int> idSAPProveedorSolicitante { get; set; }
-        public Nullable<int> idCentroCostos1 { get; set; }
-        public Nullable<int> idCentroCostos2 { get; set; }
-        public Nullable<int> idCentroCostos3 { get; set; }
-        public Nullable<int> idCentroCostos4 { get; set; }
-        public Nullable<int> idCentroCostos5 { get; set; }
-        public Nullable<int> idMetodoPago { get; set; }
-        public Nullable<decimal> montoSolicitado { get; set; }
-        public Nullable<decimal> montoGastado { get; set; }
-        public Nullable<int> idMoneda { get; set; }
-        public string asunto { get; set; }
-        public string comentario { get; set; }
-        public string motivoDetalle { get; set; }
-        public Nullable<System.DateTime> fechaSolicitud { get; set; }
-        public Nullable<int> estaAprobado { get; set; }
-        public Nullable<int> estadoMigracion { get; set; }
-        public Nullable<System.DateTime> fechaContabilizacion { get; set; }
-        public Nullable<int> idUsuarioCreacion { get; set; }
-        public System.DateTime fechaCreacion { get; set; }
-        public Nullable<int> idUsuarioUltimoUpdate { get; set; }
-        public Nullable<System.DateTime> fechaUltimoUpdate { get; set; }
+        public int DocumentoId { get; set; }
+        public string Codigo { get; set; }
+        public string Asunto { get; set; }
+        public string Motivo { get; set; }
+        public int NumeroRendicion { get; set; }
+        public System.DateTime FechaSolicitud { get; set; }
+        public double MontoInicial { get; set; }
+        public int TipoDocumentoId { get; set; }
+        public int TipoDocumentoSunatId { get; set; }
+        public string SapBusinessPartnerCardCode { get; set; }
+        public string C_1SapCentroCostoOcrCode { get; set; }
+        public string C_2SapCentroCostoOcrCode { get; set; }
+        public string C_3SapCentroCostoOcrCode { get; set; }
+        public string C_4SapCentroCostoOcrCode { get; set; }
+        public string C_5SapCentroCostoOcrCode { get; set; }
+        public string SapMetodoPagoPayMethCode { get; set; }
+        public int CreacionUsuarioId { get; set; }
+        public System.DateTime FechaCreacion { get; set; }
+        public int ModificacionUsuarioId { get; set; }
+        public System.DateTime FechaModificacion { get; set; }
     
-        public virtual SAPCentroCostos SAPCentroCostos { get; set; }
-        public virtual SAPCentroCostos SAPCentroCostos1 { get; set; }
-        public virtual SAPCentroCostos SAPCentroCostos2 { get; set; }
-        public virtual SAPCentroCostos SAPCentroCostos3 { get; set; }
-        public virtual SAPCentroCostos SAPCentroCostos4 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle { get; set; }
-        public virtual SAPMetodoPago SAPMetodoPago { get; set; }
-        public virtual SAPMoneda SAPMoneda { get; set; }
-        public virtual SAPProveedor SAPProveedor { get; set; }
-        public virtual TipoDocumentoOrigen TipoDocumentoOrigen { get; set; }
+        public virtual SapCentroCosto SapCentroCosto { get; set; }
+        public virtual SapCentroCosto SapCentroCosto1 { get; set; }
+        public virtual SapCentroCosto SapCentroCosto2 { get; set; }
+        public virtual SapCentroCosto SapCentroCosto3 { get; set; }
+        public virtual SapCentroCosto SapCentroCosto4 { get; set; }
         public virtual Usuario Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
         public virtual Usuario Usuario1 { get; set; }
+        public virtual SapBusinessPartner SapBusinessPartner { get; set; }
+        public virtual SapMetodoPago SapMetodoPago { get; set; }
+        public virtual TipoDocumento TipoDocumento { get; set; }
+        public virtual TipoDocumentoSunat TipoDocumentoSunat { get; set; }
     }
 }

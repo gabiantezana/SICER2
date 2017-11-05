@@ -12,15 +12,14 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class Excepcion
+    public partial class VistaRol
     {
-        public int idExcepcion { get; set; }
-        public string mensaje { get; set; }
-        public string tipo { get; set; }
-        public string pila { get; set; }
-        public string navegador { get; set; }
-        public string excepcionInterna { get; set; }
-        public string timeStamp { get; set; }
-        public string sessionKeys { get; set; }
+        public int VistaRolId { get; set; }
+        public bool Estado { get; set; }
+        public int VistaId { get; set; }
+        public int RolId { get; set; }
+    
+        public virtual Rol Rol { get; set; }
+        public virtual Vista Vista { get; set; }
     }
 }

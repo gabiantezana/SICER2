@@ -7,28 +7,38 @@ namespace SICER.VIEWMODEL.Administracion.Usuario
 {
     public class UsuarioViewModel
     {
-        public Int32? IdUsuario { get; set; }
+        public int? UsuarioId { get; set; }
 
-        public String Password { get; set; }
+        public string Password { get; set; }
 
         [Required]
         [Display(Name = "Rol")]
-        public Int32 IdRol { get; set; }
-        public List<JsonEntity> LstRol { get; set; }
+        public Int32 RolId { get; set; }
+        public List<JsonEntity> RolJList { get; set; } = new List<JsonEntity>();
 
         [Required]
-        public String Nombres { get; set; }
+        public string Nombres { get; set; }
 
         [Required]
-        public String Documento { get; set; }
+        public string Apellidos { get; set; }
 
-        public String Correo { get; set; }
+        [Required]
+        public string Documento { get; set; }
 
-        public String Telefono { get; set; }
+        [Required]
+        public string Correo { get; set; }
 
-        public Boolean Estado { get; set; }
+        [Required]
+        public string Telefono { get; set; }
 
-        public String Usuario { get; set; }
+        [Required]
+        public bool Estado { get; set; }
 
+        [Required]
+        public string UserName { get; set; }
+
+        public DateTime? FechaNacimiento { get; set; }
+
+        public string SapBusinessPartnerCardCode { get; set; }
     }
 }

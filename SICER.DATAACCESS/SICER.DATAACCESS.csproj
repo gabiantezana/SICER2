@@ -49,16 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administracion\ConceptoDataAccess.cs" />
-    <Compile Include="Administracion\DocumentoDataAccess.cs" />
-    <Compile Include="Administracion\SAPAccountDataAccess.cs" />
-    <Compile Include="Administracion\SAPCentroCostosDataAccess.cs" />
-    <Compile Include="Administracion\SAPCuentaContableDataAccess.cs" />
-    <Compile Include="Administracion\SAPMetodoPagoDataAccess.cs" />
-    <Compile Include="Administracion\SAPMonedaDataAccess.cs" />
-    <Compile Include="Administracion\SAPProveedorDataAccess.cs" />
     <Compile Include="Administracion\RolDataAccess.cs" />
-    <Compile Include="Administracion\SyncDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Administracion\UsuarioDataAccess.cs" />
   </ItemGroup>
@@ -76,7 +67,10 @@
       <Name>SICER.VIEWMODEL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Documentos\" />
+    <Folder Include="Sync\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

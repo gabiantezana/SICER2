@@ -18,10 +18,19 @@
                 <span class="site-menu-title">Administración</span>
             </a>
             <ul class="site-menu-sub">
-                @if (Session.GetRol() == AppRol.SuperAdministrador)
+                @if (Session.GetRol() == AppRol.Superadmin)
                 {
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("ListRoles", "Rol", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Roles</span>
+                        </a>
+                    </li>
+                }
+                
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("LstRoles", "Rol", new { Area = ConstantHelper.Area.ADMINISTRACION})"
+                    <a class="animsition-link" href="@Url.Action("ListUsuarios", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION})"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
                         <span class="site-menu-title">Roles</span>
@@ -86,7 +95,6 @@
                         <span class="site-menu-title">Conceptoa</span>
                     </a>
                 </li>
-                }
 
 
 

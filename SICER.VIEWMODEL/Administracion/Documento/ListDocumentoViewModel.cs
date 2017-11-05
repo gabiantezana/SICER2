@@ -9,6 +9,6 @@ namespace SICER.VIEWMODEL.Administracion.Documento
 {
     public class ListDocumentoViewModel
     {
-        public IPagedList<MODEL.Documento> ListDocumentos { get; set; }
+       // public IPagedList<MODEL.Documento> ListDocumentos { get; set; }
     }
 }

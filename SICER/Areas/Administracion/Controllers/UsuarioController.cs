@@ -1,5 +1,4 @@
 ﻿using SICER.Controllers;
-using SICER.DATAACCESS.Administracion;
 using SICER.EXCEPTION;
 using SICER.Filters;
 using SICER.HELPER;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SICER.LOGIC.Administracion;
 
 namespace SICER.Areas.Administracion.Controllers
 {
@@ -17,38 +17,38 @@ namespace SICER.Areas.Administracion.Controllers
         #region Get
 
         [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Usuario.LISTAR)]
-        public ActionResult LstUsuarios()
+        public ActionResult ListUsuarios()
         {
-            var model = new UsuarioDataAccess().LstUsuarios(GetDataContext());
+            var model = UsuarioLogic.GetList(GetDataContext());
             return View(model);
         }
 
-        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Usuario.EDITAR)]
-        public ActionResult AddUpdateUsuario(Int32? UsuarioID)
+        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Usuario.CREAR)]
+        public ActionResult AddUpdateUsuario(int? usuarioId)
         {
-            var usuario = new UsuarioDataAccess().GetUsuario(GetDataContext(), UsuarioID);
-            return View(usuario);
+            var model = UsuarioLogic.GetUsuario(GetDataContext(), usuarioId);
+            return View(model);
         }
 
         #endregion
 
         #region Post
-        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Usuario.EDITAR)]
+        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Usuario.CREAR)]
+        [HttpPost]
         public ActionResult AddUpdateUsuario(UsuarioViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    new UsuarioDataAccess().AddUpdateUsuario(GetDataContext(), model);
+                    UsuarioLogic.AddUpdateUsuario(GetDataContext(), model);
                     PostMessage(MessageType.Success);
-                    return RedirectToAction(nameof(LstUsuarios));
+                    return RedirectToAction(nameof(ListUsuarios));
                 }
                 catch (CustomException ex)
                 {
                     PostMessage(ex);
                 }
-
             }
             else
             {
@@ -58,7 +58,6 @@ namespace SICER.Areas.Administracion.Controllers
             }
             return View(model);
         }
-
 
         #endregion
 

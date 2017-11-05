@@ -1,5 +1,4 @@
-﻿using SICER.MODEL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +8,6 @@ namespace SICER.VIEWMODEL.Administracion.Sync
 {
     class ListSAPCentroCostosViewModel
     {
-        List<SAPCentroCostos> ListSAPCentroCostos { get; set; }
+        //List<SAPCentroCostos> ListSAPCentroCostos { get; set; }
     }
 }

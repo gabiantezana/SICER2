@@ -3,7 +3,7 @@ using System;
 
 namespace SICER.EXCEPTION
 {
-    public class CustomException : Exception
+    public sealed class CustomException : Exception
     {
         public MessageTypeException MessageTypeException;
         public String Action { get; set; }
@@ -15,20 +15,20 @@ namespace SICER.EXCEPTION
 
         public CustomException(string message, Exception inner) : base(message, inner) { }
 
-        public CustomException(TempDataEntityException userException, DataContext DataContext)
+        public CustomException(TempDataEntityException userException, DataContext dataContext)
             : base(userException.Mensaje)
         {
             MessageTypeException = userException.TipoMensaje;
-            ExceptionHelper.LogException(this.GetBaseException(), DataContext);
+            ExceptionHelper.LogException(this.GetBaseException(), dataContext);
         }
 
-        public CustomException(TempDataEntityException userException, DataContext DataContext, String Action, String Controller)
+        public CustomException(TempDataEntityException userException, DataContext dataContext, string action, string controller)
             : base(userException.Mensaje)
         {
             MessageTypeException = userException.TipoMensaje;
-            this.Action = Action;
-            this.Controller = Controller;
-            ExceptionHelper.LogException(this.GetBaseException(), DataContext);
+            this.Action = action;
+            this.Controller = controller ?? throw new ArgumentNullException(nameof(controller));
+            ExceptionHelper.LogException(this.GetBaseException(), dataContext);
         }
     }
 

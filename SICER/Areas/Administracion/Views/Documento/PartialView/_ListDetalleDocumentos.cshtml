@@ -24,10 +24,10 @@
             for (int i = 0; i < Model.ListDetalle.Count; i++)
             {
                 <tr>
-                    @Html.HiddenFor(model => Model.ListDetalle[i].IdDocumentoDetalle)
+                    @Html.HiddenFor(x => Model.ListDetalle[i].IdDocumentoDetalle)
                     <td class=" text-right">@(i + 1)</td>
 
-                    @Html.HiddenFor(model => Model.ListDetalle[i].IdProveedor)
+                    @Html.HiddenFor(x => Model.ListDetalle[i].Proveedor)
                     <td>@Model.ListDetalle[i].Proveedor</td>
 
                     @Html.HiddenFor(x => Model.ListDetalle[i].Serie)
@@ -52,15 +52,18 @@
                     <td>@Model.ListDetalle[i].ImporteTotal</td>
 
                     <td class="text-nowrap text-center">
-                        <button  type="button"
+                        <button type="button"
                                 class="btn btn-outline btn-default btn-xs btnModalDetalle"
-                                 @Url.ModalHelperFor("ModalDocumentoDetalle", "Documento")
+                                @Url.ModalHelperFor("ModalDocumentoDetalle", "Documento")
                                 data-toggle="tooltip"
                                 data-original-title="Modificar"
                                 data-index="@i"
                                 data-id="@Model.ListDetalle[i].IdDocumentoDetalle">
                             <i class="icon wb-pencil" aria-hidden="true"></i>
                         </button>
+                        <a href="@Url.Action("DeleteDocumentoDetalle", "Documento")" class="btn btn-sm btn-icon btn-flat btn-default"
+                           data-toggle="tooltip" data-original-title="Eliminar">
+                        </a>
                     </td>
                 </tr>
             }
@@ -69,7 +72,7 @@
 </table>
 @section Scripts
 {
-   
+
 }
 <style>
     .table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {

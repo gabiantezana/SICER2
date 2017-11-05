@@ -1,8 +1,8 @@
 ﻿@model SICER.VIEWMODEL.Administracion.Usuario.UsuarioViewModel
 @{
-    ViewBag.Title = Model.IdUsuario.HasValue ? "Editar Usuario" : "Crear Usuario";
-    ViewBag.Icon = Model.IdUsuario.HasValue ? "edit" : "plus";
-    var isEdit = Model.IdUsuario.HasValue ? "true" : "false";
+    ViewBag.Title = Model.UsuarioId.HasValue ? "Editar Usuario" : "Crear Usuario";
+    ViewBag.Icon = Model.UsuarioId.HasValue ? "edit" : "plus";
+    var isEdit = Model.UsuarioId.HasValue ? "true" : "false";
 }
 <div class="panel">
 
@@ -12,27 +12,41 @@
 
     @using (Html.BeginForm("AddUpdateUsuario", "Usuario", FormMethod.Post))
     {
-        if (Model.IdUsuario.HasValue)
+        if (Model.UsuarioId.HasValue)
         {
-            @Html.HiddenFor(x => Model.IdUsuario)
+            @Html.HiddenFor(x => Model.UsuarioId)
         }
         <div class="panel-body">
             <div class="form-group">
                 @Html.LabelFor(x => Model.Estado, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.CheckBoxFor(x => Model.Estado, new { @data_plugin = "switchery" })
+                    @Html.CheckBoxFor(x => Model.Estado, new { @data_plugin = "switchery" }
+
+               )
                 </div>
             </div>
-            @Html.EditorFor(x => Model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => Model.UserName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(x => Model.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Documento, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Correo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
+            @*@Html.EditorFor(x => Model.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+
+            <div class="form-group col-sm-6">
+                @Html.LabelFor(x => Model.FechaNacimiento, new { @class = "control-label" })
+                <div class="input-group date">
+                    @Html.TextBoxFor(x => Model.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "form-control fecha", @type = "text" })
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                </div>
+                @Html.ValidationMessageFor(x => Model.FechaNacimiento)
+            </div>
+
 
             <div class="form-group col-md-6 col-sm-12">
-                @Html.LabelFor(x => Model.IdRol, new { @class = "form-label" })
-                @Html.DropDownListFor(x => Model.IdRol, new SelectList(Model.LstRol, "id", "text", 0), new { @class = "form-control form-group-margin", @data_plugin = "select2", @data_isedit = isEdit })
-                @Html.ValidationMessageFor(x => Model.IdRol)
+                @Html.LabelFor(x => Model.RolId, new { @class = "form-label" })
+                @Html.DropDownListFor(x => Model.RolId, new SelectList(Model.RolJList, "id", "text", 0), new { @class = "form-control form-group-margin", @data_plugin = "select2", @data_isedit = isEdit })
+                @Html.ValidationMessageFor(x => Model.RolId)
             </div>
         </div>
 

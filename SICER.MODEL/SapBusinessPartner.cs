@@ -12,27 +12,24 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoDocumentoOrigen
+    public partial class SapBusinessPartner
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoDocumentoOrigen()
+        public SapBusinessPartner()
         {
             this.Documento = new HashSet<Documento>();
-            this.DocumentoDetalle = new HashSet<DocumentoDetalle>();
-            this.UsuarioTipoDocumento = new HashSet<UsuarioTipoDocumento>();
-            this.UsuarioUsuariosAprobacion = new HashSet<UsuarioUsuariosAprobacion>();
+            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
+            this.Usuario = new HashSet<Usuario>();
         }
     
-        public int idTipoDocumentoOrigen { get; set; }
-        public string nombre { get; set; }
+        public string SapBusinessPartnerCardCode { get; set; }
+        public string CardName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioUsuariosAprobacion> UsuarioUsuariosAprobacion { get; set; }
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

@@ -5,12 +5,12 @@ namespace SICER.VIEWMODEL.Administracion.Rol
 {
     public class RolViewModel
     {
-        public Int32? idRol { get; set; }
+        public int? RolId { get; set; }
 
         [Required(ErrorMessage="Campo requerido")]
-        public String Codigo { get; set; }
+        public string Codigo { get; set; }
 
         [Required(ErrorMessage = "Campo requerido")]
-        public String Nombre { get; set; }
+        public string Descripcion { get; set; }
     }
 }

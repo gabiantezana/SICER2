@@ -12,23 +12,25 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SAPProveedor
+    public partial class TipoDocumento
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SAPProveedor()
+        public TipoDocumento()
         {
+            this.AprobacionDocumento = new HashSet<AprobacionDocumento>();
             this.Documento = new HashSet<Documento>();
-            this.DocumentoDetalle = new HashSet<DocumentoDetalle>();
+            this.UsuarioTipoDocumento = new HashSet<UsuarioTipoDocumento>();
         }
     
-        public int idSAPProveedor { get; set; }
-        public string LictradNum { get; set; }
-        public string CardName { get; set; }
-        public string validFor { get; set; }
+        public int TipoDocumentoId { get; set; }
+        public string Codigo { get; set; }
+        public string Descripcion { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AprobacionDocumento> AprobacionDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle { get; set; }
+        public virtual ICollection<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
     }
 }

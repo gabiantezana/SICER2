@@ -12,23 +12,21 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class UsuarioUsuariosAprobacion
+    public partial class Vista
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UsuarioUsuariosAprobacion()
+        public Vista()
         {
-            this.UsuarioTipoDocumento = new HashSet<UsuarioTipoDocumento>();
+            this.VistaRol = new HashSet<VistaRol>();
         }
     
-        public int idUsuarioUsuarioAprobacion { get; set; }
-        public Nullable<int> idUsuario { get; set; }
-        public Nullable<int> idUsuarioAprobacion { get; set; }
-        public Nullable<int> idTipoDocumentoOrigen { get; set; }
+        public int VistaId { get; set; }
+        public string Codigo { get; set; }
+        public string Descripcion { get; set; }
+        public int GrupoVistaId { get; set; }
     
-        public virtual TipoDocumentoOrigen TipoDocumentoOrigen { get; set; }
-        public virtual Usuario Usuario { get; set; }
-        public virtual Usuario Usuario1 { get; set; }
+        public virtual GrupoVista GrupoVista { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
+        public virtual ICollection<VistaRol> VistaRol { get; set; }
     }
 }

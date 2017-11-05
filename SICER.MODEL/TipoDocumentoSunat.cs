@@ -12,21 +12,22 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class Concepto
+    public partial class TipoDocumentoSunat
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Concepto()
+        public TipoDocumentoSunat()
         {
-            this.DocumentoDetalle = new HashSet<DocumentoDetalle>();
+            this.Documento = new HashSet<Documento>();
+            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
         }
     
-        public int idConcepto { get; set; }
-        public Nullable<int> idAccount { get; set; }
-        public string nombre { get; set; }
-        public string descripcion { get; set; }
+        public int TipoDocumentoSunatId { get; set; }
+        public string Nombre { get; set; }
+        public string CodigoSunat { get; set; }
     
-        public virtual SAPAccount SAPAccount { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle { get; set; }
+        public virtual ICollection<Documento> Documento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
     }
 }

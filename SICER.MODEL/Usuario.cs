@@ -17,49 +17,40 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
+            this.AprobacionDocumento = new HashSet<AprobacionDocumento>();
             this.Documento1 = new HashSet<Documento>();
             this.Documento2 = new HashSet<Documento>();
-            this.DocumentoDetalle = new HashSet<DocumentoDetalle>();
-            this.DocumentoDetalle1 = new HashSet<DocumentoDetalle>();
-            this.SAPCentroCostosUsuario = new HashSet<SAPCentroCostosUsuario>();
-            this.UsuarioRol = new HashSet<UsuarioRol>();
+            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
+            this.DocumentoRendicion1 = new HashSet<DocumentoRendicion>();
             this.UsuarioTipoDocumento = new HashSet<UsuarioTipoDocumento>();
-            this.UsuarioUsuariosAprobacion = new HashSet<UsuarioUsuariosAprobacion>();
-            this.UsuarioUsuariosAprobacion1 = new HashSet<UsuarioUsuariosAprobacion>();
         }
     
-        public int idUsuario { get; set; }
-        public Nullable<int> idRol { get; set; }
-        public string username { get; set; }
-        public string documento { get; set; }
-        public byte[] password { get; set; }
-        public string nombres { get; set; }
-        public string telefono { get; set; }
-        public string correo { get; set; }
-        public Nullable<bool> estado { get; set; }
-        public string userCreate { get; set; }
-        public Nullable<bool> enviarCorreoMigracionDo_cumentos { get; set; }
-        public Nullable<bool> esUsuarioSAP { get; set; }
-        public string cardCodeSAP { get; set; }
+        public int UsuarioId { get; set; }
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public string Documento { get; set; }
+        public string Telefono { get; set; }
+        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        public string Correo { get; set; }
+        public bool Estado { get; set; }
+        public string UserName { get; set; }
+        public byte[] Password { get; set; }
+        public int RolId { get; set; }
+        public string SapBusinessPartnerCardCode { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AprobacionDocumento> AprobacionDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle1 { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion1 { get; set; }
         public virtual Rol Rol { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SAPCentroCostosUsuario> SAPCentroCostosUsuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioRol> UsuarioRol { get; set; }
+        public virtual SapBusinessPartner SapBusinessPartner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioUsuariosAprobacion> UsuarioUsuariosAprobacion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioUsuariosAprobacion> UsuarioUsuariosAprobacion1 { get; set; }
     }
 }

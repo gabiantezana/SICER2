@@ -12,20 +12,19 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SAPAccount
+    public partial class GrupoVista
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SAPAccount()
+        public GrupoVista()
         {
-            this.Concepto = new HashSet<Concepto>();
+            this.Vista = new HashSet<Vista>();
         }
     
-        public int idSAPAccount { get; set; }
-        public string AcctCode { get; set; }
-        public string AcctName { get; set; }
-        public string ValidFor { get; set; }
+        public int GrupoVistaId { get; set; }
+        public string Codigo { get; set; }
+        public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Concepto> Concepto { get; set; }
+        public virtual ICollection<Vista> Vista { get; set; }
     }
 }

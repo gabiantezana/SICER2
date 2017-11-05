@@ -12,13 +12,13 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class UsuarioRol
+    public partial class AprobacionDocumento
     {
-        public int idUsuarioRol { get; set; }
-        public Nullable<int> idUsuario { get; set; }
-        public Nullable<int> idRol { get; set; }
+        public int AprobacionDocumentoId { get; set; }
+        public int UsuarioTipoDocumentoId { get; set; }
+        public int UsuarioId { get; set; }
     
-        public virtual Rol Rol { get; set; }
+        public virtual TipoDocumento TipoDocumento { get; set; }
         public virtual Usuario Usuario { get; set; }
     }
 }

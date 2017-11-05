@@ -1,17 +1,18 @@
-﻿using SICER.MODEL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SICER.MODEL;
 
 namespace SICER.VIEWMODEL.Administracion.Usuario
 {
-    class LstUsuarioRolViewModel
+    public class LstUsuarioRolViewModel 
     {
-        public List<Vistas> LstVistas { get; set; }
-        public List<VistasGrupo> LstVistasGrupo { get; set; }
-        public List<VistasRol> LstVistasRol { get; set; }
-        public Int32 idRol { get; set; }
+        public List<Vista> LstVistas { get; set; }
+        public List<GrupoVista> LstGrupoVistas { get; set; }
+        public List<VistaRol> LstVistasRol { get; set; }
+
+        public int IdRol { get; set; }
     }
 }

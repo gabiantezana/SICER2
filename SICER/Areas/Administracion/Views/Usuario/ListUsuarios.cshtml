@@ -1,9 +1,8 @@
-﻿@model List<SICER.VIEWMODEL.Administracion.Usuario.UsuarioViewModel>
+﻿@model IEnumerable<SICER.MODEL.Usuario>
 
 @{
     ViewBag.Title = "Listado de usuarios";
     ViewBag.Icon = "list";
-
 }
 
 @section Breadcrumbs{
@@ -24,12 +23,12 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <td>Usuario</td>
+                        <td>Username</td>
                         <td>Nombres</td>
                         <td>Rol</td>
                         <td>Documento</td>
                         <td>Correo</td>
-                        <td>Telefono</td>
+                        @*<td>Telefono</td>*@
                         <td>Estado</td>
                         <td>Opciones</td>
                     </tr>
@@ -38,15 +37,15 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@item.Usuario</td>
+                            <td>@item.UserName</td>
                             <td>@item.Nombres</td>
-                            <td>@item.IdRol</td>
+                            <td>@item.Rol.Descripcion</td>
                             <td>@item.Documento</td>
                             <td>@item.Correo</td>
-                            <td>@item.Telefono</td>
+                            @*<td>@item.Telefono</td>*@
                             <td>@item.Estado</td>
                             <td class="text-nowrap text-center">
-                                <a href="@Url.Action("AddUpdateUsuario", "Usuario", new { Area = "Administracion", UsuarioId = item.IdUsuario })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+                                <a href="@Url.Action("AddUpdateUsuario", "Usuario", new { Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
                                     <i class="icon wb-wrench" aria-hidden="true"></i>
                                 </a>
                             </td>

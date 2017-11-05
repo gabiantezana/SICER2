@@ -1,4 +1,4 @@
-﻿@model SICER.MODEL.Rol
+﻿@model SICER.VIEWMODEL.Administracion.Rol.RolViewModel
 
 @{
     ViewBag.Title = "Crear rol";
@@ -15,11 +15,11 @@
     </div>
 
     <div class="panel-body">
-        @using (Html.BeginForm("AddEditRol", "Rol", FormMethod.Post))
+        @using (Html.BeginForm("AddUpdateRol", "Rol", FormMethod.Post))
         {
             <div class="panel-body">
-                @Html.EditorFor(x => Model.nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.EditorFor(x => Model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(x => Model.Codigo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(x => Model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
             </div>
 
             <br />

@@ -13,9 +13,11 @@ namespace SICER.HELPER
 
         public static String DEFAULT_PASSWORD = "123456";
 
-        public static String MENSAJE_EXITO = "";
-        public static String MENSAJE_ERROR = "";
+        public static String MENSAJE_EXITO = "Operación  realizada exitosamente.";
+        public static String MENSAJE_ERROR = "Ocurrió un error.";
         public static String SEPARADOR_NOMBRE_DESCRIPCION_SELECT = " - ";
+        public static string PASSWORD_DEFAULT ="1234";
+        public static string CODIGOROLSUPERADMINISTRADOR = "Superadmin";
 
         public static class Rol
         {
@@ -27,12 +29,21 @@ namespace SICER.HELPER
         {
             public static class Administracion
             {
-                public static class Usuario
-                {
-                    private const String PREFIX = "ADMINISTRACION.CLIENTE.";
+                private const string PARENTPREFIX = "ADMINISTRACION.";
 
-                    public const String LISTAR = PREFIX + "USUARIO.LISTAR";
-                    public const String EDITAR = PREFIX + "USUARIO.EDITAR";
+                public static class Usuario
+                { 
+                    private const string PREFIX = PARENTPREFIX + "USUARIO.";
+
+                    public const string LISTAR = PREFIX + "LISTAR";
+                    public const string CREAR = PREFIX + "CREAR";
+                }
+                public static class Rol
+                {
+                    private const string PREFIX = PARENTPREFIX + "ROL.";
+
+                    public const string LISTAR = PREFIX + "LISTAR";
+                    public const string CREAR = PREFIX + "CREAR";
                 }
             }
         }

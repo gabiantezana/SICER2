@@ -162,10 +162,7 @@
     <Compile Include="App_Start\MoneyMaskBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Administracion\AdministracionAreaRegistration.cs" />
-    <Compile Include="Areas\Administracion\Controllers\ConceptoController.cs" />
-    <Compile Include="Areas\Administracion\Controllers\DocumentoController.cs" />
     <Compile Include="Areas\Administracion\Controllers\RolController.cs" />
-    <Compile Include="Areas\Administracion\Controllers\SyncController.cs" />
     <Compile Include="Areas\Administracion\Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -177,6 +174,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Administracion\Views\Rol\AddUpdateRol.cshtml" />
+    <Content Include="Areas\Administracion\Views\Rol\EditPermisosPorRoles.cshtml" />
+    <Content Include="Areas\Administracion\Views\Rol\ListRoles.cshtml" />
     <Content Include="Content\assets\daterangepicker\daterangepicker.css" />
     <Content Include="Content\assets\daterangepicker\daterangepicker.js" />
     <Content Include="Content\assets\daterangepicker\moment.js" />
@@ -351,24 +351,7 @@
     <Content Include="Content\assets\images\logo192.png" />
     <Content Include="Content\assets\images\trama-escalera.png" />
     <Content Include="Content\assets\js\app.min.js" />
-    <Content Include="Areas\Administracion\Views\Usuario\LstUsuarios.cshtml" />
-    <Content Include="Areas\Administracion\Views\Rol\AddEditRol.cshtml" />
-    <Content Include="Areas\Administracion\Views\Rol\EditPermisosPorRoles.cshtml" />
-    <Content Include="Areas\Administracion\Views\Rol\LstRoles.cshtml" />
-    <Content Include="Areas\Administracion\Views\Sync\ListSAPCentrosCosto.cshtml" />
-    <Content Include="Areas\Administracion\Views\Sync\ListSAPMetodoPago.cshtml" />
-    <Content Include="Areas\Administracion\Views\Sync\ListSAPServicio.cshtml" />
-    <Content Include="Areas\Administracion\Views\Sync\ListSAPProveedor.cshtml" />
-    <Content Include="Areas\Administracion\Views\Sync\ListSAPMoneda.cshtml" />
-    <Content Include="Areas\Administracion\Views\Documento\ListDocumentos.cshtml" />
-    <Content Include="Areas\Administracion\Views\Documento\AddUpdateDocumento.cshtml" />
-    <Content Include="Areas\Administracion\Views\Documento\PartialView\_ListDetalleDocumentos.cshtml" />
-    <Content Include="Areas\Administracion\Views\Documento\Modal\ModalDocumentoDetalle.cshtml" />
-    <Content Include="Areas\Administracion\Views\Concepto\ListConceptos.cshtml" />
-    <Content Include="Areas\Administracion\Views\Concepto\PartialView\_ListConceptosPartialView.cshtml" />
-    <Content Include="Areas\Administracion\Views\Documento\PartialView\_ListDocumentosPartialView.cshtml" />
-    <Content Include="Areas\Administracion\Views\Concepto\AddUpdateConcepto.cshtml" />
-    <Content Include="Areas\Administracion\Views\Documento\PartialView\_AddUpdateDetalleDocumento.cshtml" />
+    <Content Include="Areas\Administracion\Views\Usuario\ListUsuarios.cshtml" />
     <None Include="Content\assets\js\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\assets\js\jquery-1.10.2.js" />
     <Content Include="Content\assets\js\jquery-1.10.2.min.js" />
@@ -872,7 +855,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -902,7 +887,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administracion\Models\" />
-    <Folder Include="Areas\Administracion\Views\Shared\" />
     <Folder Include="Content\assets\css\" />
     <Folder Include="Content\vendor\flag-icon-css\flags\" />
     <Folder Include="Models\" />

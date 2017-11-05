@@ -22,8 +22,8 @@ namespace SICER.HELPER
 
     public enum AppRol
     {
-        SuperAdministrador,
-        //Administrador,
+        Superadmin,
+        Administrador,
         //Creador,
         //Aprobador,
         //Contador

@@ -16,7 +16,7 @@ namespace SICER.LOGIC.Administracion
         public ListDocumentoViewModel ListDocumentos(DataContext dataContext, DocumentType documentType)
         {
             ListDocumentoViewModel model = new ListDocumentoViewModel();
-            model.ListDocumentos = IPagedListDocumentos(dataContext, documentType);
+            //model. = IPagedListDocumentos(dataContext, documentType);
             return model;
         }
 
@@ -102,11 +102,11 @@ namespace SICER.LOGIC.Administracion
         {
             //Validate properties
             Boolean modelIsValid = true;
-            Boolean esUpdate = model.IdDocumentoDetalle == null ? true : false;
+            Boolean esUpdate = model.IdDocumentoDetalle == null ? false : true;
 
             if (!esUpdate)
             {
-                model.IdDocumentoDetalle = -+new Guid().GetHashCode();
+                model.IdDocumentoDetalle = -DateTime.Now.Ticks.GetHashCode();
             }
             else
             {

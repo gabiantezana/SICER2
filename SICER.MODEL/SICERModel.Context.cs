@@ -27,28 +27,22 @@ namespace SICER.MODEL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Concepto> Concepto { get; set; }
+        public virtual DbSet<AprobacionDocumento> AprobacionDocumento { get; set; }
         public virtual DbSet<Documento> Documento { get; set; }
-        public virtual DbSet<DocumentoDetalle> DocumentoDetalle { get; set; }
-        public virtual DbSet<Excepcion> Excepcion { get; set; }
-        public virtual DbSet<Motivo> Motivo { get; set; }
+        public virtual DbSet<DocumentoRendicion> DocumentoRendicion { get; set; }
+        public virtual DbSet<GrupoVista> GrupoVista { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<SAPAccount> SAPAccount { get; set; }
-        public virtual DbSet<SAPCentroCostos> SAPCentroCostos { get; set; }
-        public virtual DbSet<SAPCentroCostosUsuario> SAPCentroCostosUsuario { get; set; }
-        public virtual DbSet<SAPCuentasContables> SAPCuentasContables { get; set; }
-        public virtual DbSet<SAPMetodoPago> SAPMetodoPago { get; set; }
-        public virtual DbSet<SAPMoneda> SAPMoneda { get; set; }
-        public virtual DbSet<SAPProveedor> SAPProveedor { get; set; }
-        public virtual DbSet<SAPServicio> SAPServicio { get; set; }
-        public virtual DbSet<TipoDocumentoOrigen> TipoDocumentoOrigen { get; set; }
+        public virtual DbSet<SapBusinessPartner> SapBusinessPartner { get; set; }
+        public virtual DbSet<SapCentroCosto> SapCentroCosto { get; set; }
+        public virtual DbSet<SapConcepto> SapConcepto { get; set; }
+        public virtual DbSet<SapMetodoPago> SapMetodoPago { get; set; }
+        public virtual DbSet<SapMoneda> SapMoneda { get; set; }
+        public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
+        public virtual DbSet<TipoDocumentoSunat> TipoDocumentoSunat { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
-        public virtual DbSet<UsuarioRol> UsuarioRol { get; set; }
         public virtual DbSet<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
-        public virtual DbSet<UsuarioUsuariosAprobacion> UsuarioUsuariosAprobacion { get; set; }
-        public virtual DbSet<Vistas> Vistas { get; set; }
-        public virtual DbSet<VistasGrupo> VistasGrupo { get; set; }
-        public virtual DbSet<VistasRol> VistasRol { get; set; }
+        public virtual DbSet<Vista> Vista { get; set; }
+        public virtual DbSet<VistaRol> VistaRol { get; set; }
     
         public virtual ObjectResult<SP_SAPProveedor_Result> SP_SAPProveedor()
         {

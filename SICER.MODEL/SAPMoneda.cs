@@ -12,26 +12,19 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SAPMoneda
+    public partial class SapMoneda
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SAPMoneda()
+        public SapMoneda()
         {
-            this.Documento = new HashSet<Documento>();
-            this.DocumentoDetalle = new HashSet<DocumentoDetalle>();
-            this.DocumentoDetalle1 = new HashSet<DocumentoDetalle>();
+            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
         }
     
-        public int idSAPMoneda { get; set; }
-        public string DocCurrCod { get; set; }
+        public string SapMonedaDocCurrCode { get; set; }
         public string CurrName { get; set; }
         public string Locked { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Documento> Documento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoDetalle> DocumentoDetalle1 { get; set; }
+        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
     }
 }

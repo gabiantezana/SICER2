@@ -12,16 +12,15 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SAPMetodoPago
+    public partial class SapMetodoPago
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SAPMetodoPago()
+        public SapMetodoPago()
         {
             this.Documento = new HashSet<Documento>();
         }
     
-        public int idSAPMetodoPago { get; set; }
-        public string PayMethCod { get; set; }
+        public string SapMetodoPagoPayMethCode { get; set; }
         public string Descript { get; set; }
         public string Active { get; set; }
     

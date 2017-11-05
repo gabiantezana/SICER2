@@ -14,14 +14,12 @@ namespace SICER.MODEL
     
     public partial class UsuarioTipoDocumento
     {
-        public int idUsuarioTipoDocumento { get; set; }
-        public Nullable<int> idUsuario { get; set; }
-        public Nullable<int> idTipoDocumento { get; set; }
-        public Nullable<int> cantidadDocumentos { get; set; }
-        public Nullable<int> idUsuarioUsuariosAprobacion { get; set; }
+        public int UsuarioTipoDocumentoId { get; set; }
+        public int CantidadMaximaDocumentos { get; set; }
+        public int UsuarioId { get; set; }
+        public int TipoDocumentoId { get; set; }
     
-        public virtual TipoDocumentoOrigen TipoDocumentoOrigen { get; set; }
+        public virtual TipoDocumento TipoDocumento { get; set; }
         public virtual Usuario Usuario { get; set; }
-        public virtual UsuarioUsuariosAprobacion UsuarioUsuariosAprobacion { get; set; }
     }
 }

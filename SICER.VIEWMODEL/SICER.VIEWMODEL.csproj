@@ -53,21 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administracion\Concepto\ConceptoViewModel.cs" />
-    <Compile Include="Administracion\Concepto\ListConceptosViewModel.cs" />
-    <Compile Include="Administracion\Documento\DocumentoDetalleViewModel.cs" />
-    <Compile Include="Administracion\Documento\DocumentoViewModel.cs" />
-    <Compile Include="Administracion\Documento\ListDocumentoViewModel.cs" />
     <Compile Include="Administracion\Rol\LstRolUsuarioViewModel.cs" />
     <Compile Include="Administracion\Rol\RolViewModel.cs" />
-    <Compile Include="Administracion\Sync\ListSAPCentrosCostoViewModel.cs" />
-    <Compile Include="Administracion\Sync\ListSAPServiciosViewModel.cs" />
-    <Compile Include="Administracion\Sync\ListSAPMetodosPagoViewModel.cs" />
-    <Compile Include="Administracion\Sync\ListSAPMonedasViewModel.cs" />
-    <Compile Include="Administracion\Sync\ListSAProveedoresViewModel.cs" />
     <Compile Include="Administracion\Usuario\LstUsuarioRolViewModel.cs" />
     <Compile Include="Administracion\Usuario\UsuarioViewModel.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="General\ChangePasswordViewModel.cs" />
     <Compile Include="General\LoginViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,12 +67,11 @@
       <Name>SICER.HELPER</Name>
     </ProjectReference>
     <ProjectReference Include="..\SICER.MODEL\SICER.MODEL.csproj">
-      <Project>{7625219E-48B1-4C83-B215-19FE95577F7D}</Project>
+      <Project>{7625219e-48b1-4c83-b215-19fe95577f7d}</Project>
       <Name>SICER.MODEL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

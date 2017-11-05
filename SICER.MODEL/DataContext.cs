@@ -14,12 +14,12 @@ namespace SICER.MODEL
         public String CurrentCulture { get; set; }
         public String SystemNameSpace { get; set; }
         public HttpBrowserCapabilitiesBase Browser { get; set; }
-        public SAPDbServerType SAPDbServerType { get; set; }
+        public SapDbServerType SapDbServerType { get; set; }
     }
 
-    public enum SAPDbServerType
+    public enum SapDbServerType
     {
-        SQL,
-        HANA
+        Sql,
+        Hana,
     }
 }

@@ -68,7 +68,7 @@ namespace SICER.Areas.Administracion.Controllers
 
         public ActionResult ModalDocumentoDetalle(DocumentoDetalleViewModel model)
         {
-            return View("Modal/ModalDocumentoDetalle", new DocumentoDetalleViewModel());
+            ModelState.Clear();
             if (model?.IdDocumentoDetalle == null)
             {
                 model = new DocumentoLogic().DetalleDocumentoViewModel(GetDataContext());

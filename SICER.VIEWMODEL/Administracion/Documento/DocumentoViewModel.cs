@@ -1,5 +1,4 @@
 ﻿using SICER.HELPER;
-using SICER.MODEL;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

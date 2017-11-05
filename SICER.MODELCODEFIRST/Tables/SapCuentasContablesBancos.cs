@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SICER.VIEWMODEL
+namespace SICER.MODELCODEFIRST.Tables
 {
-    public class Class1
+    public class SapCuentasContablesBancos
     {
     }
 }

@@ -12,11 +12,10 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SAPCuentasContables
+    public partial class SapConcepto
     {
-        public int idSAPCuentaContable { get; set; }
-        public string LictradNum { get; set; }
-        public string CardName { get; set; }
-        public string validFor { get; set; }
+        public string U_Codigo { get; set; }
+        public string U_CuentaContable { get; set; }
+        public string U_Descripcion { get; set; }
     }
 }

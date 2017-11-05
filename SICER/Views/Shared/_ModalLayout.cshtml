@@ -80,7 +80,8 @@
                         data: { "model": _model, "ListDetalle": _ListDetalle },
                         success: function (value) {
                             debugger;
-                            $form.append(value);
+                            $("#_PartialDetalleDocumentos").empty();
+                            $("#_PartialDetalleDocumentos").append(value);
                             $("#_PartialDetalleDocumentos").html(value);
                             $form.closest('.modal').modal('hide');
                         },
@@ -118,4 +119,4 @@
     </script>
 }
 @RenderSection("Scripts", false)
-@*@Scripts.Render("~/bundles/jqueryval");*@
+@Scripts.Render("~/bundles/jqueryval");

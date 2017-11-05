@@ -52,26 +52,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Administracion\ConceptoLogic.cs" />
-    <Compile Include="Administracion\DocumentoLogic.cs" />
-    <Compile Include="Administracion\SAPAccountLogic.cs" />
-    <Compile Include="Administracion\SAPCentroCostosLogic.cs" />
-    <Compile Include="Administracion\SAPMonedaLogic.cs" />
-    <Compile Include="Administracion\SAPProveedorLogic.cs" />
+    <Compile Include="Administracion\RolLogic.cs" />
+    <Compile Include="Administracion\UsuarioLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Administracion\SAPMetodoPagoLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SICER.DATAACCESS\SICER.DATAACCESS.csproj">
       <Project>{E0DB3BD3-E166-49C0-98C9-FED88334FF88}</Project>
       <Name>SICER.DATAACCESS</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SICER.EXCEPTION\SICER.EXCEPTION.csproj">
+      <Project>{1D022DFA-AD2C-4A13-AB22-9C89678A0FF1}</Project>
+      <Name>SICER.EXCEPTION</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SICER.HELPER\SICER.HELPER.csproj">
       <Project>{105061C3-3586-47F4-A737-D47E9CDD0F58}</Project>
       <Name>SICER.HELPER</Name>
     </ProjectReference>
     <ProjectReference Include="..\SICER.MODEL\SICER.MODEL.csproj">
-      <Project>{7625219E-48B1-4C83-B215-19FE95577F7D}</Project>
+      <Project>{7625219e-48b1-4c83-b215-19fe95577f7d}</Project>
       <Name>SICER.MODEL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SICER.VIEWMODEL\SICER.VIEWMODEL.csproj">
@@ -80,7 +79,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

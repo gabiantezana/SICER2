@@ -11,48 +11,38 @@ namespace SICER.DATAACCESS.Administracion
 {
     public class RolDataAccess
     {
-        public List<Rol> LstRoles(DataContext contextData)
+        private DataContext DataContext { get; set; }
+        public RolDataAccess(DataContext dataContext)
         {
-            return contextData.Context.Rol.ToList();
+            DataContext = dataContext;
         }
 
-        public List<JsonEntity> LstRolJsonEntity(DataContext context)
+        public IEnumerable<Rol> GetList()
         {
-
-            return LstRoles(context).Select(x => new JsonEntity()
-            {
-                id = x.idRol,
-                text = x.nombre
-            }).ToList() ?? new List<JsonEntity>();
+            return DataContext.Context.Rol.ToList();
         }
 
-        public RolViewModel GetRol(DataContext DataContext, Int32? idRol)
+        public Rol GetRol(int? rolId)
         {
-            RolViewModel model = new RolViewModel();
-
-            var rol = DataContext.Context.Rol.FirstOrDefault(x => x.idRol == idRol);
-
-            if (rol != null)
-            {
-                model.Codigo = rol.nombre;
-                model.Nombre = rol.descripcion;
-                model.idRol = rol.idRol;
-            }
-
-
-            return model;
+            return DataContext.Context.Rol.FirstOrDefault(x => x.RolId == rolId);
         }
 
-        public LstRolUsuarioViewModel EditPermisosPorRoles(DataContext DataContext, Int32 idRol)
+        public int AddUpdateRol(RolViewModel model)
         {
-            LstRolUsuarioViewModel model = new LstRolUsuarioViewModel();
-            model.idRol = idRol;
-            model.LstGrupoVistas = DataContext.Context.VistasGrupo.ToList();
-            model.LstVistas = DataContext.Context.Vistas.Where(x => x.idVistasGrupo != null).ToList();
-            model.LstVistasRol = DataContext.Context.VistasRol.Where(x => x.idRol == idRol).ToList();
+            Rol rol = DataContext.Context.Rol.Find(model.RolId);
+            bool isUpdate = rol != null;
 
-            return model;
+            if (!isUpdate)
+                rol = new Rol();
+            rol.Codigo = model.Codigo;
+            rol.Descripcion = model.Descripcion;
 
+            if (isUpdate)
+                DataContext.Context.Entry(rol);
+            else
+                DataContext.Context.Rol.Add(rol);
+            DataContext.Context.SaveChanges();
+            return rol.RolId;
         }
     }
 }

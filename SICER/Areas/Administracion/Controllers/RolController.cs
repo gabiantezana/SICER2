@@ -1,84 +1,88 @@
 ﻿using SICER.Controllers;
-using SICER.DATAACCESS.Administracion;
 using SICER.Filters;
 using SICER.HELPER;
-using SICER.MODEL;
 using SICER.VIEWMODEL.Administracion.Rol;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Transactions;
-using System.Web;
 using System.Web.Mvc;
+using SICER.LOGIC.Administracion;
+using SICER.MODEL;
 
 namespace SICER.Areas.Administracion.Controllers
 {
-    [AppRolAuthorize(AppRol.SuperAdministrador)]
+    [AppRolAuthorize(AppRol.Superadmin, AppRol.Administrador)]
     public class RolController : BaseController
     {
-        public ActionResult LstRoles()
+        public ActionResult ListRoles()
         {
-            var model = new RolDataAccess().LstRoles(GetDataContext());
+            var model = RolLogic.GetList(GetDataContext());
             return View(model);
         }
 
-        public ActionResult EditPermisosPorRoles(Int32 idRol)
+        public ActionResult EditPermisosPorRoles(int rolId)
         {
-            var model = new RolDataAccess().EditPermisosPorRoles(GetDataContext(), idRol);
+            var model = RolLogic.EditPermisosPorRoles(GetDataContext(), rolId);
             return View(model);
         }
 
-        public ActionResult AddEditRol(Int32? RolId)
+        public ActionResult AddUpdateRol(int? rolId)
         {
-            var model = new RolDataAccess().GetRol(GetDataContext(), RolId);
+            var model = RolLogic.GetRol(GetDataContext(), rolId);
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult LstRoles(LstRolUsuarioViewModel model, FormCollection collection)
+        public ActionResult AddUpdateRol(RolViewModel model)
+        {
+            RolLogic.AddUpdateRol(GetDataContext(), model);
+            return RedirectToAction(nameof(ListRoles));
+        }
+
+        [HttpPost]//TODO: REMOVE DATAACCESS
+        public ActionResult ListRoles(LstRolUsuarioViewModel model, FormCollection collection)
         {
             try
             {
-                RolDataAccess dataAccess = new RolDataAccess();
-
-                var rolId = model.idRol;
-                List<VistasRol> vistasRoles = context.VistasRol.Where(x => x.idRol == rolId).ToList();
-
+                var logic = new RolLogic();
+                var rolId = model.RolId;
+                List<VistaRol> vistasRoles = context.VistaRol.Where(x => x.RolId == rolId).ToList();
 
                 using (var transaction = new TransactionScope())
                 {
                     foreach (var vistaRol in vistasRoles)
                     {
-                        vistaRol.estado = false;
+                        vistaRol.Estado = false;
                         context.SaveChanges();
                     }
                     transaction.Complete();
                 }
-                var vistasUsariosKey = collection.AllKeys.Where(x => x.StartsWith("chk-"));
 
+                var vistasUsariosKey = collection.AllKeys.Where(x => x.StartsWith("chk-"));
                 using (var transaction = new TransactionScope())
                 {
                     foreach (var vistaUsuarioKey in vistasUsariosKey)
                     {
                         var value = collection[vistaUsuarioKey.ToString()] == "on" || collection[vistaUsuarioKey.ToString()] == "true" ? true : false;
 
-                        var vistaNombre = vistaUsuarioKey.Split('-')[1];
-                        VistasRol vistaRol = context.VistasRol.FirstOrDefault(x => x.idRol == rolId && x.Vistas.nombre.Equals(vistaNombre));
+                        var vistaCodigo = vistaUsuarioKey.Split('-')[1];
+                        VistaRol vistaRol = context.VistaRol.FirstOrDefault(x => x.RolId == rolId && x.Vista.Codigo.Equals(vistaCodigo));
 
                         if (vistaRol == null)
                         {
-                            // Vistas vista = context.VistasRol.FirstOrDefault(x => x.Vistas.nombre.Equals(vistaNombre)).Vistas;
-                            Vistas vista = context.Vistas.FirstOrDefault(x => x.nombre.Equals(vistaNombre));
-
-                            vistaRol = new VistasRol();
-                            vistaRol.idRol = rolId;
-                            vistaRol.idVista = vista.idVista;
-                            vistaRol.estado = value;
-                            context.VistasRol.Add(vistaRol);
+                            Vista vista = context.Vista.FirstOrDefault(x => x.Codigo.Equals(vistaCodigo));
+                            vistaRol = new VistaRol
+                            {
+                                RolId = rolId,
+                                VistaId = vista.VistaId,
+                                Estado = value
+                            };
+                            context.VistaRol.Add(vistaRol);
                         }
                         else
                         {
-                            vistaRol.estado = value;
+                            vistaRol.Estado = value;
                         }
                         context.SaveChanges();
 
@@ -92,7 +96,7 @@ namespace SICER.Areas.Administracion.Controllers
                 PostMessage(MessageType.Error, "Ocurrio un error inesperado. " + ex.ToString());
             }
 
-            return RedirectToAction("LstRoles");
+            return RedirectToAction(nameof(ListRoles));
         }
 
     }
