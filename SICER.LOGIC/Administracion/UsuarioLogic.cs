@@ -1,41 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web.Mvc;
+using PagedList;
 using SICER.DATAACCESS.Administracion;
 using SICER.EXCEPTION;
 using SICER.HELPER;
 using SICER.VIEWMODEL.Administracion.Usuario;
 using SICER.VIEWMODEL.General;
 using SICER.MODEL;
-using SICER.VIEWMODEL.Administracion.Rol;
 
 namespace SICER.LOGIC.Administracion
 {
-    public class UsuarioLogic
+    public static class UsuarioLogic
     {
-        private UsuarioLogic() { }
-
-        public static void FillJLists(DataContext dataContext, ref UsuarioViewModel model)
+        private static IEnumerable<Usuario> GetQueryUsuariosList(DataContext dataContext, string filtro = null, int? usuarioId = null)
         {
-            model.RolJList = RolLogic.GetJsonList(dataContext);
+           return new UsuarioDataAccess(dataContext).GetList(filtro, usuarioId);
         }
 
-        public static IEnumerable<Usuario> GetList(DataContext dataContext)
+        public static ListUsuariosViewModel GetListUsuariosViewModel(DataContext dataContext, string query, int? page)
         {
-            return new UsuarioDataAccess(dataContext).GetList();
+            var model = new ListUsuariosViewModel()
+            {
+                ListUsuarios = GetUsuariosPagedList(dataContext, query, page),
+                Filter = string.Empty,
+                ListUsuariosDefault = new List<Usuario>()
+            };
+            return model;
         }
 
-        /*public List<UsuarioViewModel> GetList(DataContext dataContext)
+        public static IPagedList<Usuario> GetUsuariosPagedList(DataContext dataContext, string query, int? page)
         {
-            var usuarioViewModelList = new List<UsuarioViewModel>();
+            return GetQueryUsuariosList(dataContext, query).ToList().ToPagedList(page ?? 1, ConstantHelper.NUMEROFILASPORPAGINA);
+        }
 
-            IEnumerable<Usuario> usuarioList = new UsuarioDataAccess().GetList(dataContext);
-            usuarioList.ToList().ForEach(x=> usuarioViewModelList.Add(GetUsuarioViewModel(x)));
+        private static void FillJLists(DataContext dataContext, ref UsuarioViewModel model)
+        {
+            //Fill select
+            model.RolJList = RolLogic.GetJList(dataContext, RolNivel.Principal);
 
-            return usuarioViewModelList;
-        }*/
+            //Fill all secundary roles
+            model.RolList = new RolDataAccess(dataContext).GetList(RolNivel.Secundario);
+
+            //Fill all user roles
+            model.RolUserList = new UsuarioDataAccess(dataContext).GetUsuarioRolesList(model.UsuarioId);
+        }
 
         public static UsuarioViewModel GetUsuario(DataContext dataContext, int? usuarioId)
         {
@@ -43,9 +53,24 @@ namespace SICER.LOGIC.Administracion
             return GetUsuarioViewModel(dataContext, usuario);
         }
 
-        public static int AddUpdateUsuario(DataContext dataContext, UsuarioViewModel model)
+        public static int AddUpdateUsuario(DataContext dataContext, UsuarioViewModel model, FormCollection formCollection)
         {
+
             ValidarDuplicado(dataContext, model);
+
+            model.RolUserList = new List<UsuarioRoles>();
+            var rolesUsuarioKey = formCollection.AllKeys.Where(x => x.StartsWith("chk-"));
+
+            var listadoRolesActivos = new List<Rol>();
+            foreach (var rolUsuarioKey in rolesUsuarioKey)
+            {
+                var value = formCollection[rolesUsuarioKey.ToString()] == "on" || formCollection[rolesUsuarioKey.ToString()] == "true";
+                var rolCodigo = rolUsuarioKey.Split('-')[1];
+
+                var rol = new RolDataAccess(dataContext).GetList(RolNivel.Secundario).FirstOrDefault(x => x.Codigo == rolCodigo);
+                listadoRolesActivos.Add(rol);
+            }
+            model.RolList = listadoRolesActivos;
             return new UsuarioDataAccess(dataContext).AddUpdateUsuario(model);
         }
 
@@ -63,16 +88,50 @@ namespace SICER.LOGIC.Administracion
             return model;
         }
 
-        private  static void ValidarDuplicado(DataContext dataContext, UsuarioViewModel model)
+        private static void ValidarDuplicado(DataContext dataContext, UsuarioViewModel model)
         {
             const string message = "El campo UserName* ya existe para otro usuario.";
             var usuario = dataContext.Context.Usuario.FirstOrDefault(x => x.UserName == model.UserName
                                                                          && x.UsuarioId != model.UsuarioId
                                                                          );
-            if(usuario != null)
+            if (usuario != null)
                 throw new CustomException(new TempDataEntityException { Mensaje = message, TipoMensaje = MessageTypeException.Warning }, dataContext);
         }
 
+        private static UsuarioRolesViewModel GetUsuarioRolViewModel(DataContext dataContext, UsuarioRoles usuarioRoles)
+        {
+            UsuarioRolesViewModel model = usuarioRoles?.ConvertTo(typeof(UsuarioRolesViewModel));
+            model = model ?? new UsuarioRolesViewModel();
+            return model;
+        }
+
+        public static void DisableUsuario(DataContext dataContext, int? usuarioId)
+        {
+            new UsuarioDataAccess(dataContext).DisableUsuario(usuarioId);
+        }
+
+        /// <summary>
+        /// Filtrar listado de usuarios por nombres y usuario
+        /// </summary>
+        public static IEnumerable<JsonEntity> GetUsuariosJsonList(DataContext dataContext, string filtro)
+        {
+            var query = GetQueryUsuariosList(dataContext);
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                query = filtro.ToLower().Split(' ').Aggregate(query,
+                    (current, token) => current.Where(x => x.Apellidos.ToLower().Contains(token)
+                                         || x.Nombres.ToLower().Contains(token)
+                                         || x.UserName.ToLower().Contains(token)));
+            }
+            var jsonEntities = query?.Select(x => new JsonEntity()
+            {
+                id = x.UsuarioId,
+                text = x.GetNombreCompleto(),
+            });
+
+            return jsonEntities;
+        }
     }
+
 }
 

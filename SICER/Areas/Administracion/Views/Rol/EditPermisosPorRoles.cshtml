@@ -8,7 +8,7 @@
 }
 
 @section Breadcrumbs{
-    <li><a href="@Url.Action("ListUsuarios", "Usuario", new { Areas = SICER.HELPER.ConstantHelper.Area.ADMINISTRACION })"> Lista de usuarios</a></li>
+    <li><a href="@Url.Action("ListRoles", "Rol", new { Areas = SICER.HELPER.ConstantHelper.Area.ADMINISTRACION })"> Lista de roles</a></li>
 }
 
 <h3><i class="fa fa-shield"></i> Vistas</h3>
@@ -28,9 +28,7 @@
                 </div>
                 <div class="panel-collapse collapse" id="@grupo.Codigo" aria-labelledby="heading-continuous-one" role="tabpanel" aria-expanded="false">
                     <div class="panel-body">
-
                         <div class="table table-responsive">
-
                             <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                     <tr>

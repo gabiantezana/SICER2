@@ -23,6 +23,8 @@ namespace SICER.MODEL
             this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
             this.DocumentoRendicion1 = new HashSet<DocumentoRendicion>();
             this.UsuarioTipoDocumento = new HashSet<UsuarioTipoDocumento>();
+            this.UsuarioRoles = new HashSet<UsuarioRoles>();
+            this.UsuarioRoles1 = new HashSet<UsuarioRoles>();
         }
     
         public int UsuarioId { get; set; }
@@ -52,5 +54,9 @@ namespace SICER.MODEL
         public virtual SapBusinessPartner SapBusinessPartner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UsuarioRoles> UsuarioRoles1 { get; set; }
     }
 }

@@ -43,6 +43,7 @@ namespace SICER.MODEL
         public virtual DbSet<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
         public virtual DbSet<Vista> Vista { get; set; }
         public virtual DbSet<VistaRol> VistaRol { get; set; }
+        public virtual DbSet<UsuarioRoles> UsuarioRoles { get; set; }
     
         public virtual ObjectResult<SP_SAPProveedor_Result> SP_SAPProveedor()
         {

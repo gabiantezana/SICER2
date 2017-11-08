@@ -1,13 +1,11 @@
-﻿@model IEnumerable<SICER.MODEL.Usuario>
+﻿@model SICER.VIEWMODEL.Administracion.Usuario.ListUsuariosViewModel
 
 @{
     ViewBag.Title = "Listado de usuarios";
     ViewBag.Icon = "list";
 }
 
-@section Breadcrumbs{
-
-}
+@section Breadcrumbs{}
 
 <div class="panel">
     <div class="panel-body">
@@ -20,39 +18,99 @@
         </div>
         <br />
         <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <td>Username</td>
-                        <td>Nombres</td>
-                        <td>Rol</td>
-                        <td>Documento</td>
-                        <td>Correo</td>
-                        @*<td>Telefono</td>*@
-                        <td>Estado</td>
-                        <td>Opciones</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.UserName</td>
-                            <td>@item.Nombres</td>
-                            <td>@item.Rol.Descripcion</td>
-                            <td>@item.Documento</td>
-                            <td>@item.Correo</td>
-                            @*<td>@item.Telefono</td>*@
-                            <td>@item.Estado</td>
-                            <td class="text-nowrap text-center">
-                                <a href="@Url.Action("AddUpdateUsuario", "Usuario", new { Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
-                                    <i class="icon wb-wrench" aria-hidden="true"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+            @using (Html.BeginForm("ListUsuarios", "Usuario", FormMethod.Post, new { Area = ConstantHelper.Area.ADMINISTRACION }))
+            {
+                <div class="form-group col-md-6">
+                    <div class="col-sm-11" style="padding-right:0px">
+                        @Html.DropDownListFor(x => Model.Filter, new SelectList(Model.ListUsuariosDefault, "UsuarioId", "Nombres"), new { @class = "form-control form-group-margin select2-busqueda" })
+                    </div>
+                    <div class="col-sm-1" style="padding:0px">
+                        <button type="button" class="btn btn-icon btn-primary"><i class="icon wb-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            }
+            <div id="partialList" style="padding: 30px;">
+                @Html.Partial("PartialView/_ListUsuariosPartialView", Model.ListUsuarios)
+            </div>
         </div>
     </div>
 </div>
+
+@section Scripts
+{
+
+    <script>
+        var _guid = '@Guid.NewGuid()';
+
+        $('.select2-busqueda').trigger("change");
+
+        $(function () {
+            $('.select2-busqueda').select2({
+                ajax: {
+                    url: '@Url.Action("GetUsuariosJsonList", "Usuario", new { Area = ConstantHelper.Area.ADMINISTRACION})',
+                    dataType: 'json',
+                    type: 'POST',
+                    delay: 250,
+                    data: function (params) {
+                        values = params.term;
+                        return {
+                            filtro: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true,
+                },
+                tags: true,
+                createTag: function (newTag) {
+                    return {
+                        id: _guid + newTag.term,
+                        text: newTag.term + " (buscar)",
+                        isNew: true,
+                    };
+                },
+                minimumInputLength: 3,
+                allowClear: true,
+                language: 'es',
+                placeholder: 'Buscar',
+            });
+
+        });
+
+        $('.select2-busqueda').change(function () {
+            var value = this.value;
+            if (value.toString().startsWith(_guid) || value.toString() === '')
+                FilterTable(value.replace(_guid, ''));
+            else {
+                var redirectTo = '@Url.Action("AddUpdateUsuario", "Usuario", new { Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = "_usuarioId" })'.replace("_usuarioId", value);
+                window.location.href = redirectTo;
+            }
+
+        });
+
+        function FilterTable(filter) {
+            var $table = $('#partialList');
+            $.ajax({
+                type: 'POST',
+                url:
+                    '@Url.Action("_ListUsuariosPartialView", "Usuario", new { Area = ConstantHelper.Area.ADMINISTRACION })',
+                cache: false,
+                data: { 'filter': filter },
+                beforeSend: function() {
+                    $('#main-loader').fadeIn();
+                },
+                success: function(data) {
+                    $table.empty();
+                    $table.append(data);
+                },
+                complete: function(data) {
+                    $('#main-loader').fadeOut();
+                }
+
+            });
+        }
+    </script>
+}

@@ -12,27 +12,30 @@ using SICER.MODEL;
 
 namespace SICER.Areas.Administracion.Controllers
 {
-    [AppRolAuthorize(AppRol.Superadmin, AppRol.Administrador)]
     public class RolController : BaseController
     {
+        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Rol.LISTAR)]
         public ActionResult ListRoles()
         {
-            var model = RolLogic.GetList(GetDataContext());
+            var model = RolLogic.GetList(GetDataContext(), RolNivel.Principal);
             return View(model);
         }
 
+        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Rol.CREAR)]
         public ActionResult EditPermisosPorRoles(int rolId)
         {
             var model = RolLogic.EditPermisosPorRoles(GetDataContext(), rolId);
             return View(model);
         }
 
+        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Rol.CREAR)]
         public ActionResult AddUpdateRol(int? rolId)
         {
             var model = RolLogic.GetRol(GetDataContext(), rolId);
             return View(model);
         }
 
+        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Rol.CREAR)]
         [HttpPost]
         public ActionResult AddUpdateRol(RolViewModel model)
         {
@@ -40,6 +43,7 @@ namespace SICER.Areas.Administracion.Controllers
             return RedirectToAction(nameof(ListRoles));
         }
 
+        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Rol.CREAR)]
         [HttpPost]//TODO: REMOVE DATAACCESS
         public ActionResult ListRoles(LstRolUsuarioViewModel model, FormCollection collection)
         {

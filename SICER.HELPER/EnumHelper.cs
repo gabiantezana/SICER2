@@ -12,7 +12,7 @@ namespace SICER.HELPER
     }
     public enum SessionKey
     {
-        IdUsuario,
+        UsuarioId,
         UserName,
         NombresUsuario,
         Rol,
@@ -22,13 +22,19 @@ namespace SICER.HELPER
 
     public enum AppRol
     {
-        Superadmin,
-        Administrador,
+        SUPERADMIN,
+        ADMIN,
+        GESTORDOCUMENTOS,
         //Creador,
         //Aprobador,
         //Contador
     }
 
+    public enum RolNivel
+    {
+        Principal = 1,
+        Secundario = 2,
+    }
 
     public enum MessageType
     {

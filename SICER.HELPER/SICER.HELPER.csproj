@@ -74,6 +74,7 @@
     <Compile Include="EncryptionHelper.cs" />
     <Compile Include="EntityHelper.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="ExtensionHelper.cs" />
     <Compile Include="HtmlHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryHelper.cs" />

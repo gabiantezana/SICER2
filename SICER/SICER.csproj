@@ -352,6 +352,7 @@
     <Content Include="Content\assets\images\trama-escalera.png" />
     <Content Include="Content\assets\js\app.min.js" />
     <Content Include="Areas\Administracion\Views\Usuario\ListUsuarios.cshtml" />
+    <Content Include="Areas\Administracion\Views\Usuario\PartialView\_ListUsuariosPartialView.cshtml" />
     <None Include="Content\assets\js\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\assets\js\jquery-1.10.2.js" />
     <Content Include="Content\assets\js\jquery-1.10.2.min.js" />

@@ -5,22 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1423b138f17d4b4d905e3f6e678c1d2a" Name="Diagram1" ZoomLevel="76" ShowGrid="true">
-        <EntityTypeShape EntityType="SICERModel.AprobacionDocumento" Width="1.5" PointX="3" PointY="18.875" />
+        <EntityTypeShape EntityType="SICERModel.AprobacionDocumento" Width="1.5" PointX="4" PointY="21.5" />
         <EntityTypeShape EntityType="SICERModel.Documento" Width="1.5" PointX="3" PointY="1.625" />
         <EntityTypeShape EntityType="SICERModel.DocumentoRendicion" Width="1.5" PointX="5.25" PointY="1.25" />
-        <EntityTypeShape EntityType="SICERModel.GrupoVista" Width="1.5" PointX="1.5" PointY="30.875" />
-        <EntityTypeShape EntityType="SICERModel.Rol" Width="1.5" PointX="1.5" PointY="24.75" />
-        <EntityTypeShape EntityType="SICERModel.SapBusinessPartner" Width="1.5" PointX="1.5" PointY="22" />
+        <EntityTypeShape EntityType="SICERModel.GrupoVista" Width="1.5" PointX="2.25" PointY="32.5" />
+        <EntityTypeShape EntityType="SICERModel.Rol" Width="1.5" PointX="1.5" PointY="17.25" />
+        <EntityTypeShape EntityType="SICERModel.SapBusinessPartner" Width="1.5" PointX="1.5" PointY="20.375" />
         <EntityTypeShape EntityType="SICERModel.SapCentroCosto" Width="1.5" PointX="0.75" PointY="3.625" />
         <EntityTypeShape EntityType="SICERModel.SapConcepto" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SICERModel.SapMetodoPago" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SICERModel.SapMetodoPago" Width="1.5" PointX="0.75" PointY="23.25" />
         <EntityTypeShape EntityType="SICERModel.SapMoneda" Width="1.5" PointX="3" PointY="11.25" />
-        <EntityTypeShape EntityType="SICERModel.TipoDocumento" Width="1.5" PointX="0.75" PointY="13" />
-        <EntityTypeShape EntityType="SICERModel.TipoDocumentoSunat" Width="1.5" PointX="0.75" PointY="10.25" />
-        <EntityTypeShape EntityType="SICERModel.Usuario" Width="1.5" PointX="0.75" PointY="15.875" />
-        <EntityTypeShape EntityType="SICERModel.UsuarioTipoDocumento" Width="1.5" PointX="3" PointY="15.75" />
-        <EntityTypeShape EntityType="SICERModel.Vista" Width="1.5" PointX="1.5" PointY="27.625" />
-        <EntityTypeShape EntityType="SICERModel.VistaRol" Width="1.5" PointX="3.75" PointY="24.625" />
+        <EntityTypeShape EntityType="SICERModel.TipoDocumento" Width="1.5" PointX="0.75" PointY="25.75" />
+        <EntityTypeShape EntityType="SICERModel.TipoDocumentoSunat" Width="1.5" PointX="0.75" PointY="28.625" />
+        <EntityTypeShape EntityType="SICERModel.Usuario" Width="1.5" PointX="0.75" PointY="11.25" />
+        <EntityTypeShape EntityType="SICERModel.UsuarioTipoDocumento" Width="1.5" PointX="4" PointY="18.5" />
+        <EntityTypeShape EntityType="SICERModel.Vista" Width="1.5" PointX="4.5" PointY="32.375" />
+        <EntityTypeShape EntityType="SICERModel.VistaRol" Width="1.5" PointX="6.75" PointY="17.375" />
         <AssociationConnector Association="SICERModel.FK__Aprobacio__Usuar__2A4B4B5E" />
         <AssociationConnector Association="SICERModel.FK__Aprobacio__Usuar__2B3F6F97" />
         <AssociationConnector Association="SICERModel.FK__Documento___1Sap__32E0915F" />
@@ -52,6 +52,10 @@
         <AssociationConnector Association="SICERModel.FK__UsuarioTi__TipoD__49C3F6B7" />
         <AssociationConnector Association="SICERModel.FK__UsuarioTi__Usuar__48CFD27E" />
         <AssociationConnector Association="SICERModel.FK__VistaRol__VistaI__20C1E124" />
+        <EntityTypeShape EntityType="SICERModel.UsuarioRoles" Width="1.5" PointX="3.75" PointY="14" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__RolId__48CFD27E" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__Creac__47DBAE45" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__Usuar__49C3F6B7" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

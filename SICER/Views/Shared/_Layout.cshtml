@@ -295,111 +295,111 @@
     @RenderSection("scripts", required: false)
 
 
-    <script>
-        $(document).on("click", "table tbody tr", function (e) {
-            $(this).addClass("active").siblings().removeClass("active");
-        });
-        $(function () {
-            $('.select2').css('width', '');
-        })
+<script>
+    $(document).on("click", "table tbody tr", function (e) {
+        $(this).addClass("active").siblings().removeClass("active");
+    });
+    $(function () {
+        $('.select2').css('width', '');
+    })
 
        
 
-        function OnChangeDecimal(e, input, decimals) {
-            var $this = $(input);
-            var value = $this.val();
-            var convert = convertToDecimal_(value, decimals);
-            $this.val(convert);
-        }
+    function OnChangeDecimal(e, input, decimals) {
+        var $this = $(input);
+        var value = $this.val();
+        var convert = convertToDecimal_(value, decimals);
+        $this.val(convert);
+    }
 
-        function convertToDecimal_(value, decimals) {
-            //var twoPlacedFloat = parseFloat(yourString).toFixed(2);
-            value = String(value);
-            var number = parseFloat(value.replace(",", ""));
-            if (number || number == 0) {
-                if (decimals) {
-                    decimals = parseInt(decimals);
-                    return parseFloat(value).toFixed(decimals);
-                }
-                else
-                    return parseFloat(value).toFixed(2);
-            }
-            else {
-                return "0.00";
-            }
-        }
-
-        function formatJsonDate(date) {
-            if (date) {
-                var newDate = new Date(parseInt(date.replace(/\/Date\((.*?)\)\//gi, "$1")));
-                var dd = newDate.getDate();
-                var mm = newDate.getMonth() + 1; //January is 0!
-
-                var yyyy = newDate.getFullYear();
-                if (dd < 10) {
-                    dd = '0' + dd
-                }
-                if (mm < 10) {
-                    mm = '0' + mm
-                }
-                var today = dd + '/' + mm + '/' + yyyy;
-                return today;
+    function convertToDecimal_(value, decimals) {
+        //var twoPlacedFloat = parseFloat(yourString).toFixed(2);
+        value = String(value);
+        var number = parseFloat(value.replace(",", ""));
+        if (number || number == 0) {
+            if (decimals) {
+                decimals = parseInt(decimals);
+                return parseFloat(value).toFixed(decimals);
             }
             else
-                return "";
+                return parseFloat(value).toFixed(2);
         }
-        function select2Focus() {
-            var select2 = $(this).closest('.select2').prev('select');
-
-            setTimeout(function () {
-                if (!select2.opened()) {
-                    select2.open();
-                }
-            }, 0);
+        else {
+            return "0.00";
         }
+    }
 
-        $(".title_").each(function () {
-            var x = $(this).find("li").length;
-            if (!x) {
-                $(this).hide();
+    function formatJsonDate(date) {
+        if (date) {
+            var newDate = new Date(parseInt(date.replace(/\/Date\((.*?)\)\//gi, "$1")));
+            var dd = newDate.getDate();
+            var mm = newDate.getMonth() + 1; //January is 0!
+
+            var yyyy = newDate.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd
             }
-        });
-
-        //Confirm LogOut
-        $("#btnLogOut").click(function () {
-            if (confirm('Se cerrará la sesión. ¿Desea continuar?')) {
-                return true;
-            } else {
-                return false;
+            if (mm < 10) {
+                mm = '0' + mm
             }
-        })
-
-        function ShowMessage(type, message) {
-            toastr.options.closeButton = true;
-            //toastr.options.timeOut = 0;
-            //toastr.options.extendedTimeOut = 0;
-            if (type == 'Success')
-                toastr.success(message);
-            else if (type == 'Error')
-                toastr.error(message);
-            else if (type == 'Warning')
-                toastr.warning(message);
-            else
-                toastr.info(message);
+            var today = dd + '/' + mm + '/' + yyyy;
+            return today;
         }
-        //close tabs after close session:
+        else
+            return "";
+    }
+    function select2Focus() {
+        var select2 = $(this).closest('.select2').prev('select');
 
-
-        //Convert serialized array to Object (Format JSON)
-        function ConvertSerializedArrayToObject(formArray) {//serialize data function
-            var returnArray = {};
-            for (var i = 0; i < formArray.length; i++) {
-                returnArray[formArray[i]['name']] = formArray[i]['value'];
+        setTimeout(function () {
+            if (!select2.opened()) {
+                select2.open();
             }
-            return returnArray;
-        }
+        }, 0);
+    }
 
-    </script>
+    $(".title_").each(function () {
+        var x = $(this).find("li").length;
+        if (!x) {
+            $(this).hide();
+        }
+    });
+
+    //Confirm LogOut
+    $("#btnLogOut").click(function () {
+        if (confirm('Se cerrará la sesión. ¿Desea continuar?')) {
+            return true;
+        } else {
+            return false;
+        }
+    })
+
+    function ShowMessage(type, message) {
+        toastr.options.closeButton = true;
+        //toastr.options.timeOut = 0;
+        //toastr.options.extendedTimeOut = 0;
+        if (type == 'Success')
+            toastr.success(message);
+        else if (type == 'Error')
+            toastr.error(message);
+        else if (type == 'Warning')
+            toastr.warning(message);
+        else
+            toastr.info(message);
+    }
+    //close tabs after close session:
+
+
+    //Convert serialized array to Object (Format JSON)
+    function ConvertSerializedArrayToObject(formArray) {//serialize data function
+        var returnArray = {};
+        for (var i = 0; i < formArray.length; i++) {
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
+    }
+
+
+</script>
 </body>
-
 </html>

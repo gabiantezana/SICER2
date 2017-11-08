@@ -54,24 +54,23 @@ namespace SICER.Controllers
                         PostMessage(MessageType.Error, "Su usuario no se encuentra activo");
                         return RedirectToAction(nameof(this.Login));
                     }
-                    Session.Set(SessionKey.NombresUsuario, usuario.Nombres);
+
+                    Session.Set(SessionKey.NombresUsuario, usuario.Nombres + " " + usuario.Apellidos);
                     Session.Set(SessionKey.UserName, usuario.UserName);
-                    Session.Set(SessionKey.IdUsuario, usuario.UsuarioId);
-                    Session.Set(SessionKey.Vistas, usuario.Rol.VistaRol.Where(x => x.Estado).Select(x => x.Vista.Codigo).ToArray());
+                    Session.Set(SessionKey.UsuarioId, usuario.UsuarioId);
 
                     if (usuario.Rol.Codigo == ConstantHelper.CODIGOROLSUPERADMINISTRADOR)
-                        Session.Set(SessionKey.Rol, AppRol.Superadmin);
-
-                    switch (Session.GetRol())
                     {
-                        case AppRol.Superadmin:
-                            Session.Set(SessionKey.Vistas, GetDataContext().Context.Vista.Select(x => x.Codigo).ToArray());
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
+                        Session.Set(SessionKey.Rol, AppRol.SUPERADMIN);
+                        Session.Set(SessionKey.Vistas, GetDataContext().Context.Vista.Select(x => x.Codigo).ToArray());
+                    }
+                    else
+                    {
+                        Session.Set(SessionKey.Rol, Enum.Parse(typeof(AppRol), usuario.Rol.Codigo));
+                        Session.Set(SessionKey.Vistas, usuario.Rol.VistaRol.Where(x => x.Estado).Select(x => x.Vista.Codigo).ToArray());
                     }
 
-                    var defaultEncryptPassword = EncryptionHelper.EncryptTextToMemory(ConstantHelper.DEFAULT_PASSWORD, ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);
+                    var defaultEncryptPassword = EncryptionHelper.EncryptTextToMemory(ConstantHelper.PASSWORD_DEFAULT, ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);
                     return RedirectToAction(defaultEncryptPassword.SequenceEqual(usuario.Password) ? nameof(this.ChangePassword) : nameof(this.Index));
                 }
 

@@ -55,7 +55,9 @@
   <ItemGroup>
     <Compile Include="Administracion\Rol\LstRolUsuarioViewModel.cs" />
     <Compile Include="Administracion\Rol\RolViewModel.cs" />
+    <Compile Include="Administracion\Usuario\ListUsuariosViewModel.cs" />
     <Compile Include="Administracion\Usuario\LstUsuarioRolViewModel.cs" />
+    <Compile Include="Administracion\Usuario\UsuarioRolesViewModel.cs" />
     <Compile Include="Administracion\Usuario\UsuarioViewModel.cs" />
     <Compile Include="General\ChangePasswordViewModel.cs" />
     <Compile Include="General\LoginViewModel.cs" />

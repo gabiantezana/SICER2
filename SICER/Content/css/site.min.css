@@ -716,7 +716,8 @@ body.site-gridmenu-active {
 }
 
 .page-content {
-    padding: 30px 30px;
+    /*padding: 30px 30px;*/
+    padding: 0px 30px;
 }
 
 .page-content-actions {
@@ -11991,4 +11992,10 @@ div.widget-title {
     color: #F4FA58;
     content: "\f005";
     position: absolute;
+}
+/*GABRIELA*/
+/*//Tabla de celdas delgadas*/ 
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding-top: 0;
+    padding-bottom: 0;
 }

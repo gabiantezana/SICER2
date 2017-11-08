@@ -17,9 +17,9 @@ namespace SICER.DATAACCESS.Administracion
             DataContext = dataContext;
         }
 
-        public IEnumerable<Rol> GetList()
+        public IEnumerable<Rol> GetList(RolNivel nivel)
         {
-            return DataContext.Context.Rol.ToList();
+            return DataContext.Context.Rol.Where(x=> x.nivel == (int)nivel).ToList();
         }
 
         public Rol GetRol(int? rolId)

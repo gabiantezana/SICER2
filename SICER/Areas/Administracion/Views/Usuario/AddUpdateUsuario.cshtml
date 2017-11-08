@@ -1,18 +1,25 @@
-﻿@model SICER.VIEWMODEL.Administracion.Usuario.UsuarioViewModel
+﻿@using SICER.MODEL
+@model SICER.VIEWMODEL.Administracion.Usuario.UsuarioViewModel
 @{
     ViewBag.Title = Model.UsuarioId.HasValue ? "Editar Usuario" : "Crear Usuario";
     ViewBag.Icon = Model.UsuarioId.HasValue ? "edit" : "plus";
     var isEdit = Model.UsuarioId.HasValue ? "true" : "false";
 }
-<div class="panel">
+@using (Html.BeginForm("AddUpdateUsuario", "Usuario", FormMethod.Post))
+{
+    @section Breadcrumbs{
+        <li><a href="@Url.Action("ListUsuarios", "Usuario")">Listado de usuarios</a></li>
 
-    <div class="panel-heading">
-        <h5 class="panel-title">Datos del usuario</h5>
+    }
+
+    <div class="panel-footer text-right">
+        <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
     </div>
-
-    @using (Html.BeginForm("AddUpdateUsuario", "Usuario", FormMethod.Post))
-    {
-        if (Model.UsuarioId.HasValue)
+    <div class="panel">
+        <div class="panel-heading">
+            <h5 class="panel-title">Datos del usuario</h5>
+        </div>
+        @if (Model.UsuarioId.HasValue)
         {
             @Html.HiddenFor(x => Model.UsuarioId)
         }
@@ -20,9 +27,7 @@
             <div class="form-group">
                 @Html.LabelFor(x => Model.Estado, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.CheckBoxFor(x => Model.Estado, new { @data_plugin = "switchery" }
-
-               )
+                    @Html.CheckBoxFor(x => Model.Estado, new { @data_plugin = "switchery" })
                 </div>
             </div>
             @Html.EditorFor(x => Model.UserName, new { htmlAttributes = new { @class = "form-control" } })
@@ -41,17 +46,51 @@
                 </div>
                 @Html.ValidationMessageFor(x => Model.FechaNacimiento)
             </div>
-
-
             <div class="form-group col-md-6 col-sm-12">
                 @Html.LabelFor(x => Model.RolId, new { @class = "form-label" })
                 @Html.DropDownListFor(x => Model.RolId, new SelectList(Model.RolJList, "id", "text", 0), new { @class = "form-control form-group-margin", @data_plugin = "select2", @data_isedit = isEdit })
                 @Html.ValidationMessageFor(x => Model.RolId)
             </div>
         </div>
+    </div>
 
-        <div class="panel-footer text-right">
-            <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
+    <div class="panel">
+        <div class="panel-heading">
+            <h4 class="panel-title">Permisos por documentos</h4>
+            <div class="panel-actions">
+                <a class="panel-action icon wb-minus" data-toggle="panel-collapse" aria-hidden="true"></a>
+            </div>
         </div>
-    }
-</div>
+        <div class="panel-body">
+            @{
+                var _listDocumentNames = new List<string>();
+                foreach (var rol in Model.RolList)
+                {
+                    _listDocumentNames.Add(rol.Codigo.Split('.')[1]);
+                }
+            }
+            @foreach (var item in _listDocumentNames.Distinct())
+            {
+                <div class="col-md-4">
+                    <h5> <i class="fa fa-cubes" aria-hidden="true"></i> &nbsp @item</h5>
+                    <hr />
+                    @foreach (var rol in Model.RolList.Where(x => x.Codigo.Split('.')[1] == item))
+                    {
+                        UsuarioRoles usuarioRol = Model.RolUserList.ToList().FirstOrDefault(x => x.Rol.Codigo == rol.Codigo);
+                        <div class="checkbox-custom checkbox-primary">
+                            <input type="checkbox" id="chk-@rol.Codigo" name="chk-@rol.Codigo" @(usuarioRol == null || !usuarioRol.Estado ? string.Empty : "checked") />
+                            <label for="chk-@rol.Codigo">&nbsp; @rol.Descripcion</label>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="panel-footer text-right">
+        <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
+    </div>
+
+
+
+                }

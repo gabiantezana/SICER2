@@ -1,0 +1,56 @@
+﻿@model IPagedList<SICER.MODEL.Usuario>
+<table class="table table-hover">
+    <thead style="font-weight:bold">
+        <tr>
+            <td>Username</td>
+            <td>Nombres</td>
+            <td>Rol</td>
+            <td>Documento</td>
+            <td>Correo</td>
+            <td>Telefono</td>
+            <td class="text-center">Opciones</td>
+        </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td style="font-style: italic" colspan="7">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.UserName</td>
+            <td>@(item.Nombres + " " + item.Apellidos)</td>
+            <td>@item.Rol.Descripcion</td>
+            <td>@item.Documento</td>
+            <td>@item.Correo</td>
+            <td>@item.Telefono</td>
+            <td class="text-nowrap text-center">
+                <a href="@Url.Action("DisableUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})" class="btn btn-sm btn-icon btn-flat btn-default"
+                   data-toggle="tooltip" data-original-title="@(item.Estado ? "Desactivar" : "Activar")">
+                    @if (item.Estado)
+                    {
+                        <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                    }
+                    else
+                    {
+                        <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                    }
+                </a>
+                <a href="@Url.Action("AddUpdateUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+                    <i class="icon wb-wrench" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div id="myPager">
+    @Html.PagedListPager(Model, page => Url.Action("_ListUsuariosPaged",
+        new
+        {
+            page = page,
+            //MODEL PROPERTIES HERE:
+            filter = ViewBag.Filter,
+        }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("partialList"))
+</div>

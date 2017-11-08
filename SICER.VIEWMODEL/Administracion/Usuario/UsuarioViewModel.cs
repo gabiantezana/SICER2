@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using SICER.MODEL;
+using SICER.VIEWMODEL.Administracion.Rol;
 
 namespace SICER.VIEWMODEL.Administracion.Usuario
 {
@@ -13,7 +15,7 @@ namespace SICER.VIEWMODEL.Administracion.Usuario
 
         [Required]
         [Display(Name = "Rol")]
-        public Int32 RolId { get; set; }
+        public int RolId { get; set; }
         public List<JsonEntity> RolJList { get; set; } = new List<JsonEntity>();
 
         [Required]
@@ -40,5 +42,17 @@ namespace SICER.VIEWMODEL.Administracion.Usuario
         public DateTime? FechaNacimiento { get; set; }
 
         public string SapBusinessPartnerCardCode { get; set; }
+
+        #region Roles por Usuario
+
+        //public IEnumerable<RolViewModel> RolList { get; set; } = new List<RolViewModel>();
+        //public IEnumerable<UsuarioRolesViewModel> RolUserList { get; set; } = new List<UsuarioRolesViewModel>();
+
+        public IEnumerable<MODEL.Rol> RolList { get; set; } = new List<MODEL.Rol>();
+        public IEnumerable<UsuarioRoles> RolUserList { get; set; } =  new List<UsuarioRoles>();
+
+        #endregion
+
+
     }
 }

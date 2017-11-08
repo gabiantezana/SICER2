@@ -57,11 +57,11 @@ namespace SICER.HELPER
 
         public static Int32? GetIdUsuario(this HttpSessionStateBase Session)
         {
-            return (Int32?)Get(Session, SessionKey.IdUsuario);
+            return (Int32?)Get(Session, SessionKey.UsuarioId);
         }
         public static Int32? GetIdUsuario(this HttpSessionState Session)
         {
-            return (Int32?)Get(Session, SessionKey.IdUsuario);
+            return (Int32?)Get(Session, SessionKey.UsuarioId);
         }
 
         #endregion

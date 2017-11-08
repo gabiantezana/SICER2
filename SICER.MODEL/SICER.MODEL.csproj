@@ -109,6 +109,9 @@
     <Compile Include="Usuario.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UsuarioRoles.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UsuarioTipoDocumento.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
