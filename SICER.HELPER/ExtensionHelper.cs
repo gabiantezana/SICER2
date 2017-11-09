@@ -14,5 +14,7 @@ namespace SICER.HELPER
         {
             return usuario?.Nombres.ToSafeString() + " " + usuario?.Apellidos.ToSafeString();
         }
+
+
     }
 }

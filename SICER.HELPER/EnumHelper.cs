@@ -78,5 +78,11 @@ namespace SICER.HELPER
     {
         BusinessPartner = 1,
     }
+
+    public enum SourceType
+    {
+        Local = 1,
+        Sap = 2
+    }
 }
 

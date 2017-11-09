@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComparerHelper.cs" />
     <Compile Include="ConstantHelper.cs" />
     <Compile Include="ConvertHelper.cs" />
     <Compile Include="EncryptionHelper.cs" />
