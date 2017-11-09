@@ -20,7 +20,7 @@ namespace SICER.MODEL
             this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
         }
     
-        public string SapMonedaDocCurrCode { get; set; }
+        public string SapMonedaDocCurrCod { get; set; }
         public string CurrName { get; set; }
         public string Locked { get; set; }
     

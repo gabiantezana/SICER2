@@ -16,7 +16,7 @@ namespace SICER.LOGIC.Administracion
     {
         private static IEnumerable<Usuario> GetQueryUsuariosList(DataContext dataContext, string filtro = null, int? usuarioId = null)
         {
-           return new UsuarioDataAccess(dataContext).GetList(filtro, usuarioId);
+            return new UsuarioDataAccess(dataContext).GetList(filtro, usuarioId);
         }
 
         public static ListUsuariosViewModel GetListUsuariosViewModel(DataContext dataContext, string query, int? page)
@@ -62,13 +62,16 @@ namespace SICER.LOGIC.Administracion
             var rolesUsuarioKey = formCollection.AllKeys.Where(x => x.StartsWith("chk-"));
 
             var listadoRolesActivos = new List<Rol>();
-            foreach (var rolUsuarioKey in rolesUsuarioKey)
+            if (model.RolId == (int)AppRol.GESTORDOCUMENTOS)
             {
-                var value = formCollection[rolesUsuarioKey.ToString()] == "on" || formCollection[rolesUsuarioKey.ToString()] == "true";
-                var rolCodigo = rolUsuarioKey.Split('-')[1];
+                foreach (var rolUsuarioKey in rolesUsuarioKey)
+                {
+                    var value = formCollection[rolesUsuarioKey.ToString()] == "on" || formCollection[rolesUsuarioKey.ToString()] == "true";
+                    var rolCodigo = rolUsuarioKey.Split('-')[1];
 
-                var rol = new RolDataAccess(dataContext).GetList(RolNivel.Secundario).FirstOrDefault(x => x.Codigo == rolCodigo);
-                listadoRolesActivos.Add(rol);
+                    var rol = new RolDataAccess(dataContext).GetList(RolNivel.Secundario).FirstOrDefault(x => x.Codigo == rolCodigo);
+                    listadoRolesActivos.Add(rol);
+                }
             }
             model.RolList = listadoRolesActivos;
             return new UsuarioDataAccess(dataContext).AddUpdateUsuario(model);

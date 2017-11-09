@@ -76,10 +76,16 @@
     <Compile Include="SapConcepto.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="SapMetodoPago.cs">
+    <Compile Include="SapCuentaContable.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SapIndicators.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SapMoneda.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SapTipoCambio.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="SICERModel.Context.cs">

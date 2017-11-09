@@ -12,37 +12,37 @@
         </tr>
     </thead>
     <tbody>
-    @if (!Model.Any())
-    {
-        <tr><td style="font-style: italic" colspan="7">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
-    }
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.UserName</td>
-            <td>@(item.Nombres + " " + item.Apellidos)</td>
-            <td>@item.Rol.Descripcion</td>
-            <td>@item.Documento</td>
-            <td>@item.Correo</td>
-            <td>@item.Telefono</td>
-            <td class="text-nowrap text-center">
-                <a href="@Url.Action("DisableUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})" class="btn btn-sm btn-icon btn-flat btn-default"
-                   data-toggle="tooltip" data-original-title="@(item.Estado ? "Desactivar" : "Activar")">
-                    @if (item.Estado)
-                    {
-                        <i class="fa fa-toggle-on" aria-hidden="true"></i>
-                    }
-                    else
-                    {
-                        <i class="fa fa-toggle-off" aria-hidden="true"></i>
-                    }
-                </a>
-                <a href="@Url.Action("AddUpdateUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
-                    <i class="icon wb-wrench" aria-hidden="true"></i>
-                </a>
-            </td>
-        </tr>
-    }
+        @if (!Model.Any())
+        {
+            <tr><td style="font-style: italic" colspan="7">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr ondblclick="window.location = '@Url.Action("AddUpdateUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})'">
+                <td>@item.UserName</td>
+                <td>@(item.Nombres + " " + item.Apellidos)</td>
+                <td>@item.Rol.Descripcion</td>
+                <td>@item.Documento</td>
+                <td>@item.Correo</td>
+                <td>@item.Telefono</td>
+                <td class="text-nowrap text-center">
+                    <a href="@Url.Action("DisableUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})" class="btn btn-sm btn-icon btn-flat btn-default"
+                       data-toggle="tooltip" data-original-title="@(item.Estado ? "Desactivar" : "Activar")">
+                        @if (item.Estado)
+                        {
+                            <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                        }
+                    </a>
+                    <a href="@Url.Action("AddUpdateUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+                        <i class="icon wb-wrench" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 <div id="myPager">

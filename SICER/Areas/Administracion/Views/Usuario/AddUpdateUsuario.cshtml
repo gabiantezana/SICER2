@@ -1,4 +1,6 @@
-﻿@using SICER.MODEL
+﻿@using SICER.Areas.Administracion.Controllers
+@using SICER.LOGIC.Administracion
+@using SICER.MODEL
 @model SICER.VIEWMODEL.Administracion.Usuario.UsuarioViewModel
 @{
     ViewBag.Title = Model.UsuarioId.HasValue ? "Editar Usuario" : "Crear Usuario";
@@ -36,7 +38,7 @@
             @Html.EditorFor(x => Model.Documento, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Correo, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Telefono, new { htmlAttributes = new { @class = "form-control" } })
-            @*@Html.EditorFor(x => Model.Password, new { htmlAttributes = new { @class = "form-control" } })*@
+            @*@Html.EditorFor(x => Model.Password, new { htmlAttributes = new { @class = "form-control" } })//TODO RESET*@
 
             <div class="form-group col-sm-6">
                 @Html.LabelFor(x => Model.FechaNacimiento, new { @class = "control-label" })
@@ -47,16 +49,16 @@
                 @Html.ValidationMessageFor(x => Model.FechaNacimiento)
             </div>
             <div class="form-group col-md-6 col-sm-12">
-                @Html.LabelFor(x => Model.RolId, new { @class = "form-label" })
-                @Html.DropDownListFor(x => Model.RolId, new SelectList(Model.RolJList, "id", "text", 0), new { @class = "form-control form-group-margin", @data_plugin = "select2", @data_isedit = isEdit })
+                @Html.LabelFor(x => Model.RolId, new { @class = "form-label " })
+                @Html.DropDownListFor(x => Model.RolId, new SelectList(Model.RolJList, "id", "text", 0), new { @class = "form-control form-group-margin select-rol", @data_plugin = "select2", @data_isedit = isEdit })
                 @Html.ValidationMessageFor(x => Model.RolId)
             </div>
         </div>
     </div>
 
-    <div class="panel">
+    <div class="panel panel-subroles" style="display:  @(Model.RolId== (int)AppRol.GESTORDOCUMENTOS? "block":"none")">
         <div class="panel-heading">
-            <h4 class="panel-title">Permisos por documentos</h4>
+            <h4 class="panel-title"> <i class="fa fa-cubes" aria-hidden="true"></i> Permisos por documentos</h4> <br/>
             <div class="panel-actions">
                 <a class="panel-action icon wb-minus" data-toggle="panel-collapse" aria-hidden="true"></a>
             </div>
@@ -72,7 +74,7 @@
             @foreach (var item in _listDocumentNames.Distinct())
             {
                 <div class="col-md-4">
-                    <h5> <i class="fa fa-cubes" aria-hidden="true"></i> &nbsp @item</h5>
+                    <h5 class="title-desc"> <i class="fa fa-file-o" aria-hidden="true"></i> &nbsp @item</h5>
                     <hr />
                     @foreach (var rol in Model.RolList.Where(x => x.Codigo.Split('.')[1] == item))
                     {
@@ -83,14 +85,26 @@
                         </div>
                     }
                 </div>
+
+
             }
         </div>
     </div>
 
+
     <div class="panel-footer text-right">
+        <a class="btn btn-default animsition-link pull-left" href="@Url.Action("ListUsuarios", "Usuario", new { area = SICER.HELPER.ConstantHelper.Area.ADMINISTRACION })"><i class="fa fa-arrow-left"></i> Atrás</a>
         <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
     </div>
-
-
-
                 }
+@section Scripts{
+    <script>
+        $(".select-rol").change(function () {
+          if(this.value =='@((int)AppRol.GESTORDOCUMENTOS)')
+              $(".panel-subroles").slideDown();
+            else
+                $(".panel-subroles").slideUp();
+        })
+
+    </script>
+}

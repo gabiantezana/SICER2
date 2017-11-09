@@ -34,7 +34,7 @@ namespace SICER.MODEL
         public string C_3SapCentroCostoOcrCode { get; set; }
         public string C_4SapCentroCostoOcrCode { get; set; }
         public string C_5SapCentroCostoOcrCode { get; set; }
-        public string SapMonedaDocCurrCode { get; set; }
+        public string SapMonedaDocCurrCod { get; set; }
         public int CreacionUsuarioId { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public int ModificacionUsuarioId { get; set; }

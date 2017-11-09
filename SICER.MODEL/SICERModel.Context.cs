@@ -35,15 +35,17 @@ namespace SICER.MODEL
         public virtual DbSet<SapBusinessPartner> SapBusinessPartner { get; set; }
         public virtual DbSet<SapCentroCosto> SapCentroCosto { get; set; }
         public virtual DbSet<SapConcepto> SapConcepto { get; set; }
-        public virtual DbSet<SapMetodoPago> SapMetodoPago { get; set; }
+        public virtual DbSet<SapCuentaContable> SapCuentaContable { get; set; }
+        public virtual DbSet<SapIndicators> SapIndicators { get; set; }
         public virtual DbSet<SapMoneda> SapMoneda { get; set; }
+        public virtual DbSet<SapTipoCambio> SapTipoCambio { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<TipoDocumentoSunat> TipoDocumentoSunat { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         public virtual DbSet<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
         public virtual DbSet<Vista> Vista { get; set; }
         public virtual DbSet<VistaRol> VistaRol { get; set; }
-        public virtual DbSet<UsuarioRoles> UsuarioRoles { get; set; }
     
         public virtual ObjectResult<SP_SAPProveedor_Result> SP_SAPProveedor()
         {

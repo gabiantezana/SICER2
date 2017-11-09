@@ -14,8 +14,9 @@ namespace SICER.MODEL
     
     public partial class SapConcepto
     {
-        public string U_Codigo { get; set; }
-        public string U_CuentaContable { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string U_CUENTACONTABLE { get; set; }
         public string U_Descripcion { get; set; }
     }
 }

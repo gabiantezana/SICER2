@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using SICER.MODEL;
 
 namespace SICER.HELPER
 {
-    public class QueryHelper
+    public  class QueryHelper
     {
         private SapDbServerType SApDbServerType { get; }
         private string SqlQuery { get; set; }
@@ -20,10 +22,18 @@ namespace SICER.HELPER
             this.HanaQuery = string.Empty;
         }
 
-        public string QuerySapProveedor()
+
+        public string GetSyncQuery(SyncEntity syncEntity)
         {
-            SqlQuery = "SELECT LicTradNum, CardName, validFor FROM [SBODemoCL].[dbo].OCRD WHERE CARDTYPE='S'";
-            return ReturnQuery();
+            var resourceFullName = Assembly.GetCallingAssembly().GetManifestResourceNames().ToList().FirstOrDefault(x => x.Contains(syncEntity.ToString()));
+            if (string.IsNullOrEmpty(resourceFullName))
+                throw new Exception("ResourceName not found for: " + syncEntity.ToString());
+
+            using (var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceFullName))
+            using (var reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
         }
 
         public string QuerySapMoneda()

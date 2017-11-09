@@ -7,15 +7,14 @@
 
 @section Breadcrumbs{}
 
+<div class="panel-footer text-right">
+    <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddUpdateUsuario", "Usuario"))">
+        <i class="fa fa-plus"></i>
+        Nuevo
+    </a>
+</div>
 <div class="panel">
     <div class="panel-body">
-
-        <div class="panel-footer text-right">
-            <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddUpdateUsuario", "Usuario"))">
-                <i class="fa fa-plus"></i>
-                Nuevo
-            </a>
-        </div>
         <br />
         <div class="table-responsive">
             @using (Html.BeginForm("ListUsuarios", "Usuario", FormMethod.Post, new { Area = ConstantHelper.Area.ADMINISTRACION }))
@@ -41,9 +40,6 @@
 
     <script>
         var _guid = '@Guid.NewGuid()';
-
-        $('.select2-busqueda').trigger("change");
-
         $(function () {
             $('.select2-busqueda').select2({
                 ajax: {
@@ -79,7 +75,6 @@
             });
 
         });
-
         $('.select2-busqueda').change(function () {
             var value = this.value;
             if (value.toString().startsWith(_guid) || value.toString() === '')
@@ -88,7 +83,6 @@
                 var redirectTo = '@Url.Action("AddUpdateUsuario", "Usuario", new { Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = "_usuarioId" })'.replace("_usuarioId", value);
                 window.location.href = redirectTo;
             }
-
         });
 
         function FilterTable(filter) {

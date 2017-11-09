@@ -12,7 +12,6 @@ namespace SICER.DATAACCESS.Administracion
     {
         public SyncDataAccess()
         {
-
         }
 
         public void SyncTables(DataContext dataContext)

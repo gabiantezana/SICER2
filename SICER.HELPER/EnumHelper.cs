@@ -20,11 +20,11 @@ namespace SICER.HELPER
         Vistas,
     }
 
-    public enum AppRol
+    public enum AppRol //TODO: SYNC WITH DATABASE rolId
     {
-        SUPERADMIN,
-        ADMIN,
-        GESTORDOCUMENTOS,
+        SUPERADMIN = 1,
+        ADMIN = 5,
+        GESTORDOCUMENTOS = 7,
         //Creador,
         //Aprobador,
         //Contador
@@ -72,6 +72,11 @@ namespace SICER.HELPER
         Aprobado,
         Rechazado,
         EnObservacion,
+    }
+
+    public enum SyncEntity
+    {
+        BusinessPartner = 1,
     }
 }
 

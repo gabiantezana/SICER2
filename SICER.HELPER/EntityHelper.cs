@@ -33,9 +33,12 @@ namespace SICER.HELPER
 
     public class OCRD 
     {
+        public string CardCode { get; set; }
         public String LictradNum { get; set; }
         public String CardName { get; set; }
         public String validFor { get; set; }
+        public string CardType { get; set; }
+
     }
 
     public class OITM

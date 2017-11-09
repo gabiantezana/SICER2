@@ -30,6 +30,10 @@ namespace SICER.MODEL
         }
     
         public string SapCentroCostoOcrCode { get; set; }
+        public string OcrCode { get; set; }
+        public string OcrName { get; set; }
+        public Nullable<int> DimCode { get; set; }
+        public Nullable<bool> Locked { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento { get; set; }

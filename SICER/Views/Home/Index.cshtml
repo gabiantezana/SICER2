@@ -1,12 +1,15 @@
-﻿@{
+﻿@using System.Collections.Specialized
+@{
     ViewBag.Title = "Dashboard";
     ViewBag.Section = "Admin";
     ViewBag.Subsection = "Dashboard";
     ViewBag.Icon = "tachometer";
 }
 
-<div>
 
+
+<div>
+    <br/>
     <h5>Bienvenido, @Session.GetNombresUsuario()</h5>
     @*<a class="btn btn-primary" @Url.ModalHelperFor("EditComentario", "Home")><i class="fa fa-wpforms" aria-hidden="true"></i> Ejemplo de Modal</a>
         <a class="btn btn-primary" data-mensaje="Desea guardar la solicitud X" id="btnConfirm" onclick="onClickConfirm(this)"> Ejemplo Mensaje de confirmación</a>*@

@@ -18,8 +18,8 @@ namespace SICER.MODEL
         public Rol()
         {
             this.Usuario = new HashSet<Usuario>();
-            this.VistaRol = new HashSet<VistaRol>();
             this.UsuarioRoles = new HashSet<UsuarioRoles>();
+            this.VistaRol = new HashSet<VistaRol>();
         }
     
         public int RolId { get; set; }
@@ -30,8 +30,8 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VistaRol> VistaRol { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VistaRol> VistaRol { get; set; }
     }
 }

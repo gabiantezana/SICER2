@@ -51,7 +51,6 @@ namespace SICER.MODEL
         public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
         public virtual Usuario Usuario1 { get; set; }
         public virtual SapBusinessPartner SapBusinessPartner { get; set; }
-        public virtual SapMetodoPago SapMetodoPago { get; set; }
         public virtual TipoDocumento TipoDocumento { get; set; }
         public virtual TipoDocumentoSunat TipoDocumentoSunat { get; set; }
     }

@@ -24,6 +24,10 @@ namespace SICER.MODEL
     
         public string SapBusinessPartnerCardCode { get; set; }
         public string CardName { get; set; }
+        public string CardType { get; set; }
+        public string LictradNum { get; set; }
+        public string validFor { get; set; }
+        public string CardCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento { get; set; }
