@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace SICER.HELPER
 
     public class OCRD 
     {
+        [Key]
         public string CardCode { get; set; }
         public String LictradNum { get; set; }
         public String CardName { get; set; }

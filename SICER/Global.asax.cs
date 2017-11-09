@@ -54,11 +54,10 @@ namespace SICER
         public void DoWork()
         {
             var dataContext = new DataContext() { Context = new SICEREntities() };
-            var dataAccess = new SyncDataAccess(dataContext);
             var n = 0;
             while (true)
             {
-                dataAccess.SyncBusinessPartner();
+                new SyncDataAccess(dataContext).SyncBusinessPartner();
                 Debug.WriteLine(n);
                 n++;
             }

@@ -1,5 +1,6 @@
 ﻿using SICER.MODEL;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -17,68 +18,83 @@ namespace SICER.DATAACCESS.Sync
             DataContext = dataContext;
         }
 
-        public void Start()
-        {
-            Debug.WriteLine("*********************************************START TO SYNC**************************************");
-            while (true)
-            {
-                SyncBusinessPartner();
-                Debug.WriteLine("*********************************************END  SYNC**************************************");
-            }
-        }
-
         #region SapBusinessPartner
 
         public void SyncBusinessPartner()
         {
             var query = new QueryHelper(DataContext.SapDbServerType).GetSyncQuery(SyncEntity.BusinessPartner);
 
-            List<OCRD> saPlist = DataContext.Context.Database.SqlQuery<OCRD>(query)?.ToList();
-            List<OCRD> localList = DataContext.Context.SapBusinessPartner.Select(x => x.ConvertTo(typeof(OCRD), false, null) as OCRD).ToList();
-            List<OCRD> distinctItemList = saPlist.ExceptUsingJSonCompare(localList).Concat(localList.ExceptUsingJSonCompare(saPlist)).ToList().GroupBy(x => x.CardCode).Select(y => y.FirstOrDefault()).ToList();
+            var localList = DataContext.Context.SapBusinessPartner.ToArray();
+            var oCrDsaPlist = DataContext.Context.Database.SqlQuery<OCRD>(query).ToArray();
+            var oCrdLocalList = localList.Select(x => new OCRD()
+            {
+                CardCode = x.CardCode,
+                CardType = x.CardType,
+                LictradNum = x.LictradNum,
+                validFor = x.validFor,
+                CardName = x.CardName,
+            }).ToArray();
 
-            var listToSync = new Dictionary<OCRD, SyncType>();
+            var distinctItemList = oCrDsaPlist.ExceptUsingJSonCompare(oCrdLocalList)
+                                                             .Concat(oCrdLocalList.ExceptUsingJSonCompare(oCrDsaPlist))
+                                                             .GroupBy(x => x.CardCode)
+                                                             .Select(y => y.FirstOrDefault()).ToArray();
+            var listToAdd = new List<SapBusinessPartner>();
+            var listToUpdate = new List<SapBusinessPartner>();
+            var listToDelete = new List<SapBusinessPartner>();
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             foreach (var item in distinctItemList)
             {
-                var existeEnLocal = localList.FirstOrDefault(x => x.CardCode == item.CardCode) != null;
-                if (existeEnLocal)
+                var itemInLocal = localList.FirstOrDefault(x => x.CardCode == item.CardCode);
+                if (itemInLocal != null)
                 {
-                    var existeEnSap = saPlist.FirstOrDefault(x => x.CardCode == item.CardCode) != null;
-                    listToSync.Add(item, existeEnSap ? SyncType.Update : SyncType.Delete);
+                    var itemInSap = oCrDsaPlist.FirstOrDefault(x => x.CardCode == item.CardCode);
+                    if (itemInSap != null)
+                        listToUpdate.Add(SyncItem(SyncType.Update, itemInLocal, item));
+                    else
+                        listToDelete.Add(SyncItem(SyncType.Delete, itemInLocal, item));
                 }
                 else
-                    listToSync.Add(item, SyncType.Create);
+                    listToAdd.Add(SyncItem(SyncType.Create, null, item));
             }
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
 
-            listToSync.ToList().ForEach(x => SyncItem(x.Key, x.Value));
+            //ADD
+            DataContext.Context.Set<SapBusinessPartner>().AddRange(listToAdd);
+            DataContext.Context.SaveChanges();
+
+            //UPDATE
+            DataContext.Context.Set<SapBusinessPartner>().AddRange(listToUpdate);
+            DataContext.Context.ChangeTracker.DetectChanges();
+            //DELETE
+            DataContext.Context.Set<SapBusinessPartner>().RemoveRange(listToDelete);
+            DataContext.Context.SaveChanges();
+
+            //DataContext.Context?.Dispose();
         }
 
-        private void SyncItem(OCRD ocrd, SyncType syncType)
+        private SapBusinessPartner SyncItem(SyncType syncType, SapBusinessPartner entity, OCRD ocrd)
         {
             switch (syncType)
             {
                 case SyncType.Create:
                     var itemToCreate = (SapBusinessPartner)ocrd.ConvertTo(typeof(SapBusinessPartner));
                     itemToCreate.SapBusinessPartnerCardCode = ocrd.CardCode;
-                    DataContext.Context.SapBusinessPartner.Add(itemToCreate);
-                    break;
+                    return itemToCreate;
                 case SyncType.Update:
-                    var item = DataContext.Context.SapBusinessPartner.Find(ocrd.CardCode);
-                    item.CardCode = ocrd.CardCode;
-                    item.CardName = ocrd.CardName;
-                    item.LictradNum = ocrd.LictradNum;
-                    item.CardType = ocrd.CardType;
-                    item.validFor = ocrd.validFor;
-                    DataContext.Context.Entry(item);
-                    break;
+                    entity.CardCode = ocrd.CardCode;
+                    entity.CardName = ocrd.CardName;
+                    entity.LictradNum = ocrd.LictradNum;
+                    entity.CardType = ocrd.CardType;
+                    entity.validFor = ocrd.validFor;
+                    return entity;
                 case SyncType.Delete:
-                    var itemToDelete = DataContext.Context.SapBusinessPartner.Find(ocrd.CardCode);
-                    DataContext.Context.SapBusinessPartner.Remove(itemToDelete);
-                    break;
+                    return entity;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(syncType), syncType, null);
             }
-            DataContext.Context.SaveChanges();
         }
 
 
