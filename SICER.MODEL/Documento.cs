@@ -28,14 +28,12 @@ namespace SICER.MODEL
         public System.DateTime FechaSolicitud { get; set; }
         public double MontoInicial { get; set; }
         public int TipoDocumentoId { get; set; }
-        public int TipoDocumentoSunatId { get; set; }
         public string SapBusinessPartnerCardCode { get; set; }
         public string C_1SapCentroCostoOcrCode { get; set; }
         public string C_2SapCentroCostoOcrCode { get; set; }
         public string C_3SapCentroCostoOcrCode { get; set; }
         public string C_4SapCentroCostoOcrCode { get; set; }
         public string C_5SapCentroCostoOcrCode { get; set; }
-        public string SapMetodoPagoPayMethCode { get; set; }
         public int CreacionUsuarioId { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public int ModificacionUsuarioId { get; set; }
@@ -52,6 +50,5 @@ namespace SICER.MODEL
         public virtual Usuario Usuario1 { get; set; }
         public virtual SapBusinessPartner SapBusinessPartner { get; set; }
         public virtual TipoDocumento TipoDocumento { get; set; }
-        public virtual TipoDocumentoSunat TipoDocumentoSunat { get; set; }
     }
 }

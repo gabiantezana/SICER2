@@ -16,7 +16,8 @@ namespace SICER.MODEL
     {
         public string Code { get; set; }
         public string Name { get; set; }
-        public string U_CUENTACONTABLE { get; set; }
-        public string U_Descripcion { get; set; }
+        public string U_MSS_DSCRPT { get; set; }
+        public string U_MSS_IBACCT { get; set; }
+        public string U_MSS_ACCT { get; set; }
     }
 }

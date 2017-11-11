@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using SAPbobsCOM;
 
 namespace SICER.MODEL
 {
@@ -14,7 +16,7 @@ namespace SICER.MODEL
         public String CurrentCulture { get; set; }
         public String SystemNameSpace { get; set; }
         public HttpBrowserCapabilitiesBase Browser { get; set; }
-        public SapDbServerType SapDbServerType { get; set; }
+        public Company Company { get; set; } 
     }
 
     public enum SapDbServerType

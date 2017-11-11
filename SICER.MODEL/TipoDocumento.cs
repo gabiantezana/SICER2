@@ -19,7 +19,6 @@ namespace SICER.MODEL
         {
             this.AprobacionDocumento = new HashSet<AprobacionDocumento>();
             this.Documento = new HashSet<Documento>();
-            this.UsuarioTipoDocumento = new HashSet<UsuarioTipoDocumento>();
         }
     
         public int TipoDocumentoId { get; set; }
@@ -30,7 +29,5 @@ namespace SICER.MODEL
         public virtual ICollection<AprobacionDocumento> AprobacionDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UsuarioTipoDocumento> UsuarioTipoDocumento { get; set; }
     }
 }

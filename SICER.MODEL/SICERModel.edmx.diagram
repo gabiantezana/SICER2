@@ -5,58 +5,70 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1423b138f17d4b4d905e3f6e678c1d2a" Name="Diagram1" ZoomLevel="76" ShowGrid="true">
-        <EntityTypeShape EntityType="SICERModel.AprobacionDocumento" Width="1.5" PointX="4" PointY="19.625" />
-        <EntityTypeShape EntityType="SICERModel.Documento" Width="1.5" PointX="3" PointY="1.75" />
-        <EntityTypeShape EntityType="SICERModel.DocumentoRendicion" Width="1.5" PointX="5.25" PointY="1.25" />
-        <EntityTypeShape EntityType="SICERModel.GrupoVista" Width="1.5" PointX="2.25" PointY="31.5" />
-        <EntityTypeShape EntityType="SICERModel.Rol" Width="1.5" PointX="1.5" PointY="18.25" />
-        <EntityTypeShape EntityType="SICERModel.SapBusinessPartner" Width="1.5" PointX="1.5" PointY="21.25" />
-        <EntityTypeShape EntityType="SICERModel.SapCentroCosto" Width="1.5" PointX="0.75" PointY="3.25" />
-        <EntityTypeShape EntityType="SICERModel.SapConcepto" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SICERModel.SapCuentaContable" Width="1.5" PointX="7.75" PointY="3.75" />
-        <EntityTypeShape EntityType="SICERModel.SapIndicators" Width="1.5" PointX="7.75" PointY="6.75" />
-        <EntityTypeShape EntityType="SICERModel.SapMoneda" Width="1.5" PointX="3" PointY="11.25" />
-        <EntityTypeShape EntityType="SICERModel.SapTipoCambio" Width="1.5" PointX="9.75" PointY="0.75" />
-        <EntityTypeShape EntityType="SICERModel.TipoDocumento" Width="1.5" PointX="0.75" PointY="27.5" />
-        <EntityTypeShape EntityType="SICERModel.TipoDocumentoSunat" Width="1.5" PointX="0.75" PointY="24.75" />
-        <EntityTypeShape EntityType="SICERModel.Usuario" Width="1.5" PointX="0.75" PointY="11.5" />
-        <EntityTypeShape EntityType="SICERModel.UsuarioRoles" Width="1.5" PointX="3.75" PointY="14.625" />
-        <EntityTypeShape EntityType="SICERModel.UsuarioTipoDocumento" Width="1.5" PointX="4" PointY="22.5" />
-        <EntityTypeShape EntityType="SICERModel.Vista" Width="1.5" PointX="4.5" PointY="31.25" />
-        <EntityTypeShape EntityType="SICERModel.VistaRol" Width="1.5" PointX="6.75" PointY="18.25" />
-        <AssociationConnector Association="SICERModel.FK__Aprobacio__Usuar__32E0915F" />
-        <AssociationConnector Association="SICERModel.FK__Aprobacio__Usuar__33D4B598" />
-        <AssociationConnector Association="SICERModel.FK__Documento___1Sap__34C8D9D1" />
-        <AssociationConnector Association="SICERModel.FK__Documento___2Sap__35BCFE0A" />
-        <AssociationConnector Association="SICERModel.FK__Documento___3Sap__36B12243" />
-        <AssociationConnector Association="SICERModel.FK__Documento___4Sap__37A5467C" />
-        <AssociationConnector Association="SICERModel.FK__Documento___5Sap__38996AB5" />
-        <AssociationConnector Association="SICERModel.FK__Documento__Creac__398D8EEE" />
-        <AssociationConnector Association="SICERModel.FK__Documento__Docum__440B1D61" />
-        <AssociationConnector Association="SICERModel.FK__Documento__Modif__3A81B327" />
-        <AssociationConnector Association="SICERModel.FK__Documento__SapBu__3B75D760" />
-        <AssociationConnector Association="SICERModel.FK__Documento__TipoD__3C69FB99" />
-        <AssociationConnector Association="SICERModel.FK__Documento__TipoD__3D5E1FD2" />
-        <AssociationConnector Association="SICERModel.FK__Documento___1Sap__3E52440B" />
-        <AssociationConnector Association="SICERModel.FK__Documento___2Sap__3F466844" />
-        <AssociationConnector Association="SICERModel.FK__Documento___3Sap__403A8C7D" />
-        <AssociationConnector Association="SICERModel.FK__Documento___4Sap__412EB0B6" />
-        <AssociationConnector Association="SICERModel.FK__Documento___5Sap__4222D4EF" />
-        <AssociationConnector Association="SICERModel.FK__Documento__Creac__4316F928" />
-        <AssociationConnector Association="SICERModel.FK__Documento__Modif__44FF419A" />
-        <AssociationConnector Association="SICERModel.FK__Documento__SapBu__45F365D3" />
-        <AssociationConnector Association="SICERModel.FK__Documento__SapMo__46E78A0C" />
-        <AssociationConnector Association="SICERModel.FK__Documento__TipoD__47DBAE45" />
-        <AssociationConnector Association="SICERModel.FK__Vista__GrupoVist__4F7CD00D" />
-        <AssociationConnector Association="SICERModel.FK__Usuario__RolId__48CFD27E" />
-        <AssociationConnector Association="SICERModel.FK__UsuarioRo__RolId__4BAC3F29" />
-        <AssociationConnector Association="SICERModel.FK__VistaRol__RolId__5070F446" />
-        <AssociationConnector Association="SICERModel.FK__Usuario__SapBusi__49C3F6B7" />
-        <AssociationConnector Association="SICERModel.FK__UsuarioTi__TipoD__4D94879B" />
-        <AssociationConnector Association="SICERModel.FK__UsuarioRo__Creac__4AB81AF0" />
-        <AssociationConnector Association="SICERModel.FK__UsuarioRo__Usuar__4CA06362" />
-        <AssociationConnector Association="SICERModel.FK__UsuarioTi__Usuar__4E88ABD4" />
-        <AssociationConnector Association="SICERModel.FK__VistaRol__VistaI__5165187F" />
+        <EntityTypeShape EntityType="SICERModel.AprobacionDocumento" Width="1.5" PointX="8.25" PointY="10.5" />
+        <EntityTypeShape EntityType="SICERModel.Documento" Width="1.5" PointX="11.25" PointY="8.375" />
+        <EntityTypeShape EntityType="SICERModel.DocumentoRendicion" Width="1.5" PointX="13.5" PointY="7.75" />
+        <EntityTypeShape EntityType="SICERModel.Excepcion" Width="1.5" PointX="3.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SICERModel.GrupoVista" Width="1.5" PointX="1.5" PointY="3.625" />
+        <EntityTypeShape EntityType="SICERModel.NivelAprobacion" Width="1.5" PointX="6" PointY="5.625" />
+        <EntityTypeShape EntityType="SICERModel.Rol" Width="1.5" PointX="0.75" PointY="10.375" />
+        <EntityTypeShape EntityType="SICERModel.SapBusinessPartner" Width="1.5" PointX="3.75" PointY="6.125" />
+        <EntityTypeShape EntityType="SICERModel.SapCentroCosto" Width="1.5" PointX="9" PointY="2.625" />
+        <EntityTypeShape EntityType="SICERModel.SapConcepto" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SICERModel.SapCuentaContable" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="SICERModel.SapIndicators" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="SICERModel.SapMoneda" Width="1.5" PointX="11.25" PointY="5.625" />
+        <EntityTypeShape EntityType="SICERModel.SapTipoCambio" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="SICERModel.TipoDocumento" Width="1.5" PointX="6" PointY="15.5" />
+        <EntityTypeShape EntityType="SICERModel.Usuario" Width="1.5" PointX="6" PointY="8.875" />
+        <EntityTypeShape EntityType="SICERModel.UsuarioNivelAprobacion" Width="1.5" PointX="8.25" PointY="7.5" />
+        <EntityTypeShape EntityType="SICERModel.UsuarioRoles" Width="1.5" PointX="8.25" PointY="14.125" />
+        <EntityTypeShape EntityType="SICERModel.Vista" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="SICERModel.VistaRol" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="SICERModel.AggregatedCounter" Width="1.5" PointX="15.75" PointY="7.75" />
+        <EntityTypeShape EntityType="SICERModel.Counter" Width="1.5" PointX="15.75" PointY="10.75" />
+        <EntityTypeShape EntityType="SICERModel.Hash" Width="1.5" PointX="10.75" PointY="15.75" />
+        <EntityTypeShape EntityType="SICERModel.Job" Width="1.5" PointX="13.75" PointY="2.25" />
+        <EntityTypeShape EntityType="SICERModel.JobParameter" Width="1.5" PointX="16" PointY="4.25" />
+        <EntityTypeShape EntityType="SICERModel.JobQueue" Width="1.5" PointX="15.75" PointY="13.75" />
+        <EntityTypeShape EntityType="SICERModel.List" Width="1.5" PointX="0.75" PointY="16.75" />
+        <EntityTypeShape EntityType="SICERModel.Schema" Width="1.5" PointX="2.75" PointY="16.75" />
+        <EntityTypeShape EntityType="SICERModel.Server" Width="1.5" PointX="12.75" PointY="16.75" />
+        <EntityTypeShape EntityType="SICERModel.Set" Width="1.5" PointX="14.75" PointY="16.75" />
+        <EntityTypeShape EntityType="SICERModel.State" Width="1.5" PointX="16" PointY="1.125" />
+        <AssociationConnector Association="SICERModel.FK__Aprobacio__Usuar__30F848ED" />
+        <AssociationConnector Association="SICERModel.FK__Aprobacio__Usuar__31EC6D26" />
+        <AssociationConnector Association="SICERModel.FK__Documento___1Sap__32E0915F" />
+        <AssociationConnector Association="SICERModel.FK__Documento___2Sap__33D4B598" />
+        <AssociationConnector Association="SICERModel.FK__Documento___3Sap__34C8D9D1" />
+        <AssociationConnector Association="SICERModel.FK__Documento___4Sap__35BCFE0A" />
+        <AssociationConnector Association="SICERModel.FK__Documento___5Sap__36B12243" />
+        <AssociationConnector Association="SICERModel.FK__Documento__Creac__37A5467C" />
+        <AssociationConnector Association="SICERModel.FK__Documento__Docum__412EB0B6" />
+        <AssociationConnector Association="SICERModel.FK__Documento__Modif__38996AB5" />
+        <AssociationConnector Association="SICERModel.FK__Documento__SapBu__398D8EEE" />
+        <AssociationConnector Association="SICERModel.FK__Documento__TipoD__3A81B327" />
+        <AssociationConnector Association="SICERModel.FK__Documento___1Sap__3B75D760" />
+        <AssociationConnector Association="SICERModel.FK__Documento___2Sap__3C69FB99" />
+        <AssociationConnector Association="SICERModel.FK__Documento___3Sap__3D5E1FD2" />
+        <AssociationConnector Association="SICERModel.FK__Documento___4Sap__3E52440B" />
+        <AssociationConnector Association="SICERModel.FK__Documento___5Sap__3F466844" />
+        <AssociationConnector Association="SICERModel.FK__Documento__Creac__403A8C7D" />
+        <AssociationConnector Association="SICERModel.FK__Documento__Modif__4222D4EF" />
+        <AssociationConnector Association="SICERModel.FK__Documento__SapBu__4316F928" />
+        <AssociationConnector Association="SICERModel.FK__Documento__SapMo__440B1D61" />
+        <AssociationConnector Association="SICERModel.FK__Vista__GrupoVist__4BAC3F29" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioNi__Nivel__08B54D69" />
+        <AssociationConnector Association="SICERModel.FK__Usuario__RolId__44FF419A" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__RolId__47DBAE45" />
+        <AssociationConnector Association="SICERModel.FK__VistaRol__RolId__4CA06362" />
+        <AssociationConnector Association="SICERModel.FK__Usuario__SapBusi__45F365D3" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioNi__Usuar__09A971A2" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__Creac__46E78A0C" />
+        <AssociationConnector Association="SICERModel.FK__UsuarioRo__Usuar__48CFD27E" />
+        <AssociationConnector Association="SICERModel.FK__VistaRol__VistaI__4D94879B" />
+        <AssociationConnector Association="SICERModel.FK_HangFire_JobParameter_Job" />
+        <AssociationConnector Association="SICERModel.FK_HangFire_State_Job" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

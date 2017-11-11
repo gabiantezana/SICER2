@@ -12,22 +12,19 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class TipoDocumentoSunat
+    public partial class NivelAprobacion
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TipoDocumentoSunat()
+        public NivelAprobacion()
         {
-            this.Documento = new HashSet<Documento>();
-            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
+            this.UsuarioNivelAprobacion = new HashSet<UsuarioNivelAprobacion>();
         }
     
-        public int TipoDocumentoSunatId { get; set; }
-        public string Nombre { get; set; }
-        public string CodigoSunat { get; set; }
+        public int NivelAprobacionId { get; set; }
+        public int NumeroNivel { get; set; }
+        public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Documento> Documento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
+        public virtual ICollection<UsuarioNivelAprobacion> UsuarioNivelAprobacion { get; set; }
     }
 }

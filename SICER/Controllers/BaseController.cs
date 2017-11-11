@@ -9,6 +9,10 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
+using SAPbobsCOM;
+using SICER.Areas.Sync.Controllers;
+using SICER.DATAACCESS;
+using SICER.LOGIC;
 
 namespace SICER.Controllers
 {
@@ -16,28 +20,33 @@ namespace SICER.Controllers
     public class BaseController : Controller
     {
         private DataContext dataContext;
-        public SICEREntities context { get; set; }
-        public String currentCulture { get; set; }
+
+        protected SICEREntities context { get; set; }
+        private string currentCulture { get; set; }
         protected HttpBrowserCapabilitiesBase Browser { get; set; }
+        private Company Company => new BaseLogic().ConnectAndGetCurrentCompany();
 
         public BaseController()
         {
             if (context == null)
                 context = new SICEREntities();
             currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
+            //_company = new BaseLogic().ConnectAndGetCurrentCompany();
+
         }
 
         public DataContext GetDataContext()
         {
             if (dataContext == null)
-                dataContext = new DataContext
+            {
+                dataContext = new DataContext()
                 {
                     Context = context,
                     Session = Session,
                     CurrentCulture = currentCulture,
-                    Browser = this.Request.Browser
+                    Browser = this.Request?.Browser
                 };
-
+            }
             return dataContext;
         }
 
@@ -101,6 +110,14 @@ namespace SICER.Controllers
             base.OnException(filterContext);
             PostMessage(MessageType.Error, ConstantHelper.MENSAJE_ERROR + " " + filterContext.Exception.Message);
             //PostMessage(MessageType.Warning, filterContext.Exception.Message);
+        }
+
+        public void InitializeApplication()
+        {
+            //new BaseDataAccess(GetDataContext()).GenerateDbSchema();
+            //TODO: VALIDATE SAP MODEL STRUCTURE 
+
+
         }
 
         public JsonResult AjaxException(TypeAjaxException type, Exception exception)

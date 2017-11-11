@@ -10,8 +10,11 @@ using System.Web.Routing;
 using Hangfire;
 using Hangfire.SqlServer;
 using Owin;
+using SICER.Areas.Sync.Controllers;
+using SICER.Controllers;
 using SICER.DATAACCESS.Sync;
 using SICER.EXCEPTION;
+using SICER.LOGIC.Sync;
 using SICER.MODEL;
 
 namespace SICER
@@ -27,39 +30,20 @@ namespace SICER
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //--------------------------------------------------SINCRONIZACIÓN--------------------------------------------------
-            //http://docs.hangfire.io/en/latest/users-guide/background-processing/processing-background-jobs.html
-            //JobStorage.Current = new SqlServerStorage(new SICEREntities().Database.Connection.ConnectionString);
-
-            //var storage = new SqlServerStorage(System.Configuration.ConfigurationManager.ConnectionStrings["db_HangFire"].ConnectionString); // db_HangFire is the connection string for Sql Server DB used as Job Storage for HangFire for processing 
-            //var options = new BackgroundJobServerOptions();
-
-            //var _backgroundJobServer = new BackgroundJobServer(options, storage);
-            //_backgroundJobServer.Start(); // start BackgroundJobServer process
-            //JobStorage.Current = storage; // assign the storage to Current
+            //TODO: VALIDATE DATABASE STRUCTURE
+            // BaseController().InitializeApplication();
 
             GlobalConfiguration.Configuration.UseSqlServerStorage(new SICEREntities().Database.Connection.ConnectionString);
             _backgroundJobServer = new BackgroundJobServer();
 
-
-            var dataContext = new DataContext() { Context = new SICEREntities() };
-            var dataAccess = new SyncDataAccess(dataContext);
-
-            BackgroundJob.Enqueue(() => DoWork());
-
-            //--------------------------------------------------SINCRONIZACIÓN--------------------------------------------------
-
-
+            //BackgroundJob.Enqueue(() => DoWork());
         }
-        public void DoWork()
+
+        public static void DoWork()
         {
-            var dataContext = new DataContext() { Context = new SICEREntities() };
-            var n = 0;
             while (true)
             {
-                new SyncDataAccess(dataContext).SyncBusinessPartner();
-                Debug.WriteLine(n);
-                n++;
+                new SyncController().SyncDataBase();
             }
         }
     }

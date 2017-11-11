@@ -12,6 +12,7 @@ namespace SICER.HELPER
         public static readonly byte[] ENCRIPT_METHOD = { 87, 10, 65, 35, 12, 66, 21, 65 };
         public static int NUMEROFILASPORPAGINA = 1;
         public static object MENSAJE_TABLA_VACIA = "No se encontraron registros.";
+        public static int DefaulSuccessSAPNumber = 0;
 
         public const string MENSAJE_EXITO = "Operación  realizada exitosamente.";
         public const string MENSAJE_ERROR = "Ocurrió un error.";
@@ -107,5 +108,7 @@ namespace SICER.HELPER
             public const String PORTAL_NAME = "PORTAL_NAME";
         }
 
+        public const int DefaultFieldSize = 200;
+        public const string ParameterPath = "../Parameters/ConnectionParameters.xml";
     }
 }

@@ -27,7 +27,6 @@ namespace SICER.MODEL
         public double MontoTotal { get; set; }
         public int EstadoRendicion { get; set; }
         public System.DateTime FechaDocumento { get; set; }
-        public int TipoDocumentoSunatId { get; set; }
         public string SapBusinessPartnerCardCode { get; set; }
         public string C_1SapCentroCostoOcrCode { get; set; }
         public string C_2SapCentroCostoOcrCode { get; set; }
@@ -50,6 +49,5 @@ namespace SICER.MODEL
         public virtual Usuario Usuario1 { get; set; }
         public virtual SapBusinessPartner SapBusinessPartner { get; set; }
         public virtual SapMoneda SapMoneda { get; set; }
-        public virtual TipoDocumentoSunat TipoDocumentoSunat { get; set; }
     }
 }

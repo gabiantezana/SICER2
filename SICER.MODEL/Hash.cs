@@ -12,14 +12,12 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class UsuarioTipoDocumento
+    public partial class Hash
     {
-        public int UsuarioTipoDocumentoId { get; set; }
-        public int CantidadMaximaDocumentos { get; set; }
-        public int UsuarioId { get; set; }
-        public int TipoDocumentoId { get; set; }
-    
-        public virtual TipoDocumento TipoDocumento { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public int Id { get; set; }
+        public string Key { get; set; }
+        public string Field { get; set; }
+        public string Value { get; set; }
+        public Nullable<System.DateTime> ExpireAt { get; set; }
     }
 }

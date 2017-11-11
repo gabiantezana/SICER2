@@ -36,6 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <Reference Include="Interop.SAPbobsCOM">
+      <HintPath>..\packages\sapb1\Interop.SAPbobsCOM.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
@@ -73,9 +77,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\NivelAprobacionLogic.cs" />
     <Compile Include="Administracion\RolLogic.cs" />
     <Compile Include="Administracion\UsuarioLogic.cs" />
+    <Compile Include="BaseLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sync\SyncLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SICER.DATAACCESS\SICER.DATAACCESS.csproj">

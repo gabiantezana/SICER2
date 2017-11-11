@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SAPbobsCOM;
 
 namespace SICER.HELPER
 {
@@ -30,57 +31,30 @@ namespace SICER.HELPER
         public String Mensaje { get; set; }
     }
 
-    #region SAP ENTITY TABLES
-
-    public class OCRD 
+    public class CompanyEntity
     {
-        [Key]
-        public string CardCode { get; set; }
-        public String LictradNum { get; set; }
-        public String CardName { get; set; }
-        public String validFor { get; set; }
-        public string CardType { get; set; }
+        public bool? XMLAsString { get; set; }
+        public string Server { get; set; }
+        public string LicenseServer { get; set; }
+        public BoDataServerTypes DbServerType { get; set; }
+        public string DbUserName { get; set; }
+        public string DbPassword { get; set; }
+        public string CompanyDB { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public BoSuppLangs language { get; set; }
+        public bool UseTrusted { get; set; }
+        public bool Connected { get; set; }
 
-        //Only for validate source in comparation sync
-        public SourceType SourceType { get; set; }
-
+        public CompanyEntity()
+        {
+            XMLAsString = null;
+            LicenseServer = String.Empty;
+            DbUserName = String.Empty;
+            DbPassword = String.Empty;
+            CompanyDB = String.Empty;
+            UserName = String.Empty;
+            Password = String.Empty;
+        }
     }
-
-    public class OITM
-    {
-        public String ItemCode { get; set; }
-        public String ItemName { get; set; }
-        public String validFor { get; set; }
-    }
-
-    public class OPRC
-    {
-        public String PrcCode { get; set; }
-        public String PrcName { get; set; }
-        public String Active { get; set; }
-    }
-
-    public class OPYM
-    {
-        public String PayMethCod { get; set; }
-        public String Descript { get; set; }
-        public String Active { get; set; }
-    }
-
-    public class OCRN
-    {
-        public String DocCurrCod { get; set; }
-        public String CurrName { get; set; }
-        public String Locked { get; set; }
-    }
-
-    public class OACT
-    {
-        public String AcctCode { get; set; }
-        public String AcctName { get; set; }
-        public String ValidFor { get; set; }
-    }
-
-    #endregion
-
 }

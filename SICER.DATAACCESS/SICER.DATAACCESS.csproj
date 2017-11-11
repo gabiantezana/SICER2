@@ -36,6 +36,13 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.SAPbobsCOM">
+      <HintPath>..\packages\sapb1\Interop.SAPbobsCOM.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="SICER.MODELCODEFIRST">
+      <HintPath>..\SICER\Bin\SICER.MODELCODEFIRST.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -49,12 +56,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\NivelAprobacionDataAccess.cs" />
     <Compile Include="Administracion\RolDataAccess.cs" />
+    <Compile Include="BaseDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Administracion\UsuarioDataAccess.cs" />
     <Compile Include="Sync\SyncDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SICER.EXCEPTION\SICER.EXCEPTION.csproj">
+      <Project>{1D022DFA-AD2C-4A13-AB22-9C89678A0FF1}</Project>
+      <Name>SICER.EXCEPTION</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SICER.HELPER\SICER.HELPER.csproj">
       <Project>{105061C3-3586-47F4-A737-D47E9CDD0F58}</Project>
       <Name>SICER.HELPER</Name>
@@ -63,6 +76,10 @@
       <Project>{7625219E-48B1-4C83-B215-19FE95577F7D}</Project>
       <Name>SICER.MODEL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SICER.SAPUSERMODEL\SICER.SAPUSERMODEL.csproj">
+      <Project>{735FD06B-2987-4C0B-9FAF-6011D4282EA9}</Project>
+      <Name>SICER.SAPUSERMODEL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SICER.VIEWMODEL\SICER.VIEWMODEL.csproj">
       <Project>{30F6D852-5332-4DAC-86E3-10954BE99FB1}</Project>
       <Name>SICER.VIEWMODEL</Name>
@@ -70,14 +87,56 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Documentos\" />
-    <Folder Include="Sync\Queries\Hana\" />
+    <Folder Include="Global\Queries\Hana\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\GetSapBusinessPartner.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\%40MSS_SICER_CONF.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Sql\OCRD.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Sql\OCRN.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Sql\OICD.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Sql\OOCR.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Sql\%40MSS_SICER_CCPT.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Sql\ORTT.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Global\Queries\Sql\GetFieldId.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Hana\%40MSS_SICER_CCPT.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Hana\%40MSS_SICER_CONF.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Hana\OCRD.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Hana\OCRN.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Hana\OICD.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Hana\OOCR.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Sync\Queries\Hana\ORTT.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

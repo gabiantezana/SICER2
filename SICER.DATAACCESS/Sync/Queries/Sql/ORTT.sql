@@ -1,0 +1,4 @@
+SELECT RateDate, Currency, Rate FROM [SBO_TAWA_CONSULTING_SAC]..ORTT											--CAMBIOMONEDA
+ 
+
+

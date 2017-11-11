@@ -17,5 +17,6 @@ namespace SICER.MODEL
         public int SapTipoCambioId { get; set; }
         public Nullable<System.DateTime> RateDate { get; set; }
         public string Currency { get; set; }
+        public Nullable<decimal> Rate { get; set; }
     }
 }

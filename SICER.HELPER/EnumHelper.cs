@@ -76,7 +76,40 @@ namespace SICER.HELPER
 
     public enum SyncEntity
     {
-        BusinessPartner = 1,
+        /// <summary>
+        /// CONCEPTOS
+        /// </summary>
+        @MSS_SICER_CCPT = 0,
+
+        /// <summary>
+        /// CONFIGURACIÓN DE CUENTAS
+        /// </summary>
+        @MSS_SICER_CONF = 1,
+
+        /// <summary>
+        /// BUSINESS PARTNERS
+        /// </summary>
+        OCRD = 2,
+
+        /// <summary>
+        /// MONEDAS
+        /// </summary>
+        OCRN = 3,
+
+        /// <summary>
+        /// INDICATORS
+        /// </summary>
+        OICD = 4,
+
+        /// <summary>
+        /// CENTRO COSTOS
+        /// </summary>
+        OOCR = 5,
+
+        /// <summary>
+        /// TIPOS DE CAMBIO
+        /// </summary>
+        ORTT = 6,
     }
 
     public enum SourceType

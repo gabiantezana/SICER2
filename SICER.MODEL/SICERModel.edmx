@@ -25,14 +25,12 @@
           <Property Name="FechaSolicitud" Type="datetime" Nullable="false" />
           <Property Name="MontoInicial" Type="float" Nullable="false" />
           <Property Name="TipoDocumentoId" Type="int" Nullable="false" />
-          <Property Name="TipoDocumentoSunatId" Type="int" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="nvarchar" MaxLength="128" />
           <Property Name="_1SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" />
           <Property Name="_2SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" />
           <Property Name="_3SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" />
           <Property Name="_4SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" />
           <Property Name="_5SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" />
-          <Property Name="SapMetodoPagoPayMethCode" Type="nvarchar" MaxLength="128" />
           <Property Name="CreacionUsuarioId" Type="int" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="ModificacionUsuarioId" Type="int" Nullable="false" />
@@ -55,7 +53,6 @@
           <Property Name="MontoTotal" Type="float" Nullable="false" />
           <Property Name="EstadoRendicion" Type="int" Nullable="false" />
           <Property Name="FechaDocumento" Type="datetime" Nullable="false" />
-          <Property Name="TipoDocumentoSunatId" Type="int" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="nvarchar" MaxLength="128" />
           <Property Name="_1SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" />
           <Property Name="_2SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" />
@@ -68,6 +65,19 @@
           <Property Name="ModificacionUsuarioId" Type="int" Nullable="false" />
           <Property Name="FechaModificacion" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Excepcion">
+          <Key>
+            <PropertyRef Name="idExcepcion" />
+          </Key>
+          <Property Name="idExcepcion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="mensaje" Type="varchar(max)" />
+          <Property Name="tipo" Type="varchar(max)" />
+          <Property Name="pila" Type="varchar(max)" />
+          <Property Name="navegador" Type="varchar(max)" />
+          <Property Name="excepcionInterna" Type="varchar(max)" />
+          <Property Name="timeStamp" Type="varchar(max)" />
+          <Property Name="sessionKeys" Type="varchar(max)" />
+        </EntityType>
         <EntityType Name="GrupoVista">
           <Key>
             <PropertyRef Name="GrupoVistaId" />
@@ -75,6 +85,14 @@
           <Property Name="GrupoVistaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Codigo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="NivelAprobacion">
+          <Key>
+            <PropertyRef Name="NivelAprobacionId" />
+          </Key>
+          <Property Name="NivelAprobacionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumeroNivel" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -104,7 +122,7 @@
           <Property Name="OcrCode" Type="nvarchar(max)" />
           <Property Name="OcrName" Type="nvarchar(max)" />
           <Property Name="DimCode" Type="int" />
-          <Property Name="Locked" Type="bit" />
+          <Property Name="Locked" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SapConcepto">
           <Key>
@@ -112,8 +130,8 @@
           </Key>
           <Property Name="Code" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="U_CUENTACONTABLE" Type="nvarchar(max)" />
-          <Property Name="U_Descripcion" Type="nvarchar(max)" />
+          <Property Name="U_MSS_DSCRPT" Type="nvarchar(max)" />
+          <Property Name="U_MSS_ACCT" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SapCuentaContable">
           <Key>
@@ -121,8 +139,9 @@
           </Key>
           <Property Name="Code" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="U_CUENTACONTABLE" Type="nvarchar(max)" />
-          <Property Name="U_Descripcion" Type="nvarchar(max)" />
+          <Property Name="U_MSS_DSCRPT" Type="nvarchar(max)" />
+          <Property Name="U_MSS_IBACCT" Type="nvarchar(max)" />
+          <Property Name="U_MSS_ACCT" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="SapIndicators">
           <Key>
@@ -146,6 +165,7 @@
           <Property Name="SapTipoCambioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RateDate" Type="date" />
           <Property Name="Currency" Type="nvarchar(max)" />
+          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
@@ -154,14 +174,6 @@
           <Property Name="TipoDocumentoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Codigo" Type="nvarchar(max)" />
           <Property Name="Descripcion" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="TipoDocumentoSunat">
-          <Key>
-            <PropertyRef Name="TipoDocumentoSunatId" />
-          </Key>
-          <Property Name="TipoDocumentoSunatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="CodigoSunat" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -180,6 +192,14 @@
           <Property Name="RolId" Type="int" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="nvarchar" MaxLength="128" />
         </EntityType>
+        <EntityType Name="UsuarioNivelAprobacion">
+          <Key>
+            <PropertyRef Name="UsuarioNivelAprobacionId" />
+          </Key>
+          <Property Name="UsuarioNivelAprobacionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NivelId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="UsuarioRoles">
           <Key>
             <PropertyRef Name="UsuarioRolId" />
@@ -190,15 +210,6 @@
           <Property Name="Estado" Type="bit" Nullable="false" />
           <Property Name="CreacionUsuarioId" Type="int" />
           <Property Name="FechaCreacion" Type="datetime" />
-        </EntityType>
-        <EntityType Name="UsuarioTipoDocumento">
-          <Key>
-            <PropertyRef Name="UsuarioTipoDocumentoId" />
-          </Key>
-          <Property Name="UsuarioTipoDocumentoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CantidadMaximaDocumentos" Type="int" Nullable="false" />
-          <Property Name="UsuarioId" Type="int" Nullable="false" />
-          <Property Name="TipoDocumentoId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Vista">
           <Key>
@@ -218,7 +229,109 @@
           <Property Name="VistaId" Type="int" Nullable="false" />
           <Property Name="RolId" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Aprobacio__Usuar__32E0915F">
+        <EntityType Name="AggregatedCounter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="bigint" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Counter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="smallint" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Hash">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Field" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="ExpireAt" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="20" />
+          <Property Name="InvocationData" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Arguments" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="JobParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="JobQueue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Queue" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FetchedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Value" Type="nvarchar(max)" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Schema">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Server">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Data" Type="nvarchar(max)" />
+          <Property Name="LastHeartbeat" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Set">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Score" Type="float" Nullable="false" />
+          <Property Name="Value" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ExpireAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JobId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="Data" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK__Aprobacio__Usuar__30F848ED">
           <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
           <End Role="AprobacionDocumento" Type="Self.AprobacionDocumento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -230,7 +343,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Aprobacio__Usuar__33D4B598">
+        <Association Name="FK__Aprobacio__Usuar__31EC6D26">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="AprobacionDocumento" Type="Self.AprobacionDocumento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -242,7 +355,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___1Sap__34C8D9D1">
+        <Association Name="FK__Documento___1Sap__32E0915F">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -254,7 +367,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___1Sap__3E52440B">
+        <Association Name="FK__Documento___1Sap__3B75D760">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -266,7 +379,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___2Sap__35BCFE0A">
+        <Association Name="FK__Documento___2Sap__33D4B598">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -278,7 +391,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___2Sap__3F466844">
+        <Association Name="FK__Documento___2Sap__3C69FB99">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -290,7 +403,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___3Sap__36B12243">
+        <Association Name="FK__Documento___3Sap__34C8D9D1">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -302,7 +415,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___3Sap__403A8C7D">
+        <Association Name="FK__Documento___3Sap__3D5E1FD2">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -314,7 +427,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___4Sap__37A5467C">
+        <Association Name="FK__Documento___4Sap__35BCFE0A">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -326,7 +439,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___4Sap__412EB0B6">
+        <Association Name="FK__Documento___4Sap__3E52440B">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -338,7 +451,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___5Sap__38996AB5">
+        <Association Name="FK__Documento___5Sap__36B12243">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -350,7 +463,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___5Sap__4222D4EF">
+        <Association Name="FK__Documento___5Sap__3F466844">
           <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -362,7 +475,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Creac__398D8EEE">
+        <Association Name="FK__Documento__Creac__37A5467C">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -374,7 +487,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Creac__4316F928">
+        <Association Name="FK__Documento__Creac__403A8C7D">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -386,7 +499,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Docum__440B1D61">
+        <Association Name="FK__Documento__Docum__412EB0B6">
           <End Role="Documento" Type="Self.Documento" Multiplicity="1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -398,7 +511,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Modif__3A81B327">
+        <Association Name="FK__Documento__Modif__38996AB5">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -410,7 +523,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Modif__44FF419A">
+        <Association Name="FK__Documento__Modif__4222D4EF">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -422,7 +535,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__SapBu__3B75D760">
+        <Association Name="FK__Documento__SapBu__398D8EEE">
           <End Role="SapBusinessPartner" Type="Self.SapBusinessPartner" Multiplicity="0..1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -434,7 +547,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__SapBu__45F365D3">
+        <Association Name="FK__Documento__SapBu__4316F928">
           <End Role="SapBusinessPartner" Type="Self.SapBusinessPartner" Multiplicity="0..1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -446,7 +559,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__SapMo__46E78A0C">
+        <Association Name="FK__Documento__SapMo__440B1D61">
           <End Role="SapMoneda" Type="Self.SapMoneda" Multiplicity="0..1" />
           <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -458,7 +571,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__TipoD__3C69FB99">
+        <Association Name="FK__Documento__TipoD__3A81B327">
           <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -470,31 +583,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__TipoD__3D5E1FD2">
-          <End Role="TipoDocumentoSunat" Type="Self.TipoDocumentoSunat" Multiplicity="1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoDocumentoSunat">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__TipoD__47DBAE45">
-          <End Role="TipoDocumentoSunat" Type="Self.TipoDocumentoSunat" Multiplicity="1" />
-          <End Role="DocumentoRendicion" Type="Self.DocumentoRendicion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoDocumentoSunat">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Principal>
-            <Dependent Role="DocumentoRendicion">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Usuario__RolId__48CFD27E">
+        <Association Name="FK__Usuario__RolId__44FF419A">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -506,7 +595,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Usuario__SapBusi__49C3F6B7">
+        <Association Name="FK__Usuario__SapBusi__45F365D3">
           <End Role="SapBusinessPartner" Type="Self.SapBusinessPartner" Multiplicity="0..1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -518,7 +607,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioRo__Creac__4AB81AF0">
+        <Association Name="FK__UsuarioNi__Nivel__08B54D69">
+          <End Role="NivelAprobacion" Type="Self.NivelAprobacion" Multiplicity="1" />
+          <End Role="UsuarioNivelAprobacion" Type="Self.UsuarioNivelAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NivelAprobacion">
+              <PropertyRef Name="NivelAprobacionId" />
+            </Principal>
+            <Dependent Role="UsuarioNivelAprobacion">
+              <PropertyRef Name="NivelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioNi__Usuar__09A971A2">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="UsuarioNivelAprobacion" Type="Self.UsuarioNivelAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="UsuarioNivelAprobacion">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UsuarioRo__Creac__46E78A0C">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="UsuarioRoles" Type="Self.UsuarioRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -530,7 +643,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioRo__RolId__4BAC3F29">
+        <Association Name="FK__UsuarioRo__RolId__47DBAE45">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="UsuarioRoles" Type="Self.UsuarioRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -542,7 +655,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioRo__Usuar__4CA06362">
+        <Association Name="FK__UsuarioRo__Usuar__48CFD27E">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="UsuarioRoles" Type="Self.UsuarioRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -554,31 +667,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioTi__TipoD__4D94879B">
-          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
-          <End Role="UsuarioTipoDocumento" Type="Self.UsuarioTipoDocumento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoDocumento">
-              <PropertyRef Name="TipoDocumentoId" />
-            </Principal>
-            <Dependent Role="UsuarioTipoDocumento">
-              <PropertyRef Name="TipoDocumentoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__UsuarioTi__Usuar__4E88ABD4">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="UsuarioTipoDocumento" Type="Self.UsuarioTipoDocumento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="UsuarioTipoDocumento">
-              <PropertyRef Name="UsuarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Vista__GrupoVist__4F7CD00D">
+        <Association Name="FK__Vista__GrupoVist__4BAC3F29">
           <End Role="GrupoVista" Type="Self.GrupoVista" Multiplicity="1" />
           <End Role="Vista" Type="Self.Vista" Multiplicity="*" />
           <ReferentialConstraint>
@@ -590,7 +679,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VistaRol__RolId__5070F446">
+        <Association Name="FK__VistaRol__RolId__4CA06362">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="VistaRol" Type="Self.VistaRol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -602,7 +691,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VistaRol__VistaI__5165187F">
+        <Association Name="FK__VistaRol__VistaI__4D94879B">
           <End Role="Vista" Type="Self.Vista" Multiplicity="1" />
           <End Role="VistaRol" Type="Self.VistaRol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -614,11 +703,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HangFire_JobParameter_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="JobParameter" Type="Self.JobParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobParameter">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangFire_State_Job">
+          <End Role="Job" Type="Self.Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="SICERModelStoreContainer">
           <EntitySet Name="AprobacionDocumento" EntityType="Self.AprobacionDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documento" EntityType="Self.Documento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentoRendicion" EntityType="Self.DocumentoRendicion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Excepcion" EntityType="Self.Excepcion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GrupoVista" EntityType="Self.GrupoVista" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NivelAprobacion" EntityType="Self.NivelAprobacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SapBusinessPartner" EntityType="Self.SapBusinessPartner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SapCentroCosto" EntityType="Self.SapCentroCosto" Schema="dbo" store:Type="Tables" />
@@ -628,143 +747,153 @@
           <EntitySet Name="SapMoneda" EntityType="Self.SapMoneda" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SapTipoCambio" EntityType="Self.SapTipoCambio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TipoDocumentoSunat" EntityType="Self.TipoDocumentoSunat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioNivelAprobacion" EntityType="Self.UsuarioNivelAprobacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioRoles" EntityType="Self.UsuarioRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UsuarioTipoDocumento" EntityType="Self.UsuarioTipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vista" EntityType="Self.Vista" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VistaRol" EntityType="Self.VistaRol" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Aprobacio__Usuar__32E0915F" Association="Self.FK__Aprobacio__Usuar__32E0915F">
+          <EntitySet Name="AggregatedCounter" EntityType="Self.AggregatedCounter" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Counter" EntityType="Self.Counter" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Hash" EntityType="Self.Hash" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Job" EntityType="Self.Job" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="JobParameter" EntityType="Self.JobParameter" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="JobQueue" EntityType="Self.JobQueue" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="List" EntityType="Self.List" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Schema" EntityType="Self.Schema" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Server" EntityType="Self.Server" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="Set" EntityType="Self.Set" Schema="HangFire" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="HangFire" store:Type="Tables" />
+          <AssociationSet Name="FK__Aprobacio__Usuar__30F848ED" Association="Self.FK__Aprobacio__Usuar__30F848ED">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
             <End Role="AprobacionDocumento" EntitySet="AprobacionDocumento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Aprobacio__Usuar__33D4B598" Association="Self.FK__Aprobacio__Usuar__33D4B598">
+          <AssociationSet Name="FK__Aprobacio__Usuar__31EC6D26" Association="Self.FK__Aprobacio__Usuar__31EC6D26">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AprobacionDocumento" EntitySet="AprobacionDocumento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___1Sap__34C8D9D1" Association="Self.FK__Documento___1Sap__34C8D9D1">
+          <AssociationSet Name="FK__Documento___1Sap__32E0915F" Association="Self.FK__Documento___1Sap__32E0915F">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___1Sap__3E52440B" Association="Self.FK__Documento___1Sap__3E52440B">
+          <AssociationSet Name="FK__Documento___1Sap__3B75D760" Association="Self.FK__Documento___1Sap__3B75D760">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___2Sap__35BCFE0A" Association="Self.FK__Documento___2Sap__35BCFE0A">
+          <AssociationSet Name="FK__Documento___2Sap__33D4B598" Association="Self.FK__Documento___2Sap__33D4B598">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___2Sap__3F466844" Association="Self.FK__Documento___2Sap__3F466844">
+          <AssociationSet Name="FK__Documento___2Sap__3C69FB99" Association="Self.FK__Documento___2Sap__3C69FB99">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___3Sap__36B12243" Association="Self.FK__Documento___3Sap__36B12243">
+          <AssociationSet Name="FK__Documento___3Sap__34C8D9D1" Association="Self.FK__Documento___3Sap__34C8D9D1">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___3Sap__403A8C7D" Association="Self.FK__Documento___3Sap__403A8C7D">
+          <AssociationSet Name="FK__Documento___3Sap__3D5E1FD2" Association="Self.FK__Documento___3Sap__3D5E1FD2">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___4Sap__37A5467C" Association="Self.FK__Documento___4Sap__37A5467C">
+          <AssociationSet Name="FK__Documento___4Sap__35BCFE0A" Association="Self.FK__Documento___4Sap__35BCFE0A">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___4Sap__412EB0B6" Association="Self.FK__Documento___4Sap__412EB0B6">
+          <AssociationSet Name="FK__Documento___4Sap__3E52440B" Association="Self.FK__Documento___4Sap__3E52440B">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___5Sap__38996AB5" Association="Self.FK__Documento___5Sap__38996AB5">
+          <AssociationSet Name="FK__Documento___5Sap__36B12243" Association="Self.FK__Documento___5Sap__36B12243">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___5Sap__4222D4EF" Association="Self.FK__Documento___5Sap__4222D4EF">
+          <AssociationSet Name="FK__Documento___5Sap__3F466844" Association="Self.FK__Documento___5Sap__3F466844">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Creac__398D8EEE" Association="Self.FK__Documento__Creac__398D8EEE">
+          <AssociationSet Name="FK__Documento__Creac__37A5467C" Association="Self.FK__Documento__Creac__37A5467C">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Creac__4316F928" Association="Self.FK__Documento__Creac__4316F928">
+          <AssociationSet Name="FK__Documento__Creac__403A8C7D" Association="Self.FK__Documento__Creac__403A8C7D">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Docum__440B1D61" Association="Self.FK__Documento__Docum__440B1D61">
+          <AssociationSet Name="FK__Documento__Docum__412EB0B6" Association="Self.FK__Documento__Docum__412EB0B6">
             <End Role="Documento" EntitySet="Documento" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Modif__3A81B327" Association="Self.FK__Documento__Modif__3A81B327">
+          <AssociationSet Name="FK__Documento__Modif__38996AB5" Association="Self.FK__Documento__Modif__38996AB5">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Modif__44FF419A" Association="Self.FK__Documento__Modif__44FF419A">
+          <AssociationSet Name="FK__Documento__Modif__4222D4EF" Association="Self.FK__Documento__Modif__4222D4EF">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapBu__3B75D760" Association="Self.FK__Documento__SapBu__3B75D760">
+          <AssociationSet Name="FK__Documento__SapBu__398D8EEE" Association="Self.FK__Documento__SapBu__398D8EEE">
             <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapBu__45F365D3" Association="Self.FK__Documento__SapBu__45F365D3">
+          <AssociationSet Name="FK__Documento__SapBu__4316F928" Association="Self.FK__Documento__SapBu__4316F928">
             <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapMo__46E78A0C" Association="Self.FK__Documento__SapMo__46E78A0C">
+          <AssociationSet Name="FK__Documento__SapMo__440B1D61" Association="Self.FK__Documento__SapMo__440B1D61">
             <End Role="SapMoneda" EntitySet="SapMoneda" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__TipoD__3C69FB99" Association="Self.FK__Documento__TipoD__3C69FB99">
+          <AssociationSet Name="FK__Documento__TipoD__3A81B327" Association="Self.FK__Documento__TipoD__3A81B327">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__TipoD__3D5E1FD2" Association="Self.FK__Documento__TipoD__3D5E1FD2">
-            <End Role="TipoDocumentoSunat" EntitySet="TipoDocumentoSunat" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__TipoD__47DBAE45" Association="Self.FK__Documento__TipoD__47DBAE45">
-            <End Role="TipoDocumentoSunat" EntitySet="TipoDocumentoSunat" />
-            <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Usuario__RolId__48CFD27E" Association="Self.FK__Usuario__RolId__48CFD27E">
+          <AssociationSet Name="FK__Usuario__RolId__44FF419A" Association="Self.FK__Usuario__RolId__44FF419A">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK__Usuario__SapBusi__49C3F6B7" Association="Self.FK__Usuario__SapBusi__49C3F6B7">
+          <AssociationSet Name="FK__Usuario__SapBusi__45F365D3" Association="Self.FK__Usuario__SapBusi__45F365D3">
             <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioRo__Creac__4AB81AF0" Association="Self.FK__UsuarioRo__Creac__4AB81AF0">
+          <AssociationSet Name="FK__UsuarioNi__Nivel__08B54D69" Association="Self.FK__UsuarioNi__Nivel__08B54D69">
+            <End Role="NivelAprobacion" EntitySet="NivelAprobacion" />
+            <End Role="UsuarioNivelAprobacion" EntitySet="UsuarioNivelAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioNi__Usuar__09A971A2" Association="Self.FK__UsuarioNi__Usuar__09A971A2">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioNivelAprobacion" EntitySet="UsuarioNivelAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UsuarioRo__Creac__46E78A0C" Association="Self.FK__UsuarioRo__Creac__46E78A0C">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioRo__RolId__4BAC3F29" Association="Self.FK__UsuarioRo__RolId__4BAC3F29">
+          <AssociationSet Name="FK__UsuarioRo__RolId__47DBAE45" Association="Self.FK__UsuarioRo__RolId__47DBAE45">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioRo__Usuar__4CA06362" Association="Self.FK__UsuarioRo__Usuar__4CA06362">
+          <AssociationSet Name="FK__UsuarioRo__Usuar__48CFD27E" Association="Self.FK__UsuarioRo__Usuar__48CFD27E">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioTi__TipoD__4D94879B" Association="Self.FK__UsuarioTi__TipoD__4D94879B">
-            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
-            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__UsuarioTi__Usuar__4E88ABD4" Association="Self.FK__UsuarioTi__Usuar__4E88ABD4">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Vista__GrupoVist__4F7CD00D" Association="Self.FK__Vista__GrupoVist__4F7CD00D">
+          <AssociationSet Name="FK__Vista__GrupoVist__4BAC3F29" Association="Self.FK__Vista__GrupoVist__4BAC3F29">
             <End Role="GrupoVista" EntitySet="GrupoVista" />
             <End Role="Vista" EntitySet="Vista" />
           </AssociationSet>
-          <AssociationSet Name="FK__VistaRol__RolId__5070F446" Association="Self.FK__VistaRol__RolId__5070F446">
+          <AssociationSet Name="FK__VistaRol__RolId__4CA06362" Association="Self.FK__VistaRol__RolId__4CA06362">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="VistaRol" EntitySet="VistaRol" />
           </AssociationSet>
-          <AssociationSet Name="FK__VistaRol__VistaI__5165187F" Association="Self.FK__VistaRol__VistaI__5165187F">
+          <AssociationSet Name="FK__VistaRol__VistaI__4D94879B" Association="Self.FK__VistaRol__VistaI__4D94879B">
             <End Role="Vista" EntitySet="Vista" />
             <End Role="VistaRol" EntitySet="VistaRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="Self.FK_HangFire_JobParameter_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobParameter" EntitySet="JobParameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangFire_State_Job" Association="Self.FK_HangFire_State_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="State" EntitySet="State" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -776,7 +905,9 @@
           <EntitySet Name="AprobacionDocumento" EntityType="SICERModel.AprobacionDocumento" />
           <EntitySet Name="Documento" EntityType="SICERModel.Documento" />
           <EntitySet Name="DocumentoRendicion" EntityType="SICERModel.DocumentoRendicion" />
+          <EntitySet Name="Excepcion" EntityType="SICERModel.Excepcion" />
           <EntitySet Name="GrupoVista" EntityType="SICERModel.GrupoVista" />
+          <EntitySet Name="NivelAprobacion" EntityType="SICERModel.NivelAprobacion" />
           <EntitySet Name="Rol" EntityType="SICERModel.Rol" />
           <EntitySet Name="SapBusinessPartner" EntityType="SICERModel.SapBusinessPartner" />
           <EntitySet Name="SapCentroCosto" EntityType="SICERModel.SapCentroCosto" />
@@ -786,143 +917,153 @@
           <EntitySet Name="SapMoneda" EntityType="SICERModel.SapMoneda" />
           <EntitySet Name="SapTipoCambio" EntityType="SICERModel.SapTipoCambio" />
           <EntitySet Name="TipoDocumento" EntityType="SICERModel.TipoDocumento" />
-          <EntitySet Name="TipoDocumentoSunat" EntityType="SICERModel.TipoDocumentoSunat" />
           <EntitySet Name="Usuario" EntityType="SICERModel.Usuario" />
+          <EntitySet Name="UsuarioNivelAprobacion" EntityType="SICERModel.UsuarioNivelAprobacion" />
           <EntitySet Name="UsuarioRoles" EntityType="SICERModel.UsuarioRoles" />
-          <EntitySet Name="UsuarioTipoDocumento" EntityType="SICERModel.UsuarioTipoDocumento" />
           <EntitySet Name="Vista" EntityType="SICERModel.Vista" />
           <EntitySet Name="VistaRol" EntityType="SICERModel.VistaRol" />
-          <AssociationSet Name="FK__Aprobacio__Usuar__32E0915F" Association="SICERModel.FK__Aprobacio__Usuar__32E0915F">
+          <EntitySet Name="AggregatedCounter" EntityType="SICERModel.AggregatedCounter" />
+          <EntitySet Name="Counter" EntityType="SICERModel.Counter" />
+          <EntitySet Name="Hash" EntityType="SICERModel.Hash" />
+          <EntitySet Name="Job" EntityType="SICERModel.Job" />
+          <EntitySet Name="JobParameter" EntityType="SICERModel.JobParameter" />
+          <EntitySet Name="JobQueue" EntityType="SICERModel.JobQueue" />
+          <EntitySet Name="List" EntityType="SICERModel.List" />
+          <EntitySet Name="Schema" EntityType="SICERModel.Schema" />
+          <EntitySet Name="Server" EntityType="SICERModel.Server" />
+          <EntitySet Name="Set" EntityType="SICERModel.Set" />
+          <EntitySet Name="State" EntityType="SICERModel.State" />
+          <AssociationSet Name="FK__Aprobacio__Usuar__30F848ED" Association="SICERModel.FK__Aprobacio__Usuar__30F848ED">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
             <End Role="AprobacionDocumento" EntitySet="AprobacionDocumento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Aprobacio__Usuar__33D4B598" Association="SICERModel.FK__Aprobacio__Usuar__33D4B598">
+          <AssociationSet Name="FK__Aprobacio__Usuar__31EC6D26" Association="SICERModel.FK__Aprobacio__Usuar__31EC6D26">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AprobacionDocumento" EntitySet="AprobacionDocumento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___1Sap__34C8D9D1" Association="SICERModel.FK__Documento___1Sap__34C8D9D1">
+          <AssociationSet Name="FK__Documento___1Sap__32E0915F" Association="SICERModel.FK__Documento___1Sap__32E0915F">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___2Sap__35BCFE0A" Association="SICERModel.FK__Documento___2Sap__35BCFE0A">
+          <AssociationSet Name="FK__Documento___2Sap__33D4B598" Association="SICERModel.FK__Documento___2Sap__33D4B598">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___3Sap__36B12243" Association="SICERModel.FK__Documento___3Sap__36B12243">
+          <AssociationSet Name="FK__Documento___3Sap__34C8D9D1" Association="SICERModel.FK__Documento___3Sap__34C8D9D1">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___4Sap__37A5467C" Association="SICERModel.FK__Documento___4Sap__37A5467C">
+          <AssociationSet Name="FK__Documento___4Sap__35BCFE0A" Association="SICERModel.FK__Documento___4Sap__35BCFE0A">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___5Sap__38996AB5" Association="SICERModel.FK__Documento___5Sap__38996AB5">
+          <AssociationSet Name="FK__Documento___5Sap__36B12243" Association="SICERModel.FK__Documento___5Sap__36B12243">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Creac__398D8EEE" Association="SICERModel.FK__Documento__Creac__398D8EEE">
+          <AssociationSet Name="FK__Documento__Creac__37A5467C" Association="SICERModel.FK__Documento__Creac__37A5467C">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Docum__440B1D61" Association="SICERModel.FK__Documento__Docum__440B1D61">
+          <AssociationSet Name="FK__Documento__Docum__412EB0B6" Association="SICERModel.FK__Documento__Docum__412EB0B6">
             <End Role="Documento" EntitySet="Documento" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Modif__3A81B327" Association="SICERModel.FK__Documento__Modif__3A81B327">
+          <AssociationSet Name="FK__Documento__Modif__38996AB5" Association="SICERModel.FK__Documento__Modif__38996AB5">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapBu__3B75D760" Association="SICERModel.FK__Documento__SapBu__3B75D760">
+          <AssociationSet Name="FK__Documento__SapBu__398D8EEE" Association="SICERModel.FK__Documento__SapBu__398D8EEE">
             <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__TipoD__3C69FB99" Association="SICERModel.FK__Documento__TipoD__3C69FB99">
+          <AssociationSet Name="FK__Documento__TipoD__3A81B327" Association="SICERModel.FK__Documento__TipoD__3A81B327">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__TipoD__3D5E1FD2" Association="SICERModel.FK__Documento__TipoD__3D5E1FD2">
-            <End Role="TipoDocumentoSunat" EntitySet="TipoDocumentoSunat" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___1Sap__3E52440B" Association="SICERModel.FK__Documento___1Sap__3E52440B">
+          <AssociationSet Name="FK__Documento___1Sap__3B75D760" Association="SICERModel.FK__Documento___1Sap__3B75D760">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___2Sap__3F466844" Association="SICERModel.FK__Documento___2Sap__3F466844">
+          <AssociationSet Name="FK__Documento___2Sap__3C69FB99" Association="SICERModel.FK__Documento___2Sap__3C69FB99">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___3Sap__403A8C7D" Association="SICERModel.FK__Documento___3Sap__403A8C7D">
+          <AssociationSet Name="FK__Documento___3Sap__3D5E1FD2" Association="SICERModel.FK__Documento___3Sap__3D5E1FD2">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___4Sap__412EB0B6" Association="SICERModel.FK__Documento___4Sap__412EB0B6">
+          <AssociationSet Name="FK__Documento___4Sap__3E52440B" Association="SICERModel.FK__Documento___4Sap__3E52440B">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___5Sap__4222D4EF" Association="SICERModel.FK__Documento___5Sap__4222D4EF">
+          <AssociationSet Name="FK__Documento___5Sap__3F466844" Association="SICERModel.FK__Documento___5Sap__3F466844">
             <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Creac__4316F928" Association="SICERModel.FK__Documento__Creac__4316F928">
+          <AssociationSet Name="FK__Documento__Creac__403A8C7D" Association="SICERModel.FK__Documento__Creac__403A8C7D">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Modif__44FF419A" Association="SICERModel.FK__Documento__Modif__44FF419A">
+          <AssociationSet Name="FK__Documento__Modif__4222D4EF" Association="SICERModel.FK__Documento__Modif__4222D4EF">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapBu__45F365D3" Association="SICERModel.FK__Documento__SapBu__45F365D3">
+          <AssociationSet Name="FK__Documento__SapBu__4316F928" Association="SICERModel.FK__Documento__SapBu__4316F928">
             <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapMo__46E78A0C" Association="SICERModel.FK__Documento__SapMo__46E78A0C">
+          <AssociationSet Name="FK__Documento__SapMo__440B1D61" Association="SICERModel.FK__Documento__SapMo__440B1D61">
             <End Role="SapMoneda" EntitySet="SapMoneda" />
             <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__TipoD__47DBAE45" Association="SICERModel.FK__Documento__TipoD__47DBAE45">
-            <End Role="TipoDocumentoSunat" EntitySet="TipoDocumentoSunat" />
-            <End Role="DocumentoRendicion" EntitySet="DocumentoRendicion" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Vista__GrupoVist__4F7CD00D" Association="SICERModel.FK__Vista__GrupoVist__4F7CD00D">
+          <AssociationSet Name="FK__Vista__GrupoVist__4BAC3F29" Association="SICERModel.FK__Vista__GrupoVist__4BAC3F29">
             <End Role="GrupoVista" EntitySet="GrupoVista" />
             <End Role="Vista" EntitySet="Vista" />
           </AssociationSet>
-          <AssociationSet Name="FK__Usuario__RolId__48CFD27E" Association="SICERModel.FK__Usuario__RolId__48CFD27E">
+          <AssociationSet Name="FK__UsuarioNi__Nivel__08B54D69" Association="SICERModel.FK__UsuarioNi__Nivel__08B54D69">
+            <End Role="NivelAprobacion" EntitySet="NivelAprobacion" />
+            <End Role="UsuarioNivelAprobacion" EntitySet="UsuarioNivelAprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__RolId__44FF419A" Association="SICERModel.FK__Usuario__RolId__44FF419A">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioRo__RolId__4BAC3F29" Association="SICERModel.FK__UsuarioRo__RolId__4BAC3F29">
+          <AssociationSet Name="FK__UsuarioRo__RolId__47DBAE45" Association="SICERModel.FK__UsuarioRo__RolId__47DBAE45">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__VistaRol__RolId__5070F446" Association="SICERModel.FK__VistaRol__RolId__5070F446">
+          <AssociationSet Name="FK__VistaRol__RolId__4CA06362" Association="SICERModel.FK__VistaRol__RolId__4CA06362">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="VistaRol" EntitySet="VistaRol" />
           </AssociationSet>
-          <AssociationSet Name="FK__Usuario__SapBusi__49C3F6B7" Association="SICERModel.FK__Usuario__SapBusi__49C3F6B7">
+          <AssociationSet Name="FK__Usuario__SapBusi__45F365D3" Association="SICERModel.FK__Usuario__SapBusi__45F365D3">
             <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioTi__TipoD__4D94879B" Association="SICERModel.FK__UsuarioTi__TipoD__4D94879B">
-            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
-            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
+          <AssociationSet Name="FK__UsuarioNi__Usuar__09A971A2" Association="SICERModel.FK__UsuarioNi__Usuar__09A971A2">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="UsuarioNivelAprobacion" EntitySet="UsuarioNivelAprobacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioRo__Creac__4AB81AF0" Association="SICERModel.FK__UsuarioRo__Creac__4AB81AF0">
+          <AssociationSet Name="FK__UsuarioRo__Creac__46E78A0C" Association="SICERModel.FK__UsuarioRo__Creac__46E78A0C">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioRo__Usuar__4CA06362" Association="SICERModel.FK__UsuarioRo__Usuar__4CA06362">
+          <AssociationSet Name="FK__UsuarioRo__Usuar__48CFD27E" Association="SICERModel.FK__UsuarioRo__Usuar__48CFD27E">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="UsuarioRoles" EntitySet="UsuarioRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK__UsuarioTi__Usuar__4E88ABD4" Association="SICERModel.FK__UsuarioTi__Usuar__4E88ABD4">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="UsuarioTipoDocumento" EntitySet="UsuarioTipoDocumento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__VistaRol__VistaI__5165187F" Association="SICERModel.FK__VistaRol__VistaI__5165187F">
+          <AssociationSet Name="FK__VistaRol__VistaI__4D94879B" Association="SICERModel.FK__VistaRol__VistaI__4D94879B">
             <End Role="Vista" EntitySet="Vista" />
             <End Role="VistaRol" EntitySet="VistaRol" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangFire_JobParameter_Job" Association="SICERModel.FK_HangFire_JobParameter_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="JobParameter" EntitySet="JobParameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HangFire_State_Job" Association="SICERModel.FK_HangFire_State_Job">
+            <End Role="Job" EntitySet="Job" />
+            <End Role="State" EntitySet="State" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="SP_SAPProveedor_Result">
@@ -938,8 +1079,8 @@
           <Property Name="AprobacionDocumentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UsuarioTipoDocumentoId" Type="Int32" Nullable="false" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TipoDocumento" Relationship="SICERModel.FK__Aprobacio__Usuar__32E0915F" FromRole="AprobacionDocumento" ToRole="TipoDocumento" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Aprobacio__Usuar__33D4B598" FromRole="AprobacionDocumento" ToRole="Usuario" />
+          <NavigationProperty Name="TipoDocumento" Relationship="SICERModel.FK__Aprobacio__Usuar__30F848ED" FromRole="AprobacionDocumento" ToRole="TipoDocumento" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Aprobacio__Usuar__31EC6D26" FromRole="AprobacionDocumento" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Documento">
           <Key>
@@ -953,29 +1094,26 @@
           <Property Name="FechaSolicitud" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="MontoInicial" Type="Double" Nullable="false" />
           <Property Name="TipoDocumentoId" Type="Int32" Nullable="false" />
-          <Property Name="TipoDocumentoSunatId" Type="Int32" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="C_1SapCentroCostoOcrCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="C_2SapCentroCostoOcrCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="C_3SapCentroCostoOcrCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="C_4SapCentroCostoOcrCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="C_5SapCentroCostoOcrCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="SapMetodoPagoPayMethCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CreacionUsuarioId" Type="Int32" Nullable="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModificacionUsuarioId" Type="Int32" Nullable="false" />
           <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="SapCentroCosto" Relationship="SICERModel.FK__Documento___1Sap__34C8D9D1" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto1" Relationship="SICERModel.FK__Documento___2Sap__35BCFE0A" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto2" Relationship="SICERModel.FK__Documento___3Sap__36B12243" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto3" Relationship="SICERModel.FK__Documento___4Sap__37A5467C" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto4" Relationship="SICERModel.FK__Documento___5Sap__38996AB5" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Documento__Creac__398D8EEE" FromRole="Documento" ToRole="Usuario" />
-          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__Docum__440B1D61" FromRole="Documento" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__Documento__Modif__3A81B327" FromRole="Documento" ToRole="Usuario" />
-          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Documento__SapBu__3B75D760" FromRole="Documento" ToRole="SapBusinessPartner" />
-          <NavigationProperty Name="TipoDocumento" Relationship="SICERModel.FK__Documento__TipoD__3C69FB99" FromRole="Documento" ToRole="TipoDocumento" />
-          <NavigationProperty Name="TipoDocumentoSunat" Relationship="SICERModel.FK__Documento__TipoD__3D5E1FD2" FromRole="Documento" ToRole="TipoDocumentoSunat" />
+          <NavigationProperty Name="SapCentroCosto" Relationship="SICERModel.FK__Documento___1Sap__32E0915F" FromRole="Documento" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto1" Relationship="SICERModel.FK__Documento___2Sap__33D4B598" FromRole="Documento" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto2" Relationship="SICERModel.FK__Documento___3Sap__34C8D9D1" FromRole="Documento" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto3" Relationship="SICERModel.FK__Documento___4Sap__35BCFE0A" FromRole="Documento" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto4" Relationship="SICERModel.FK__Documento___5Sap__36B12243" FromRole="Documento" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Documento__Creac__37A5467C" FromRole="Documento" ToRole="Usuario" />
+          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__Docum__412EB0B6" FromRole="Documento" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__Documento__Modif__38996AB5" FromRole="Documento" ToRole="Usuario" />
+          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Documento__SapBu__398D8EEE" FromRole="Documento" ToRole="SapBusinessPartner" />
+          <NavigationProperty Name="TipoDocumento" Relationship="SICERModel.FK__Documento__TipoD__3A81B327" FromRole="Documento" ToRole="TipoDocumento" />
         </EntityType>
         <EntityType Name="DocumentoRendicion">
           <Key>
@@ -994,7 +1132,6 @@
           <Property Name="MontoTotal" Type="Double" Nullable="false" />
           <Property Name="EstadoRendicion" Type="Int32" Nullable="false" />
           <Property Name="FechaDocumento" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TipoDocumentoSunatId" Type="Int32" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="C_1SapCentroCostoOcrCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="C_2SapCentroCostoOcrCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -1006,17 +1143,29 @@
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ModificacionUsuarioId" Type="Int32" Nullable="false" />
           <Property Name="FechaModificacion" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__Docum__440B1D61" FromRole="DocumentoRendicion" ToRole="Documento" />
-          <NavigationProperty Name="SapCentroCosto" Relationship="SICERModel.FK__Documento___1Sap__3E52440B" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto1" Relationship="SICERModel.FK__Documento___2Sap__3F466844" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto2" Relationship="SICERModel.FK__Documento___3Sap__403A8C7D" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto3" Relationship="SICERModel.FK__Documento___4Sap__412EB0B6" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto4" Relationship="SICERModel.FK__Documento___5Sap__4222D4EF" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Documento__Creac__4316F928" FromRole="DocumentoRendicion" ToRole="Usuario" />
-          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__Documento__Modif__44FF419A" FromRole="DocumentoRendicion" ToRole="Usuario" />
-          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Documento__SapBu__45F365D3" FromRole="DocumentoRendicion" ToRole="SapBusinessPartner" />
-          <NavigationProperty Name="SapMoneda" Relationship="SICERModel.FK__Documento__SapMo__46E78A0C" FromRole="DocumentoRendicion" ToRole="SapMoneda" />
-          <NavigationProperty Name="TipoDocumentoSunat" Relationship="SICERModel.FK__Documento__TipoD__47DBAE45" FromRole="DocumentoRendicion" ToRole="TipoDocumentoSunat" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__Docum__412EB0B6" FromRole="DocumentoRendicion" ToRole="Documento" />
+          <NavigationProperty Name="SapCentroCosto" Relationship="SICERModel.FK__Documento___1Sap__3B75D760" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto1" Relationship="SICERModel.FK__Documento___2Sap__3C69FB99" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto2" Relationship="SICERModel.FK__Documento___3Sap__3D5E1FD2" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto3" Relationship="SICERModel.FK__Documento___4Sap__3E52440B" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="SapCentroCosto4" Relationship="SICERModel.FK__Documento___5Sap__3F466844" FromRole="DocumentoRendicion" ToRole="SapCentroCosto" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Documento__Creac__403A8C7D" FromRole="DocumentoRendicion" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__Documento__Modif__4222D4EF" FromRole="DocumentoRendicion" ToRole="Usuario" />
+          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Documento__SapBu__4316F928" FromRole="DocumentoRendicion" ToRole="SapBusinessPartner" />
+          <NavigationProperty Name="SapMoneda" Relationship="SICERModel.FK__Documento__SapMo__440B1D61" FromRole="DocumentoRendicion" ToRole="SapMoneda" />
+        </EntityType>
+        <EntityType Name="Excepcion">
+          <Key>
+            <PropertyRef Name="idExcepcion" />
+          </Key>
+          <Property Name="idExcepcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="mensaje" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="tipo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="pila" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="navegador" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="excepcionInterna" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="timeStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sessionKeys" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GrupoVista">
           <Key>
@@ -1025,7 +1174,16 @@
           <Property Name="GrupoVistaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Codigo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Vista" Relationship="SICERModel.FK__Vista__GrupoVist__4F7CD00D" FromRole="GrupoVista" ToRole="Vista" />
+          <NavigationProperty Name="Vista" Relationship="SICERModel.FK__Vista__GrupoVist__4BAC3F29" FromRole="GrupoVista" ToRole="Vista" />
+        </EntityType>
+        <EntityType Name="NivelAprobacion">
+          <Key>
+            <PropertyRef Name="NivelAprobacionId" />
+          </Key>
+          <Property Name="NivelAprobacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroNivel" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UsuarioNivelAprobacion" Relationship="SICERModel.FK__UsuarioNi__Nivel__08B54D69" FromRole="NivelAprobacion" ToRole="UsuarioNivelAprobacion" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -1035,9 +1193,9 @@
           <Property Name="Codigo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="nivel" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Usuario__RolId__48CFD27E" FromRole="Rol" ToRole="Usuario" />
-          <NavigationProperty Name="UsuarioRoles" Relationship="SICERModel.FK__UsuarioRo__RolId__4BAC3F29" FromRole="Rol" ToRole="UsuarioRoles" />
-          <NavigationProperty Name="VistaRol" Relationship="SICERModel.FK__VistaRol__RolId__5070F446" FromRole="Rol" ToRole="VistaRol" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Usuario__RolId__44FF419A" FromRole="Rol" ToRole="Usuario" />
+          <NavigationProperty Name="UsuarioRoles" Relationship="SICERModel.FK__UsuarioRo__RolId__47DBAE45" FromRole="Rol" ToRole="UsuarioRoles" />
+          <NavigationProperty Name="VistaRol" Relationship="SICERModel.FK__VistaRol__RolId__4CA06362" FromRole="Rol" ToRole="VistaRol" />
         </EntityType>
         <EntityType Name="SapBusinessPartner">
           <Key>
@@ -1049,9 +1207,9 @@
           <Property Name="LictradNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="validFor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CardCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__SapBu__3B75D760" FromRole="SapBusinessPartner" ToRole="Documento" />
-          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__SapBu__45F365D3" FromRole="SapBusinessPartner" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Usuario__SapBusi__49C3F6B7" FromRole="SapBusinessPartner" ToRole="Usuario" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__SapBu__398D8EEE" FromRole="SapBusinessPartner" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__SapBu__4316F928" FromRole="SapBusinessPartner" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Usuario__SapBusi__45F365D3" FromRole="SapBusinessPartner" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="SapCentroCosto">
           <Key>
@@ -1061,17 +1219,17 @@
           <Property Name="OcrCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OcrName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DimCode" Type="Int32" />
-          <Property Name="Locked" Type="Boolean" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento___1Sap__34C8D9D1" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento___2Sap__35BCFE0A" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento___3Sap__36B12243" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento3" Relationship="SICERModel.FK__Documento___4Sap__37A5467C" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento4" Relationship="SICERModel.FK__Documento___5Sap__38996AB5" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento___1Sap__3E52440B" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="DocumentoRendicion1" Relationship="SICERModel.FK__Documento___2Sap__3F466844" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="DocumentoRendicion2" Relationship="SICERModel.FK__Documento___3Sap__403A8C7D" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="DocumentoRendicion3" Relationship="SICERModel.FK__Documento___4Sap__412EB0B6" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="DocumentoRendicion4" Relationship="SICERModel.FK__Documento___5Sap__4222D4EF" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
+          <Property Name="Locked" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento___1Sap__32E0915F" FromRole="SapCentroCosto" ToRole="Documento" />
+          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento___2Sap__33D4B598" FromRole="SapCentroCosto" ToRole="Documento" />
+          <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento___3Sap__34C8D9D1" FromRole="SapCentroCosto" ToRole="Documento" />
+          <NavigationProperty Name="Documento3" Relationship="SICERModel.FK__Documento___4Sap__35BCFE0A" FromRole="SapCentroCosto" ToRole="Documento" />
+          <NavigationProperty Name="Documento4" Relationship="SICERModel.FK__Documento___5Sap__36B12243" FromRole="SapCentroCosto" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento___1Sap__3B75D760" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="DocumentoRendicion1" Relationship="SICERModel.FK__Documento___2Sap__3C69FB99" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="DocumentoRendicion2" Relationship="SICERModel.FK__Documento___3Sap__3D5E1FD2" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="DocumentoRendicion3" Relationship="SICERModel.FK__Documento___4Sap__3E52440B" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="DocumentoRendicion4" Relationship="SICERModel.FK__Documento___5Sap__3F466844" FromRole="SapCentroCosto" ToRole="DocumentoRendicion" />
         </EntityType>
         <EntityType Name="SapConcepto">
           <Key>
@@ -1079,8 +1237,8 @@
           </Key>
           <Property Name="Code" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_CUENTACONTABLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="U_MSS_DSCRPT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="U_MSS_ACCT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SapCuentaContable">
           <Key>
@@ -1088,8 +1246,9 @@
           </Key>
           <Property Name="Code" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_CUENTACONTABLE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="U_MSS_DSCRPT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="U_MSS_IBACCT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="U_MSS_ACCT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SapIndicators">
           <Key>
@@ -1105,7 +1264,7 @@
           <Property Name="SapMonedaDocCurrCod" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="CurrName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Locked" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__SapMo__46E78A0C" FromRole="SapMoneda" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__SapMo__440B1D61" FromRole="SapMoneda" ToRole="DocumentoRendicion" />
         </EntityType>
         <EntityType Name="SapTipoCambio">
           <Key>
@@ -1114,6 +1273,7 @@
           <Property Name="SapTipoCambioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RateDate" Type="DateTime" Precision="0" />
           <Property Name="Currency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="TipoDocumento">
           <Key>
@@ -1122,19 +1282,8 @@
           <Property Name="TipoDocumentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Codigo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AprobacionDocumento" Relationship="SICERModel.FK__Aprobacio__Usuar__32E0915F" FromRole="TipoDocumento" ToRole="AprobacionDocumento" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__TipoD__3C69FB99" FromRole="TipoDocumento" ToRole="Documento" />
-          <NavigationProperty Name="UsuarioTipoDocumento" Relationship="SICERModel.FK__UsuarioTi__TipoD__4D94879B" FromRole="TipoDocumento" ToRole="UsuarioTipoDocumento" />
-        </EntityType>
-        <EntityType Name="TipoDocumentoSunat">
-          <Key>
-            <PropertyRef Name="TipoDocumentoSunatId" />
-          </Key>
-          <Property Name="TipoDocumentoSunatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CodigoSunat" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__TipoD__3D5E1FD2" FromRole="TipoDocumentoSunat" ToRole="Documento" />
-          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__TipoD__47DBAE45" FromRole="TipoDocumentoSunat" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="AprobacionDocumento" Relationship="SICERModel.FK__Aprobacio__Usuar__30F848ED" FromRole="TipoDocumento" ToRole="AprobacionDocumento" />
+          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__TipoD__3A81B327" FromRole="TipoDocumento" ToRole="Documento" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -1152,16 +1301,26 @@
           <Property Name="Password" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="RolId" Type="Int32" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AprobacionDocumento" Relationship="SICERModel.FK__Aprobacio__Usuar__33D4B598" FromRole="Usuario" ToRole="AprobacionDocumento" />
-          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento__Creac__398D8EEE" FromRole="Usuario" ToRole="Documento" />
-          <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento__Modif__3A81B327" FromRole="Usuario" ToRole="Documento" />
-          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__Creac__4316F928" FromRole="Usuario" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="DocumentoRendicion1" Relationship="SICERModel.FK__Documento__Modif__44FF419A" FromRole="Usuario" ToRole="DocumentoRendicion" />
-          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__Usuario__RolId__48CFD27E" FromRole="Usuario" ToRole="Rol" />
-          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Usuario__SapBusi__49C3F6B7" FromRole="Usuario" ToRole="SapBusinessPartner" />
-          <NavigationProperty Name="UsuarioRoles" Relationship="SICERModel.FK__UsuarioRo__Creac__4AB81AF0" FromRole="Usuario" ToRole="UsuarioRoles" />
-          <NavigationProperty Name="UsuarioRoles1" Relationship="SICERModel.FK__UsuarioRo__Usuar__4CA06362" FromRole="Usuario" ToRole="UsuarioRoles" />
-          <NavigationProperty Name="UsuarioTipoDocumento" Relationship="SICERModel.FK__UsuarioTi__Usuar__4E88ABD4" FromRole="Usuario" ToRole="UsuarioTipoDocumento" />
+          <NavigationProperty Name="AprobacionDocumento" Relationship="SICERModel.FK__Aprobacio__Usuar__31EC6D26" FromRole="Usuario" ToRole="AprobacionDocumento" />
+          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento__Creac__37A5467C" FromRole="Usuario" ToRole="Documento" />
+          <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento__Modif__38996AB5" FromRole="Usuario" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoRendicion" Relationship="SICERModel.FK__Documento__Creac__403A8C7D" FromRole="Usuario" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="DocumentoRendicion1" Relationship="SICERModel.FK__Documento__Modif__4222D4EF" FromRole="Usuario" ToRole="DocumentoRendicion" />
+          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__Usuario__RolId__44FF419A" FromRole="Usuario" ToRole="Rol" />
+          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Usuario__SapBusi__45F365D3" FromRole="Usuario" ToRole="SapBusinessPartner" />
+          <NavigationProperty Name="UsuarioNivelAprobacion" Relationship="SICERModel.FK__UsuarioNi__Usuar__09A971A2" FromRole="Usuario" ToRole="UsuarioNivelAprobacion" />
+          <NavigationProperty Name="UsuarioRoles" Relationship="SICERModel.FK__UsuarioRo__Creac__46E78A0C" FromRole="Usuario" ToRole="UsuarioRoles" />
+          <NavigationProperty Name="UsuarioRoles1" Relationship="SICERModel.FK__UsuarioRo__Usuar__48CFD27E" FromRole="Usuario" ToRole="UsuarioRoles" />
+        </EntityType>
+        <EntityType Name="UsuarioNivelAprobacion">
+          <Key>
+            <PropertyRef Name="UsuarioNivelAprobacionId" />
+          </Key>
+          <Property Name="UsuarioNivelAprobacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NivelId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NivelAprobacion" Relationship="SICERModel.FK__UsuarioNi__Nivel__08B54D69" FromRole="UsuarioNivelAprobacion" ToRole="NivelAprobacion" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__UsuarioNi__Usuar__09A971A2" FromRole="UsuarioNivelAprobacion" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="UsuarioRoles">
           <Key>
@@ -1173,20 +1332,9 @@
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="CreacionUsuarioId" Type="Int32" />
           <Property Name="FechaCreacion" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__UsuarioRo__RolId__4BAC3F29" FromRole="UsuarioRoles" ToRole="Rol" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__UsuarioRo__Creac__4AB81AF0" FromRole="UsuarioRoles" ToRole="Usuario" />
-          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__UsuarioRo__Usuar__4CA06362" FromRole="UsuarioRoles" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="UsuarioTipoDocumento">
-          <Key>
-            <PropertyRef Name="UsuarioTipoDocumentoId" />
-          </Key>
-          <Property Name="UsuarioTipoDocumentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CantidadMaximaDocumentos" Type="Int32" Nullable="false" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <Property Name="TipoDocumentoId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="TipoDocumento" Relationship="SICERModel.FK__UsuarioTi__TipoD__4D94879B" FromRole="UsuarioTipoDocumento" ToRole="TipoDocumento" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__UsuarioTi__Usuar__4E88ABD4" FromRole="UsuarioTipoDocumento" ToRole="Usuario" />
+          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__UsuarioRo__RolId__47DBAE45" FromRole="UsuarioRoles" ToRole="Rol" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__UsuarioRo__Creac__46E78A0C" FromRole="UsuarioRoles" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__UsuarioRo__Usuar__48CFD27E" FromRole="UsuarioRoles" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Vista">
           <Key>
@@ -1196,8 +1344,8 @@
           <Property Name="Codigo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="GrupoVistaId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="GrupoVista" Relationship="SICERModel.FK__Vista__GrupoVist__4F7CD00D" FromRole="Vista" ToRole="GrupoVista" />
-          <NavigationProperty Name="VistaRol" Relationship="SICERModel.FK__VistaRol__VistaI__5165187F" FromRole="Vista" ToRole="VistaRol" />
+          <NavigationProperty Name="GrupoVista" Relationship="SICERModel.FK__Vista__GrupoVist__4BAC3F29" FromRole="Vista" ToRole="GrupoVista" />
+          <NavigationProperty Name="VistaRol" Relationship="SICERModel.FK__VistaRol__VistaI__4D94879B" FromRole="Vista" ToRole="VistaRol" />
         </EntityType>
         <EntityType Name="VistaRol">
           <Key>
@@ -1207,10 +1355,116 @@
           <Property Name="Estado" Type="Boolean" Nullable="false" />
           <Property Name="VistaId" Type="Int32" Nullable="false" />
           <Property Name="RolId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__VistaRol__RolId__5070F446" FromRole="VistaRol" ToRole="Rol" />
-          <NavigationProperty Name="Vista" Relationship="SICERModel.FK__VistaRol__VistaI__5165187F" FromRole="VistaRol" ToRole="Vista" />
+          <NavigationProperty Name="Rol" Relationship="SICERModel.FK__VistaRol__RolId__4CA06362" FromRole="VistaRol" ToRole="Rol" />
+          <NavigationProperty Name="Vista" Relationship="SICERModel.FK__VistaRol__VistaI__4D94879B" FromRole="VistaRol" ToRole="Vista" />
         </EntityType>
-        <Association Name="FK__Aprobacio__Usuar__32E0915F">
+        <EntityType Name="AggregatedCounter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int64" Nullable="false" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Counter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="Int16" Nullable="false" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Hash">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Field" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="7" />
+        </EntityType>
+        <EntityType Name="Job">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="StateName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="InvocationData" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Arguments" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="JobParameter" Relationship="SICERModel.FK_HangFire_JobParameter_Job" FromRole="Job" ToRole="JobParameter" />
+          <NavigationProperty Name="State" Relationship="SICERModel.FK_HangFire_State_Job" FromRole="Job" ToRole="State" />
+        </EntityType>
+        <EntityType Name="JobParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Job" Relationship="SICERModel.FK_HangFire_JobParameter_Job" FromRole="JobParameter" ToRole="Job" />
+        </EntityType>
+        <EntityType Name="JobQueue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Queue" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FetchedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Schema">
+          <Key>
+            <PropertyRef Name="Version" />
+          </Key>
+          <Property Name="Version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Server">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastHeartbeat" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Set">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Double" Nullable="false" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ExpireAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JobId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Data" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Job" Relationship="SICERModel.FK_HangFire_State_Job" FromRole="State" ToRole="Job" />
+        </EntityType>
+        <Association Name="FK__Aprobacio__Usuar__30F848ED">
           <End Type="SICERModel.TipoDocumento" Role="TipoDocumento" Multiplicity="1" />
           <End Type="SICERModel.AprobacionDocumento" Role="AprobacionDocumento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1222,7 +1476,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Aprobacio__Usuar__33D4B598">
+        <Association Name="FK__Aprobacio__Usuar__31EC6D26">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="SICERModel.AprobacionDocumento" Role="AprobacionDocumento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1234,7 +1488,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___1Sap__34C8D9D1">
+        <Association Name="FK__Documento___1Sap__32E0915F">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1246,7 +1500,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___2Sap__35BCFE0A">
+        <Association Name="FK__Documento___2Sap__33D4B598">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1258,7 +1512,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___3Sap__36B12243">
+        <Association Name="FK__Documento___3Sap__34C8D9D1">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1270,7 +1524,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___4Sap__37A5467C">
+        <Association Name="FK__Documento___4Sap__35BCFE0A">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1282,7 +1536,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___5Sap__38996AB5">
+        <Association Name="FK__Documento___5Sap__36B12243">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1294,7 +1548,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Creac__398D8EEE">
+        <Association Name="FK__Documento__Creac__37A5467C">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1306,7 +1560,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Docum__440B1D61">
+        <Association Name="FK__Documento__Docum__412EB0B6">
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1318,7 +1572,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Modif__3A81B327">
+        <Association Name="FK__Documento__Modif__38996AB5">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1330,7 +1584,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__SapBu__3B75D760">
+        <Association Name="FK__Documento__SapBu__398D8EEE">
           <End Type="SICERModel.SapBusinessPartner" Role="SapBusinessPartner" Multiplicity="0..1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1342,7 +1596,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__TipoD__3C69FB99">
+        <Association Name="FK__Documento__TipoD__3A81B327">
           <End Type="SICERModel.TipoDocumento" Role="TipoDocumento" Multiplicity="1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1354,19 +1608,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__TipoD__3D5E1FD2">
-          <End Type="SICERModel.TipoDocumentoSunat" Role="TipoDocumentoSunat" Multiplicity="1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoDocumentoSunat">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___1Sap__3E52440B">
+        <Association Name="FK__Documento___1Sap__3B75D760">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1378,7 +1620,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___2Sap__3F466844">
+        <Association Name="FK__Documento___2Sap__3C69FB99">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1390,7 +1632,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___3Sap__403A8C7D">
+        <Association Name="FK__Documento___3Sap__3D5E1FD2">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1402,7 +1644,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___4Sap__412EB0B6">
+        <Association Name="FK__Documento___4Sap__3E52440B">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1414,7 +1656,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___5Sap__4222D4EF">
+        <Association Name="FK__Documento___5Sap__3F466844">
           <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1426,7 +1668,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Creac__4316F928">
+        <Association Name="FK__Documento__Creac__403A8C7D">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1438,7 +1680,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Modif__44FF419A">
+        <Association Name="FK__Documento__Modif__4222D4EF">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1450,7 +1692,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__SapBu__45F365D3">
+        <Association Name="FK__Documento__SapBu__4316F928">
           <End Type="SICERModel.SapBusinessPartner" Role="SapBusinessPartner" Multiplicity="0..1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1462,7 +1704,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__SapMo__46E78A0C">
+        <Association Name="FK__Documento__SapMo__440B1D61">
           <End Type="SICERModel.SapMoneda" Role="SapMoneda" Multiplicity="0..1" />
           <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1474,19 +1716,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__TipoD__47DBAE45">
-          <End Type="SICERModel.TipoDocumentoSunat" Role="TipoDocumentoSunat" Multiplicity="1" />
-          <End Type="SICERModel.DocumentoRendicion" Role="DocumentoRendicion" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TipoDocumentoSunat">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Principal>
-            <Dependent Role="DocumentoRendicion">
-              <PropertyRef Name="TipoDocumentoSunatId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Vista__GrupoVist__4F7CD00D">
+        <Association Name="FK__Vista__GrupoVist__4BAC3F29">
           <End Type="SICERModel.GrupoVista" Role="GrupoVista" Multiplicity="1" />
           <End Type="SICERModel.Vista" Role="Vista" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1498,7 +1728,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Usuario__RolId__48CFD27E">
+        <Association Name="FK__UsuarioNi__Nivel__08B54D69">
+          <End Type="SICERModel.NivelAprobacion" Role="NivelAprobacion" Multiplicity="1" />
+          <End Type="SICERModel.UsuarioNivelAprobacion" Role="UsuarioNivelAprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NivelAprobacion">
+              <PropertyRef Name="NivelAprobacionId" />
+            </Principal>
+            <Dependent Role="UsuarioNivelAprobacion">
+              <PropertyRef Name="NivelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__RolId__44FF419A">
           <End Type="SICERModel.Rol" Role="Rol" Multiplicity="1" />
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1510,7 +1752,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioRo__RolId__4BAC3F29">
+        <Association Name="FK__UsuarioRo__RolId__47DBAE45">
           <End Type="SICERModel.Rol" Role="Rol" Multiplicity="1" />
           <End Type="SICERModel.UsuarioRoles" Role="UsuarioRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1522,7 +1764,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VistaRol__RolId__5070F446">
+        <Association Name="FK__VistaRol__RolId__4CA06362">
           <End Type="SICERModel.Rol" Role="Rol" Multiplicity="1" />
           <End Type="SICERModel.VistaRol" Role="VistaRol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1534,7 +1776,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Usuario__SapBusi__49C3F6B7">
+        <Association Name="FK__Usuario__SapBusi__45F365D3">
           <End Type="SICERModel.SapBusinessPartner" Role="SapBusinessPartner" Multiplicity="0..1" />
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1546,19 +1788,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioTi__TipoD__4D94879B">
-          <End Type="SICERModel.TipoDocumento" Role="TipoDocumento" Multiplicity="1" />
-          <End Type="SICERModel.UsuarioTipoDocumento" Role="UsuarioTipoDocumento" Multiplicity="*" />
+        <Association Name="FK__UsuarioNi__Usuar__09A971A2">
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="SICERModel.UsuarioNivelAprobacion" Role="UsuarioNivelAprobacion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TipoDocumento">
-              <PropertyRef Name="TipoDocumentoId" />
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
             </Principal>
-            <Dependent Role="UsuarioTipoDocumento">
-              <PropertyRef Name="TipoDocumentoId" />
+            <Dependent Role="UsuarioNivelAprobacion">
+              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioRo__Creac__4AB81AF0">
+        <Association Name="FK__UsuarioRo__Creac__46E78A0C">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
           <End Type="SICERModel.UsuarioRoles" Role="UsuarioRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1570,7 +1812,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioRo__Usuar__4CA06362">
+        <Association Name="FK__UsuarioRo__Usuar__48CFD27E">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
           <End Type="SICERModel.UsuarioRoles" Role="UsuarioRoles" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1582,19 +1824,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UsuarioTi__Usuar__4E88ABD4">
-          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="SICERModel.UsuarioTipoDocumento" Role="UsuarioTipoDocumento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="UsuarioTipoDocumento">
-              <PropertyRef Name="UsuarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__VistaRol__VistaI__5165187F">
+        <Association Name="FK__VistaRol__VistaI__4D94879B">
           <End Type="SICERModel.Vista" Role="Vista" Multiplicity="1" />
           <End Type="SICERModel.VistaRol" Role="VistaRol" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1603,6 +1833,34 @@
             </Principal>
             <Dependent Role="VistaRol">
               <PropertyRef Name="VistaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangFire_JobParameter_Job">
+          <End Type="SICERModel.Job" Role="Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SICERModel.JobParameter" Role="JobParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="JobParameter">
+              <PropertyRef Name="JobId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HangFire_State_Job">
+          <End Type="SICERModel.Job" Role="Job" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SICERModel.State" Role="State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="JobId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1628,14 +1886,12 @@
                 <ScalarProperty Name="ModificacionUsuarioId" ColumnName="ModificacionUsuarioId" />
                 <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="CreacionUsuarioId" ColumnName="CreacionUsuarioId" />
-                <ScalarProperty Name="SapMetodoPagoPayMethCode" ColumnName="SapMetodoPagoPayMethCode" />
                 <ScalarProperty Name="C_5SapCentroCostoOcrCode" ColumnName="_5SapCentroCostoOcrCode" />
                 <ScalarProperty Name="C_4SapCentroCostoOcrCode" ColumnName="_4SapCentroCostoOcrCode" />
                 <ScalarProperty Name="C_3SapCentroCostoOcrCode" ColumnName="_3SapCentroCostoOcrCode" />
                 <ScalarProperty Name="C_2SapCentroCostoOcrCode" ColumnName="_2SapCentroCostoOcrCode" />
                 <ScalarProperty Name="C_1SapCentroCostoOcrCode" ColumnName="_1SapCentroCostoOcrCode" />
                 <ScalarProperty Name="SapBusinessPartnerCardCode" ColumnName="SapBusinessPartnerCardCode" />
-                <ScalarProperty Name="TipoDocumentoSunatId" ColumnName="TipoDocumentoSunatId" />
                 <ScalarProperty Name="TipoDocumentoId" ColumnName="TipoDocumentoId" />
                 <ScalarProperty Name="MontoInicial" ColumnName="MontoInicial" />
                 <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
@@ -1661,7 +1917,6 @@
                 <ScalarProperty Name="C_2SapCentroCostoOcrCode" ColumnName="_2SapCentroCostoOcrCode" />
                 <ScalarProperty Name="C_1SapCentroCostoOcrCode" ColumnName="_1SapCentroCostoOcrCode" />
                 <ScalarProperty Name="SapBusinessPartnerCardCode" ColumnName="SapBusinessPartnerCardCode" />
-                <ScalarProperty Name="TipoDocumentoSunatId" ColumnName="TipoDocumentoSunatId" />
                 <ScalarProperty Name="FechaDocumento" ColumnName="FechaDocumento" />
                 <ScalarProperty Name="EstadoRendicion" ColumnName="EstadoRendicion" />
                 <ScalarProperty Name="MontoTotal" ColumnName="MontoTotal" />
@@ -1678,12 +1933,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Excepcion">
+            <EntityTypeMapping TypeName="SICERModel.Excepcion">
+              <MappingFragment StoreEntitySet="Excepcion">
+                <ScalarProperty Name="sessionKeys" ColumnName="sessionKeys" />
+                <ScalarProperty Name="timeStamp" ColumnName="timeStamp" />
+                <ScalarProperty Name="excepcionInterna" ColumnName="excepcionInterna" />
+                <ScalarProperty Name="navegador" ColumnName="navegador" />
+                <ScalarProperty Name="pila" ColumnName="pila" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="idExcepcion" ColumnName="idExcepcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="GrupoVista">
             <EntityTypeMapping TypeName="SICERModel.GrupoVista">
               <MappingFragment StoreEntitySet="GrupoVista">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="GrupoVistaId" ColumnName="GrupoVistaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NivelAprobacion">
+            <EntityTypeMapping TypeName="SICERModel.NivelAprobacion">
+              <MappingFragment StoreEntitySet="NivelAprobacion">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="NumeroNivel" ColumnName="NumeroNivel" />
+                <ScalarProperty Name="NivelAprobacionId" ColumnName="NivelAprobacionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1723,8 +2001,8 @@
           <EntitySetMapping Name="SapConcepto">
             <EntityTypeMapping TypeName="SICERModel.SapConcepto">
               <MappingFragment StoreEntitySet="SapConcepto">
-                <ScalarProperty Name="U_Descripcion" ColumnName="U_Descripcion" />
-                <ScalarProperty Name="U_CUENTACONTABLE" ColumnName="U_CUENTACONTABLE" />
+                <ScalarProperty Name="U_MSS_ACCT" ColumnName="U_MSS_ACCT" />
+                <ScalarProperty Name="U_MSS_DSCRPT" ColumnName="U_MSS_DSCRPT" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
@@ -1733,8 +2011,9 @@
           <EntitySetMapping Name="SapCuentaContable">
             <EntityTypeMapping TypeName="SICERModel.SapCuentaContable">
               <MappingFragment StoreEntitySet="SapCuentaContable">
-                <ScalarProperty Name="U_Descripcion" ColumnName="U_Descripcion" />
-                <ScalarProperty Name="U_CUENTACONTABLE" ColumnName="U_CUENTACONTABLE" />
+                <ScalarProperty Name="U_MSS_ACCT" ColumnName="U_MSS_ACCT" />
+                <ScalarProperty Name="U_MSS_IBACCT" ColumnName="U_MSS_IBACCT" />
+                <ScalarProperty Name="U_MSS_DSCRPT" ColumnName="U_MSS_DSCRPT" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
               </MappingFragment>
@@ -1760,6 +2039,7 @@
           <EntitySetMapping Name="SapTipoCambio">
             <EntityTypeMapping TypeName="SICERModel.SapTipoCambio">
               <MappingFragment StoreEntitySet="SapTipoCambio">
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
                 <ScalarProperty Name="Currency" ColumnName="Currency" />
                 <ScalarProperty Name="RateDate" ColumnName="RateDate" />
                 <ScalarProperty Name="SapTipoCambioId" ColumnName="SapTipoCambioId" />
@@ -1772,15 +2052,6 @@
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="TipoDocumentoId" ColumnName="TipoDocumentoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TipoDocumentoSunat">
-            <EntityTypeMapping TypeName="SICERModel.TipoDocumentoSunat">
-              <MappingFragment StoreEntitySet="TipoDocumentoSunat">
-                <ScalarProperty Name="CodigoSunat" ColumnName="CodigoSunat" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="TipoDocumentoSunatId" ColumnName="TipoDocumentoSunatId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1802,6 +2073,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioNivelAprobacion">
+            <EntityTypeMapping TypeName="SICERModel.UsuarioNivelAprobacion">
+              <MappingFragment StoreEntitySet="UsuarioNivelAprobacion">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="NivelId" ColumnName="NivelId" />
+                <ScalarProperty Name="UsuarioNivelAprobacionId" ColumnName="UsuarioNivelAprobacionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UsuarioRoles">
             <EntityTypeMapping TypeName="SICERModel.UsuarioRoles">
               <MappingFragment StoreEntitySet="UsuarioRoles">
@@ -1811,16 +2091,6 @@
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="UsuarioRolId" ColumnName="UsuarioRolId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UsuarioTipoDocumento">
-            <EntityTypeMapping TypeName="SICERModel.UsuarioTipoDocumento">
-              <MappingFragment StoreEntitySet="UsuarioTipoDocumento">
-                <ScalarProperty Name="TipoDocumentoId" ColumnName="TipoDocumentoId" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="CantidadMaximaDocumentos" ColumnName="CantidadMaximaDocumentos" />
-                <ScalarProperty Name="UsuarioTipoDocumentoId" ColumnName="UsuarioTipoDocumentoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1841,6 +2111,119 @@
                 <ScalarProperty Name="VistaId" ColumnName="VistaId" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="VistaRolId" ColumnName="VistaRolId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AggregatedCounter">
+            <EntityTypeMapping TypeName="SICERModel.AggregatedCounter">
+              <MappingFragment StoreEntitySet="AggregatedCounter">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Counter">
+            <EntityTypeMapping TypeName="SICERModel.Counter">
+              <MappingFragment StoreEntitySet="Counter">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hash">
+            <EntityTypeMapping TypeName="SICERModel.Hash">
+              <MappingFragment StoreEntitySet="Hash">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Field" ColumnName="Field" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job">
+            <EntityTypeMapping TypeName="SICERModel.Job">
+              <MappingFragment StoreEntitySet="Job">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Arguments" ColumnName="Arguments" />
+                <ScalarProperty Name="InvocationData" ColumnName="InvocationData" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobParameter">
+            <EntityTypeMapping TypeName="SICERModel.JobParameter">
+              <MappingFragment StoreEntitySet="JobParameter">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JobQueue">
+            <EntityTypeMapping TypeName="SICERModel.JobQueue">
+              <MappingFragment StoreEntitySet="JobQueue">
+                <ScalarProperty Name="FetchedAt" ColumnName="FetchedAt" />
+                <ScalarProperty Name="Queue" ColumnName="Queue" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="List">
+            <EntityTypeMapping TypeName="SICERModel.List">
+              <MappingFragment StoreEntitySet="List">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schema">
+            <EntityTypeMapping TypeName="SICERModel.Schema">
+              <MappingFragment StoreEntitySet="Schema">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Server">
+            <EntityTypeMapping TypeName="SICERModel.Server">
+              <MappingFragment StoreEntitySet="Server">
+                <ScalarProperty Name="LastHeartbeat" ColumnName="LastHeartbeat" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Set">
+            <EntityTypeMapping TypeName="SICERModel.Set">
+              <MappingFragment StoreEntitySet="Set">
+                <ScalarProperty Name="ExpireAt" ColumnName="ExpireAt" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="State">
+            <EntityTypeMapping TypeName="SICERModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="JobId" ColumnName="JobId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
