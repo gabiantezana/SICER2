@@ -54,13 +54,13 @@ namespace SICER.TESTER
                 {
                     Context = new SICEREntities()
                 };
-                new SyncDataAccess(dataContext).SyncBusinessPartner();
-                new SyncDataAccess(dataContext).SyncCentroCostos();
-                new SyncDataAccess(dataContext).SyncConceptos();
-                new SyncDataAccess(dataContext).SyncCuentaContables();
-                new SyncDataAccess(dataContext).SyncIndicators();
-                new SyncDataAccess(dataContext).SyncMonedas();
-                new SyncDataAccess(dataContext).SyncTipoCambio();
+                //new SyncDataAccess(dataContext).SyncBusinessPartner();
+                //new SyncDataAccess(dataContext).SyncCentroCostos();
+                //new SyncDataAccess(dataContext).SyncConceptos();
+                //new SyncDataAccess(dataContext).SyncCuentaContables();
+                //new SyncDataAccess(dataContext).SyncIndicators();
+                //new SyncDataAccess(dataContext).SyncMonedas();
+                //new SyncDataAccess(dataContext).SyncTipoCambio();
             }
             catch (Exception ex)
             {

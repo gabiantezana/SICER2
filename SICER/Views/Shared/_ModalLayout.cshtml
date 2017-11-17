@@ -77,7 +77,7 @@
                     $.ajax({
                         type: 'POST',
                         url: urlValidation,
-                        data: { "model": _model, "ListDetalle": _ListDetalle },
+                        data: { "model": _model, "currentList": _ListDetalle },
                         success: function (value) {
                             debugger;
                             $("#_PartialDetalleDocumentos").empty();

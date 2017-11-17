@@ -1,0 +1,103 @@
+﻿@using PagedList.Mvc
+@using SICER.HELPER
+@model PagedList.IPagedList<SICER.MODEL.Documento>
+
+<table class="table table-hover">
+    <thead style="font-weight:bold">
+        <tr>
+            <td>Codigo</td>
+            <td>Solicitante</td>
+            <td>Proveedor</td>
+            <td>Moneda</td>
+            <td>Monto</td>
+            <td>Asunto</td>
+            <td>Motivo</td>
+            <td>Indicator</td>
+            <td>Serie</td>
+            <td>Correlativo</td>
+            <td>Estado</td>
+            <td>Opciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr><td style="font-style: italic" colspan="15">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
+        }
+        @foreach (var item in Model)
+        {
+            @*<tr ondblclick="window.location = '@Url.Action("AddUpdate", "Documento", new {Area = ConstantHelper.Area.GESTIONDOCUMENTOS, documentType = (DocumentType) item.TipoDocumentoId, documentoId = item.DocumentoId})'"
+                class="@item.Estado"
+                >*@
+        string _class = "";
+        switch ((DocumentState)item.Estado)
+        {
+            case DocumentState.None:
+            case DocumentState.Aprobado:
+                _class = "";
+                break;
+            case DocumentState.Pendiente:
+                _class = "warning";
+                break;
+            case DocumentState.Rechazado:
+                _class = "danger";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+        <tr>
+            <td>@item.Codigo</td>
+            <td>@item.Usuario.GetNombreCompleto()</td>
+            <td>@item.SapBusinessPartner.CardCode </td>
+            <td>@item.SapMoneda.SapMonedaDocCurrCod</td>
+            <td>@item.MontoNoAfecto</td>
+            <td>@item.Asunto</td>
+            <td>@item.Motivo</td>
+            <td>@item.SapIndicators.Name</td>
+            <td>@item.Serie</td>
+            <td>@item.Correlativo</td>
+
+            <td class="text-nowrap text-center">
+                @switch ((DocumentState)item.Estado)
+                {
+                    case DocumentState.None:
+                        break;
+                    case DocumentState.Pendiente:
+                        <a class="btn btn-xs btn-icon btn-warning" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                            <i class="icon wb-alert" aria-hidden="true"></i>Pendiente
+                        </a>
+                        break;
+                    case DocumentState.Aprobado:
+                        <a class="btn btn-xs btn-icon btn-success" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                            <i class="icon wb-check" aria-hidden="true"></i>Aprobado
+                        </a>    
+                        break;
+                    case DocumentState.Rechazado:
+                        <a class="btn btn-xs btn-icon btn-danger" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                            <i class="icon wb-close" aria-hidden="true"></i>Rechazado
+                        </a>
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+            </td>
+            <td class="text-nowrap text-center">
+                <a href="@Url.Action("AddUpdate", "Documento", new {Area = ConstantHelper.Area.GESTIONDOCUMENTOS, documentType = (DocumentType) item.TipoDocumentoId, documentoId = item.DocumentoId})" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Ver">
+                    <i class="icon wb-eye" aria-hidden="true"></i>
+                </a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div id="myPager">
+    @Html.PagedListPager(Model, page => Url.Action("_PagedList",
+                    new
+                    {
+                        page = page,
+                        DocumentType = ViewBag.DocumentType,
+                        //MODEL PROPERTIES HERE:
+                        filter = ViewBag.Filter,
+                    }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("partialList"))
+</div>

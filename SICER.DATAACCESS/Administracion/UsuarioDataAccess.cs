@@ -25,9 +25,9 @@ namespace SICER.DATAACCESS.Administracion
 
             else if (!string.IsNullOrEmpty(filtro))
             {
-                return filtro.ToLower().Split(' ').Aggregate(query, (current, token) => 
-                current.Where(x => x.Nombres.ToLower().Contains(token) 
-                                || x.Apellidos.ToLower().Contains(token) 
+                return filtro.ToLower().Split(' ').Aggregate(query, (current, token) =>
+                current.Where(x => x.Nombres.ToLower().Contains(token)
+                                || x.Apellidos.ToLower().Contains(token)
                                 || x.UserName.ToLower().Contains(token)
                                 || x.Documento.Contains(filtro)
                                 || x.Correo.Contains(filtro)
@@ -53,7 +53,7 @@ namespace SICER.DATAACCESS.Administracion
             return DataContext.Context.Usuario.Find(usuarioId);
         }
 
-        public int AddUpdateUsuario(UsuarioViewModel model)
+        public void AddUpdateUsuario(UsuarioViewModel model)
         {
             Usuario usuario = DataContext.Context.Usuario.Find(model.UsuarioId);
             bool isUpdate = usuario != null;
@@ -77,6 +77,7 @@ namespace SICER.DATAACCESS.Administracion
                 usuario.FechaNacimiento = model.FechaNacimiento;
                 usuario.Estado = model.Estado;
                 usuario.RolId = model.RolId;
+                usuario.AreaId = model.AreaId;
                 usuario.SapBusinessPartnerCardCode = model.SapBusinessPartnerCardCode;
 
                 if (isUpdate)
@@ -115,13 +116,24 @@ namespace SICER.DATAACCESS.Administracion
                     }
                 }
 
+                //Elimina todos los ids de niveles de aprobación:
+                DataContext.Context.UsuarioNivelAprobacion.RemoveRange(
+                    DataContext.Context.UsuarioNivelAprobacion.Where(x => x.UsuarioId == model.UsuarioId));
+
+                //Inserta los permisos de aprobación de acuerdo a id's.
+                foreach (var id in model.NivelAprobacionIdList)
+                {
+                    DataContext.Context.UsuarioNivelAprobacion.Add(
+                        new UsuarioNivelAprobacion() { UsuarioId = usuario.UsuarioId, NivelAprobacionId = id });
+                }
+
                 DataContext.Context.SaveChanges();
 
                 #endregion
 
                 transacionScope.Complete();
             }
-            return usuario.UsuarioId;
+            return;
         }
 
         public void ChangePassword(ChangePasswordViewModel model)

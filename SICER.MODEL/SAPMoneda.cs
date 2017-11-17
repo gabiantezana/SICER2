@@ -17,7 +17,7 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SapMoneda()
         {
-            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
+            this.Documento = new HashSet<Documento>();
         }
     
         public string SapMonedaDocCurrCod { get; set; }
@@ -25,6 +25,6 @@ namespace SICER.MODEL
         public string Locked { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
+        public virtual ICollection<Documento> Documento { get; set; }
     }
 }

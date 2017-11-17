@@ -1,0 +1,35 @@
+﻿@model IPagedList<SICER.MODEL.Area>
+<table class="table table-hover">
+    <thead style="font-weight:bold">
+        <tr>
+            <td>Descripción</td>
+            <td class="text-center">Opciones</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr><td style="font-style: italic" colspan="7">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr ondblclick="window.location = '@Url.Action("AddUpdate", "Area", new {Area = ConstantHelper.Area.ADMINISTRACION, areaId = item.AreaId})'">
+                <td>@item.Descripcion</td>
+                <td class="text-nowrap text-center">
+                    <a href="@Url.Action("AddUpdate", "Area", new {Area = ConstantHelper.Area.ADMINISTRACION, areaId = item.AreaId})" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+                        <i class="icon wb-wrench" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id="myPager">
+    @Html.PagedListPager(Model, page => Url.Action("_PagedList",
+        new
+        {
+            page = page,
+            //MODEL PROPERTIES HERE:
+            filter = ViewBag.Filter,
+        }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("partialList"))
+</div>

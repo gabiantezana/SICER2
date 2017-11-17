@@ -1,0 +1,356 @@
+﻿@using SICER.HELPER
+@model SICER.VIEWMODEL.GestionDocumentos.DocumentoViewModel
+@{
+    String tipoDocumento = String.Empty;
+    switch (Model.DocumentType)
+    {
+        case SICER.HELPER.DocumentType.CajaChica:
+            tipoDocumento = "Caja chica";
+            break;
+        case SICER.HELPER.DocumentType.EntregaARendir:
+            tipoDocumento = "Entrega a rendir";
+            break;
+        case SICER.HELPER.DocumentType.Reembolso:
+            tipoDocumento = "Reembolso";
+            break;
+        default:
+            tipoDocumento = "Error al leer tipo documento";
+            break;
+    }
+    ViewBag.Title = (Model.DocumentoId.HasValue ? "Editar" : "Crear") + (" " + tipoDocumento + " " + Model.Codigo);
+    ViewBag.Icon = Model.DocumentoId.HasValue ? "edit" : "plus";
+    var isEdit = Model.DocumentoId.HasValue ? "true" : "false";
+}
+@section Breadcrumbs{
+    <li><a href="@Url.Action("List", "Documento", new { @documentType = Model.DocumentType })">Listado</a></li>
+}
+@section Styles{
+    <link href="~/Content/vendor/clockpicker/clockpicker.min.css" rel="stylesheet" />
+}
+@{
+    string url = null;
+    switch ((DocumentState)Model.Estado)
+    {
+        case DocumentState.None:
+        case DocumentState.Rechazado:
+            url = "AddUpdate";
+            break;
+        case DocumentState.Pendiente:
+            url = "ApproveApertura";
+            break;
+        case DocumentState.Aprobado:
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
+}
+@using (Html.BeginForm(url, "Documento", FormMethod.Post, new { @id = "FormAddUpdateDocumento" }))
+{
+    switch (Model.ModoVistaDocumento)
+    {
+        case ModoVistaDocumento.Ver:
+            break;
+        case ModoVistaDocumento.Crear:
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Enviar</button>
+            </div>
+            break;
+        case ModoVistaDocumento.Modificar:
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Enviar</button>
+            </div>
+            break;
+        case ModoVistaDocumento.Aprobar:
+            <div class="panel-footer text-right">
+                <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Aprobar</button>
+            </div>
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
+
+    <div class="panel collapsed">
+        <div class="panel-heading">
+            <h5 class="panel-title">Datos generales</h5>
+            <div class="panel-actions">
+                <a class="panel-action icon wb-minus" data-toggle="panel-collapse" aria-hidden="true"></a>
+            </div>
+        </div>
+        @if (Model.DocumentoId.HasValue)
+        {
+            @Html.HiddenFor(x => Model.DocumentoId)
+            @Html.HiddenFor(x => Model.SubTipoDocumento)
+            @Html.HiddenFor(x => Model.Codigo)
+            @Html.HiddenFor(x => Model.Estado)
+            @Html.HiddenFor(x => Model.SapIndicatorCode)
+        }
+        @Html.HiddenFor(x => Model.DocumentType)
+        <div class="panel-body">
+            <div class=" col-md-6">
+                <div class="form-horizontal">
+                    @if (Model.DocumentoId.HasValue)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.Codigo, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(x => Model.Codigo, new { @class = "form-control ", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(x => x.Asunto)
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.Asunto, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => Model.Asunto, new { @class = "form-control " })
+                            @Html.ValidationMessageFor(x => x.Asunto)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.FechaSolicitud, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(x => Model.FechaSolicitud, "{0:dd/MM/yyyy}", new { @class = "form-control fecha", @type = "text" })
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(x => Model.FechaSolicitud)
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.Motivo, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.TextAreaFor(x => Model.Motivo, new { @class = "form-control " })
+                            @Html.ValidationMessageFor(x => x.Motivo)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.CreacionUsuarioid, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(x => Model.CreacionUsuarioid, new SelectList(Model.UsuarioJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                            @Html.ValidationMessageFor(x => x.CreacionUsuarioid)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.SapBusinessPartnerCardCode, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(x => Model.SapBusinessPartnerCardCode, new SelectList(Model.SapBusinessPartnerJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                            @Html.ValidationMessageFor(x => x.SapBusinessPartnerCardCode)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.SapMonedaDocCurrCode, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.DropDownListFor(x => Model.SapMonedaDocCurrCode, new SelectList(Model.SapMonedaJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = !string.IsNullOrEmpty(Model.SapMonedaDocCurrCode) })
+                            @Html.ValidationMessageFor(x => x.SapMonedaDocCurrCode)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.MontoNoAfecto, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => Model.MontoNoAfecto, new { @class = "form-control  text-right moneda" })
+                            @Html.ValidationMessageFor(x => x.MontoNoAfecto)
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <hr class=" col-sm-12" />
+                        <h5>Centros de costo</h5>
+                    </div>
+                    <div id="divCentrosCosto">
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.C_1SapCentroCostoOcrCode, new {@class = "col-sm-3 control-label"})
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(x => Model.C_1SapCentroCostoOcrCode, new SelectList(Model.C_1SapCentroCostoJList, "id", "text"), new {@class = "form-control form-group", @data_plugin = "select2", @data_isedit = (!string.IsNullOrEmpty(Model.C_1SapCentroCostoOcrCode)).ToString().ToLower()
+                                })
+                                @Html.ValidationMessageFor(x => x.C_1SapCentroCostoOcrCode)
+                            </div>
+                            <div class="col-md-1">
+                                <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                                    <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            @Html.LabelFor(x => Model.C_2SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(x => Model.C_2SapCentroCostoOcrCode, new SelectList(Model.C_2SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "false" })
+                                @Html.ValidationMessageFor(x => x.C_2SapCentroCostoOcrCode)
+                            </div>
+                            <div class="col-md-1">
+                                <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                                    <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                                    <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            @Html.LabelFor(x => Model.C_3SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(x => Model.C_3SapCentroCostoOcrCode, new SelectList(Model.C_3SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "false" })
+                                @Html.ValidationMessageFor(x => x.C_3SapCentroCostoOcrCode)
+                            </div>
+                            <div class="col-md-1">
+                                <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                                    <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                                    <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            @Html.LabelFor(x => Model.C_4SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(x => Model.C_4SapCentroCostoOcrCode, new SelectList(Model.C_4SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "false" })
+                                @Html.ValidationMessageFor(x => x.C_4SapCentroCostoOcrCode)
+                            </div>
+                            <div class="col-md-1">
+                                <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                                    <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                                    <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
+                            @Html.LabelFor(x => Model.C_5SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                            <div class="col-sm-8">
+                                @Html.DropDownListFor(x => Model.C_5SapCentroCostoOcrCode, new SelectList(Model.C_5SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "false" })
+                                @Html.ValidationMessageFor(x => x.C_5SapCentroCostoOcrCode)
+                            </div>
+                            <div class="col-md-1">
+                                <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                                    <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                                    <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                                </a>
+                            </div>
+                        </div>
+                        @*@for (int i = 0; i < Model.ListDetalle.Count - 1; i++)
+                            {
+                                @Html.HiddenFor(x => Model.ListDetalle[i])
+
+                            }*@
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="panel-footer text-right">
+            <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
+            </div>*@
+
+    </div>
+
+    if (Model.Estado == (int)DocumentState.Aprobado)
+    {
+        <div class="panel collapsed">
+            <div class="panel-heading">
+                <h4 class="panel-title">Rendición</h4>
+                <div class="panel-actions">
+                    <a class="panel-action icon wb-minus" data-toggle="panel-collapse" aria-hidden="true"></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <button type="button" class=" btn btn-info" @Url.ModalHelperFor("ModalRendicion", "Documento", ModalSize.Large)>
+                    <i class="fa fa-plus"></i>Agregar
+                </button>
+                <div class="panel-container col-md-12">
+                    <div class="table-responsive" id="_PartialDetalleDocumentos">
+                        @Html.Partial("PartialView/_RendicionList", Model)
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+
+
+
+@section Scripts
+{
+    <script>
+
+        function getDocumentoDetalleObject(index) {
+            debugger;
+            var object = $("#FormAddUpdateDocumento :input[id^=RendicionList_" + index + "]").serializeArray();
+            //Change name of elements:
+            object.forEach(function (item) {
+                item.name = item.name.replace('RendicionList[' + index + '].', '');
+            });
+            return object;
+        }
+
+        $(".btnModalDetalle").on("click",
+            function(e) {
+                debugger;
+                var index = $(this).data("index");
+                var object = ConvertSerializedArrayToObject(getDocumentoDetalleObject(index));
+                var url = '@Url.Action("ModalRendicionPost", "Documento")';
+                var data = $.param(object);
+                url = url + "?" + data;
+                $(this).attr('data-source-url', url);
+                return true;
+            });
+        var _guid = '@Guid.NewGuid()';
+
+        @*$('#FormAddUpdateDocumento').submit(function () {
+            event.preventDefault();
+            debugger;
+            var data = { // DocumentoViewModel
+                "Asunto": $("#Asunto").val(),
+                "Motivo": $("#Motivo").val(),
+                "FechaDocumento": $("#FechaDocumento").val(),
+                "DocumentType": 1,
+                "IdDocumento": $("#IdDocumento").val(),
+                "IdProveedorSolicitante": $("#IdProveedorSolicitante").val(),
+                "ListProveedorSolicitante": null,
+                "IdMoneda": $("#IdMoneda").val(),
+                "ListMonedas": null,
+                "IdMetodoPago": $("#IdMetodoPago").val(),
+                "ListMetodosPago": null,
+                "IdCentroCosto1": $("#IdCentroCosto1").val(),
+                "IdCentroCosto2": $("#IdCentroCosto2").val(),
+                "IdCentroCosto3": $("#IdCentroCosto3").val(),
+                "IdCentroCosto4": $("#IdCentroCosto4").val(),
+                "IdCentroCosto5": $("#IdCentroCosto5").val(),
+                "IdCentroCosto6": $("#IdCentroCosto6").val(),
+                "ListCentrosCosto": null,
+                "Observaciones": null,
+                "DocumentState":1,
+                "ListDetalle": ListDetalle,
+            }
+
+            var _data = JSON.stringify(data);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddUpdateDocumento", "Documento")',
+                data: JSON.stringify(data) ,
+                dataType: 'JSON',
+                contentType: "application/json",
+                success: function (value) {
+                    alert(value);
+                },
+                error: function (error) {
+                    ShowMessage("", error.responseJSON);
+                    alert(error);
+                },
+                finally: function (err) {
+                    alert(err);
+                }
+            });
+            return false;
+        });*@
+
+    $(".btnAddCentroCostos").click(function () {
+        $(this).parent().hide();
+        $(this).parent().parent().parent().next().show();
+    })
+    $(".btnRemoveCentroCostos").click(function () {
+        $(this).parent().parent().parent().hide();
+        $(this).parent().parent().parent().prev().find("a").show();
+        $(this).parent().parent().parent().find("select").val(null).trigger("change");
+    })
+
+    </script>
+}

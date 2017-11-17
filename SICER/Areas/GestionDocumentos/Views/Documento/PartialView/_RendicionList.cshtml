@@ -1,0 +1,83 @@
+﻿@using SICER.HELPER
+@model SICER.VIEWMODEL.GestionDocumentos.DocumentoViewModel
+
+<table id="tableDetalle" class="table">
+    <thead>
+        <tr style="font-weight:bold">
+            <td class=" text-right">#</td>
+            <td>Proveedor</td>
+            <td>Serie</td>
+            <td>Correlativo</td>
+            <td>Fecha</td>
+            <td>Concepto</td>
+            <td>Moneda doc</td>
+            <td>Total</td>
+            <td>Opciones</td>
+        </tr>
+        @if (Model.RendicionList.Count == 0)
+        {
+            <tr><td colspan="18">No existen registros aún</td></tr>
+        }
+    </thead>
+    <tbody>
+        @{
+            for (int i = 0; i < Model.RendicionList.Count; i++)
+            {
+                <tr>
+                    @Html.HiddenFor(x => Model.RendicionList[i].DocumentoId)
+                    <td class=" text-right">@(i + 1)</td>
+
+                    @Html.HiddenFor(x => Model.RendicionList[i].SapBusinessPartnerCardCode)
+                    <td>@Model.RendicionList[i].SapBusinessPartnerCardCode</td>
+
+                    @Html.HiddenFor(x => Model.RendicionList[i].Serie)
+                    <td>@Model.RendicionList[i].Serie</td>
+
+                    @Html.HiddenFor(x => Model.RendicionList[i].Correlativo)
+                    <td>@Model.RendicionList[i].Correlativo</td>
+
+                    @Html.HiddenFor(x => Model.RendicionList[i].FechaDocumento)
+                    <td>@Model.RendicionList[i].FechaDocumento</td>
+
+                    @Html.HiddenFor(x => Model.RendicionList[i].SapConceptoCode)
+                    <td>@Model.RendicionList[i].SapConceptoCode</td>
+
+                    @Html.HiddenFor(x => Model.RendicionList[i].SapMonedaDocCurrCode)
+                    <td>@Model.RendicionList[i].SapMonedaDocCurrCode</td>
+
+                    @Html.HiddenFor(x => Model.RendicionList[i].MontoTotal)
+                    <td>@Model.RendicionList[i].MontoTotal</td>
+
+                    <td class="text-nowrap text-center">
+                        <button type="button"
+                                class="btn btn-outline btn-default btn-xs btnModalDetalle"
+                                @Url.ModalHelperFor("ModalRendicion", "Documento")
+                                data-toggle="tooltip"
+                                data-original-title="Modificar"
+                                data-index="@i"
+                                data-id="@Model.RendicionList[i].DocumentoId">
+                            <i class="icon wb-pencil" aria-hidden="true"></i>
+                        </button>
+                        <a href="@Url.Action("DeleteDocumentoDetalle", "Documento")" class="btn btn-sm btn-icon btn-flat btn-default"
+                           data-toggle="tooltip" data-original-title="Eliminar">
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@section Scripts
+{
+
+}
+<style>
+    .table-condensed > tbody > tr > td, .table-condensed > tbody > tr > th, .table-condensed > tfoot > tr > td, .table-condensed > tfoot > tr > th, .table-condensed > thead > tr > td, .table-condensed > thead > tr > th {
+        padding: 4px;
+    }
+
+    /*div[role='tooltip'] {
+        position:relative;
+        z-index:1;
+    }*/
+</style>

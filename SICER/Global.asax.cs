@@ -45,23 +45,19 @@ namespace SICER
             var dataContext = new DataContext() { Context = new SICEREntities() };
             var dataAccess = new SyncDataAccess(dataContext);
 
-            BackgroundJob.Enqueue(() => DoWork());
+            //BackgroundJob.Enqueue(() => DoWork());
 
             //--------------------------------------------------SINCRONIZACIÓN--------------------------------------------------
 
 
         }
+        /*
         public void DoWork()
         {
             var dataContext = new DataContext() { Context = new SICEREntities() };
             var n = 0;
-            while (true)
-            {
-                new SyncDataAccess(dataContext).SyncBusinessPartner();
-                Debug.WriteLine(n);
-                n++;
-            }
-        }
+        
+        }*/
     }
 }
 

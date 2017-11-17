@@ -21,9 +21,11 @@ namespace SICER.MODEL
         }
     
         public int NivelAprobacionId { get; set; }
+        public int TipoDocumentoId { get; set; }
         public int NumeroNivel { get; set; }
         public string Descripcion { get; set; }
     
+        public virtual TipoDocumento TipoDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioNivelAprobacion> UsuarioNivelAprobacion { get; set; }
     }

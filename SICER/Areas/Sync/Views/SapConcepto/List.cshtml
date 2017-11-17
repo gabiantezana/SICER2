@@ -1,0 +1,98 @@
+﻿@model SICER.VIEWMODEL.Sync.ListSapConceptoViewModel
+
+@{
+    ViewBag.Title = "Listado de conceptos";
+    ViewBag.Icon = "list";
+}
+
+@section Breadcrumbs{}
+
+<div class="panel">
+    <div class="panel-body">
+        <br />
+        <div class="table-responsive">
+            @using (Html.BeginForm("", "", FormMethod.Post, new { Area = ConstantHelper.Area.SYNC }))
+            {
+                <div class="form-group col-md-6">
+                    <div class="col-sm-11" style="padding-right:0px">
+                        @Html.DropDownListFor(x => Model.Filter, new SelectList(Model.ListDefault, "Code", "U_MSS_DSCRPT"), new { @class = "form-control form-group-margin select2-busqueda" })
+                    </div>
+                    <div class="col-sm-1" style="padding:0px">
+                        <button type="button" class="btn btn-icon btn-primary"><i class="icon wb-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            }
+            <div id="partialList" style="padding: 30px;">
+                @Html.Partial("PartialView/_PagedList", Model.PagedList)
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var _guid = '@Guid.NewGuid()';
+        $(function () {
+            $('.select2-busqueda').select2({
+                ajax: {
+                    url: '@Url.Action("GetJList", "SapConcepto", new { Area = ConstantHelper.Area.SYNC})',
+                    dataType: 'json',
+                    type: 'POST',
+                    delay: 250,
+                    data: function (params) {
+                        var values = params.term;
+                        return {
+                            filter: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true,
+                },
+                tags: true,
+                createTag: function (newTag) {
+                    return {
+                        id: _guid + newTag.term,
+                        text: newTag.term + " (buscar)",
+                        isNew: true,
+                    };
+                },
+                minimumInputLength: 3,
+                allowClear: true,
+                language: 'es',
+                placeholder: 'Buscar',
+            });
+        });
+
+        $('.select2-busqueda').change(function () {
+            var value = this.value;
+            FilterTable(value.replace(_guid, ''));
+        });
+
+        function FilterTable(filter) {
+            var $table = $('#partialList');
+            $.ajax({
+                type: 'POST',
+                url:
+                    '@Url.Action("_FilterList", "SapConcepto", new { Area = ConstantHelper.Area.SYNC })',
+                cache: false,
+                data: { 'filter': filter },
+                beforeSend: function() {
+                    $('#main-loader').fadeIn();
+                },
+                success: function(data) {
+                    $table.empty();
+                    $table.append(data);
+                },
+                complete: function(data) {
+                    $('#main-loader').fadeOut();
+                }
+
+            });
+        }
+
+
+    </script>
+}

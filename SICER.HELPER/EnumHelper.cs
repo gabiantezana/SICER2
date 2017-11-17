@@ -20,6 +20,20 @@ namespace SICER.HELPER
         Vistas,
     }
 
+    public enum TempDataKey
+    {
+        ClientesCombosList,
+        ClientesActiveTab,
+        ReservasLstPointsInMap,
+        ParametrosActiveTab,
+        ConductoresActiveTab
+    }
+
+    public enum ActiveTab
+    {
+        InformacionParametros,
+    }
+
     public enum AppRol //TODO: SYNC WITH DATABASE rolId
     {
         SUPERADMIN = 1,
@@ -67,11 +81,18 @@ namespace SICER.HELPER
         Reembolso = 3,
     }
 
+    public enum DocumentSubType
+    {
+        Apertura = 1,
+        Rendicion = 2,
+    }
+
     public enum DocumentState
     {
-        Aprobado,
-        Rechazado,
-        EnObservacion,
+        None = 0,
+        Pendiente = 1,
+        Aprobado = 2,
+        Rechazado = 3,
     }
 
     public enum SyncEntity
@@ -116,6 +137,20 @@ namespace SICER.HELPER
     {
         Local = 1,
         Sap = 2
+    }
+
+    public enum DocumentView
+    {
+        Listar = 1,
+        Crear = 2,
+    }
+
+    public enum ModoVistaDocumento
+    {
+        Ver = 0,
+        Crear = 1,
+        Modificar = 2,
+        Aprobar = 3
     }
 }
 

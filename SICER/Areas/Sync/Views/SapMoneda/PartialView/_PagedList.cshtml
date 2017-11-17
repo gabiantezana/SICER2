@@ -1,0 +1,33 @@
+﻿@model IPagedList<SICER.MODEL.SapMoneda>
+<table class="table table-hover">
+    <thead style="font-weight:bold">
+    <tr>
+        <td>DocCurrCod</td>
+        <td>CurrName</td>
+        <td>Locked</td>
+    </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td style="font-style: italic" colspan="7">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.SapMonedaDocCurrCod</td>
+            <td>@item.CurrName</td>
+            <td>@item.Locked</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div id="myPager">
+    @Html.PagedListPager(Model, page => Url.Action("_PagedList",
+        new
+        {
+            page = page,
+            //MODEL PROPERTIES HERE:
+            filter = ViewBag.Filter,
+        }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("partialList"))
+</div>

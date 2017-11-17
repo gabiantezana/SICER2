@@ -29,8 +29,19 @@
                         </a>
                     </li>
                 }
+                
+                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Administracion.Area.LISTAR }).Any())
+                {
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("List", "Area", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Áreas</span>
+                        </a>
+                    </li>
+                }
 
-                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Administracion.Usuario.LISTAR}).Any())
+                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Administracion.Usuario.LISTAR }).Any())
                 {
                     <li class="site-menu-item">
                         <a class="animsition-link" href="@Url.Action("ListUsuarios", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION})"
@@ -41,8 +52,103 @@
                     </li>
                 }
 
+                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Administracion.NivelAprobacion.LISTAR }).Any())
+                {
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("List", "NivelAprobacion", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Niveles de aprobación</span>
+                        </a>
+                    </li>
+                }
+
+                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Administracion.CONFIG.LISTAR }).Any())
+                {
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("LstConfigs", "Config", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Configuración</span>
+                        </a>
+                    </li>
+                }
+
                 @*<li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListSAPCentrosCosto", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                        <a class="animsition-link" href="@Url.Action("ListSAPCentrosCosto", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Centros de costo</span>
+                        </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("ListSAPAccount", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Cuentas contables</span>
+                        </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("ListSAPMetodoPago", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Métodos de pago</span>
+                        </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("ListSAPMoneda", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Monedas</span>
+                        </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("ListSAPProveedor", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Proveedor</span>
+                        </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("ListSAPServicio", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Servicios</span>
+                        </a>
+                    </li>
+
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("ListConceptoa", "Concepto", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Conceptoa</span>
+                        </a>
+                    </li>*@
+
+            </ul>
+        </li>
+
+        <li class="site-menu-item has-sub title_">
+            <a href="javascript:void(0)">
+                <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
+                <span class="site-menu-title">Syncronización</span>
+            </a>
+            <ul class="site-menu-sub">
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("List", "SapBusinessPartner", new { Area = ConstantHelper.Area.SYNC })"
+                       data-animsition-out-class="rotate-out"
+                       data-animsition-out-duration="500">
+                        <span class="site-menu-title">Business partners</span>
+                    </a>
+                </li>
+
+                <li class="site-menu-item">
+                    <a class="animsition-link" href="@Url.Action("List", "SapCentroCosto", new { Area = ConstantHelper.Area.SYNC })"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
                         <span class="site-menu-title">Centros de costo</span>
@@ -50,53 +156,46 @@
                 </li>
 
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListSAPAccount", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                    <a class="animsition-link" href="@Url.Action("List", "SapCuentaContable", new { Area = ConstantHelper.Area.SYNC })"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
                         <span class="site-menu-title">Cuentas contables</span>
                     </a>
                 </li>
 
-                <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListSAPMetodoPago", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
-                       data-animsition-out-class="rotate-out"
-                       data-animsition-out-duration="500">
-                        <span class="site-menu-title">Métodos de pago</span>
-                    </a>
-                </li>
 
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListSAPMoneda", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                    <a class="animsition-link" href="@Url.Action("List", "SapMoneda", new { Area = ConstantHelper.Area.SYNC })"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
                         <span class="site-menu-title">Monedas</span>
                     </a>
                 </li>
 
+
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListSAPProveedor", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                    <a class="animsition-link" href="@Url.Action("List", "SapConcepto", new { Area = ConstantHelper.Area.SYNC })"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
-                        <span class="site-menu-title">Proveedor</span>
+                        <span class="site-menu-title">Conceptos</span>
                     </a>
                 </li>
 
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListSAPServicio", "Sync", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                    <a class="animsition-link" href="@Url.Action("List", "SapIndicator", new { Area = ConstantHelper.Area.SYNC })"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
-                        <span class="site-menu-title">Servicios</span>
+                        <span class="site-menu-title">Indicators</span>
                     </a>
                 </li>
 
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListConceptoa", "Concepto", new {Area = ConstantHelper.Area.ADMINISTRACION})"
+                    <a class="animsition-link" href="@Url.Action("List", "SapTipoCambio", new { Area = ConstantHelper.Area.SYNC })"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
-                        <span class="site-menu-title">Conceptoa</span>
+                        <span class="site-menu-title">Tipo de cambio</span>
                     </a>
-                </li>*@
-
+                </li>
             </ul>
         </li>
 
@@ -105,31 +204,39 @@
                 <i class="site-menu-icon wb-dashboard" aria-hidden="true"></i>
                 <span class="site-menu-title">Documentos</span>
             </a>
-            <ul class="site-menu-sub">
-                <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListDocumentos", "Documento", new { Area = "Administracion", documentType = DocumentType.CajaChica})"
-                       data-animsition-out-class="rotate-out"
-                       data-animsition-out-duration="500">
-                        <span class="site-menu-title">Caja Chica</span>
-                    </a>
-                </li>
 
+            <ul class="site-menu-sub">
+
+                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Documento.CajaChica.LISTAR }).Any())
+                {
+                    <li class="site-menu-item">
+                        <a class="animsition-link" href="@Url.Action("List", "Documento", new {Area = ConstantHelper.Area.GESTIONDOCUMENTOS, documentType = DocumentType.CajaChica})"
+                           data-animsition-out-class="rotate-out"
+                           data-animsition-out-duration="500">
+                            <span class="site-menu-title">Caja Chica</span>
+                        </a>
+                    </li>
+                }
+                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Documento.EntregaRendir.LISTAR }).Any())
+                {
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListDocumentos", "Documento", new { Area = "Administracion", documentType = DocumentType.EntregaARendir})"
+                    <a class="animsition-link" href="@Url.Action("List", "Documento", new {Area = ConstantHelper.Area.GESTIONDOCUMENTOS, documentType = DocumentType.EntregaARendir})"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
                         <span class="site-menu-title">Entrega a rendir</span>
                     </a>
                 </li>
-
-
+                }
+                @if (Session.GetPermisosVista().Intersect(new[] { ConstantHelper.Vistas.Documento.Reembolso.LISTAR }).Any())
+                {
                 <li class="site-menu-item">
-                    <a class="animsition-link" href="@Url.Action("ListDocumentos", "Documento", new { Area = "Administracion", documentType = DocumentType.Reembolso})"
+                    <a class="animsition-link" href="@Url.Action("List", "Documento", new {Area = ConstantHelper.Area.GESTIONDOCUMENTOS, documentType = DocumentType.Reembolso})"
                        data-animsition-out-class="rotate-out"
                        data-animsition-out-duration="500">
                         <span class="site-menu-title">Reembolso</span>
                     </a>
                 </li>
+                }
             </ul>
         </li>
 

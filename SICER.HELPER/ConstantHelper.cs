@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PagedList.Mvc;
 
 namespace SICER.HELPER
 {
@@ -19,6 +20,7 @@ namespace SICER.HELPER
         public const string SEPARADOR_NOMBRE_DESCRIPCION_SELECT = " - ";
         public const string PASSWORD_DEFAULT = "1234";
         public const string CODIGOROLSUPERADMINISTRADOR = "SUPERADMIN";
+        public const string CODIGOROLGESTORDOCUMENTOS = "GESTORDOCUMENTOS";
 
         public const string CAJACHICA = "CAJACHICA";
         public const string ENTREGARENDIR = "ENTREGARENDIR";
@@ -43,6 +45,7 @@ namespace SICER.HELPER
                     public const string LISTAR = PREFIX + "LISTAR";
                     public const string CREAR = PREFIX + "CREAR";
                 }
+
                 public static class Rol
                 {
                     private const string PREFIX = PARENTPREFIX + "ROL.";
@@ -51,7 +54,29 @@ namespace SICER.HELPER
                     public const string CREAR = PREFIX + "CREAR";
                 }
 
+                public static class NivelAprobacion
+                {
+                    private const string PREFIX = PARENTPREFIX + "NIVELAPROBACION.";
 
+                    public const string LISTAR = PREFIX + "LISTAR";
+                    public const string CREAR = PREFIX + "CREAR";
+                }
+
+                public static class CONFIG
+                {
+                    private const string PREFIX = PARENTPREFIX + "CONFIG.";
+
+                    public const string LISTAR = PREFIX + "LISTAR";
+                    public const string CREAR = PREFIX + "CREAR";
+                }
+
+                public static class Area
+                {
+                    private const string PREFIX = PARENTPREFIX + "AREA.";
+
+                    public const string LISTAR = PREFIX + "LISTAR";
+                    public const string CREAR = PREFIX + "CREAR";
+                }
             }
 
             public static class Sincronizacion
@@ -100,7 +125,9 @@ namespace SICER.HELPER
 
         public static class Area
         {
-            public const String ADMINISTRACION = "ADMINISTRACION";
+            public const string ADMINISTRACION = "ADMINISTRACION";
+            public static string SYNC = "SYNC";
+            public static string GESTIONDOCUMENTOS = "GESTIONDOCUMENTOS";
         }
 
         public static class WEBCONFIG
@@ -110,5 +137,42 @@ namespace SICER.HELPER
 
         public const int DefaultFieldSize = 200;
         public const string ParameterPath = "../Parameters/ConnectionParameters.xml";
+
+        public static PagedListRenderOptions Bootstrap3Pager
+        {
+            get
+            {
+                return new PagedListRenderOptions
+                {
+                    DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded,
+                    DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded,
+                    DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+                    DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+                    DisplayLinkToIndividualPages = true,
+                    DisplayPageCountAndCurrentLocation = false,
+                    MaximumPageNumbersToDisplay = 10,
+                    DisplayEllipsesWhenNotShowingAllPageNumbers = true,
+                    EllipsesFormat = "&#8230;",
+                    LinkToFirstPageFormat = "««",
+                    LinkToPreviousPageFormat = "«",
+                    LinkToIndividualPageFormat = "{0}",
+                    LinkToNextPageFormat = "»",
+                    LinkToLastPageFormat = "»»",
+                    PageCountAndCurrentLocationFormat = "Page {0} of {1}.",
+                    ItemSliceAndTotalFormat = "Showing items {0} through {1} of {2}.",
+                    FunctionToDisplayEachPageNumber = null,
+                    ClassToApplyToFirstListItemInPager = null,
+                    ClassToApplyToLastListItemInPager = null,
+                    ContainerDivClasses = new[] { "pagination-container" },
+                    UlElementClasses = new[] { "pagination" },
+                    LiElementClasses = Enumerable.Empty<string>(),
+                };
+            }
+        }
+
+        public static class CONFIG
+        {
+            public static string DOC_APER_INDICATOR = "DOC_APER_INDICATOR";
+        }
     }
 }

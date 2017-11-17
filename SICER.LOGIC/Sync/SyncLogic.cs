@@ -22,13 +22,6 @@ namespace SICER.LOGIC.Sync
             while (true)
             {
 
-                new SyncDataAccess(DataContext).SyncBusinessPartner();
-                new SyncDataAccess(DataContext).SyncCentroCostos();
-                new SyncDataAccess(DataContext).SyncConceptos();
-                new SyncDataAccess(DataContext).SyncCuentaContables();
-                new SyncDataAccess(DataContext).SyncIndicators();
-                new SyncDataAccess(DataContext).SyncMonedas();
-                new SyncDataAccess(DataContext).SyncTipoCambio();
             }
         }
     }

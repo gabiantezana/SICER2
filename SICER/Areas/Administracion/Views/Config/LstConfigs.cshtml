@@ -1,0 +1,60 @@
+﻿@model SICER.VIEWMODEL.Administracion.Config.LstConfigViewModel
+
+
+@{
+    ViewBag.Title = "Parámetros Globales";
+    ViewBag.Icon = "list";
+}
+
+ <div class="panel">
+    <div class="panel-body">
+        <div class="panel-footer text-right">
+            <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddEditConfig", "Config"))">
+                <i class="fa fa-plus"></i>
+                Nuevo
+            </a>
+        </div>
+        <div class="table-responsive">  
+            <div id="LstConfigs" style="padding: 30px;">
+                @Html.Partial("PartialView/_LstConfigPartialView", Model.LstConfigs)
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script> 
+
+     
+
+        $('.select2-configs').change(function () {
+
+            $this = $(this);
+            var value = $this.val() == null ? $this.val() : 0;
+            $configsTable = $('#LstConfigs');
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("_LstConfigPartialView", "Config", new { Area = ConstantHelper.Area.ADMINISTRACION })',
+                cache: false,
+                data: { 'Id': $this.val() },
+                beforeSend: function () {
+                    $('#main-loader').fadeIn();
+                },
+                success: function (data) {
+                    $configsTable.empty();
+                    $configsTable.append(data);
+                    $('#main-loader').fadeOut();
+                }
+
+            })
+
+        });
+
+        function complete() {
+            console.log('complete');
+        }
+
+    </script>
+}

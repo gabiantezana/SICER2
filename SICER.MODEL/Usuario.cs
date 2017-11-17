@@ -18,13 +18,11 @@ namespace SICER.MODEL
         public Usuario()
         {
             this.AprobacionDocumento = new HashSet<AprobacionDocumento>();
-            this.Documento1 = new HashSet<Documento>();
-            this.Documento2 = new HashSet<Documento>();
-            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
-            this.DocumentoRendicion1 = new HashSet<DocumentoRendicion>();
             this.UsuarioNivelAprobacion = new HashSet<UsuarioNivelAprobacion>();
             this.UsuarioRoles = new HashSet<UsuarioRoles>();
             this.UsuarioRoles1 = new HashSet<UsuarioRoles>();
+            this.Documento1 = new HashSet<Documento>();
+            this.Documento2 = new HashSet<Documento>();
         }
     
         public int UsuarioId { get; set; }
@@ -39,17 +37,10 @@ namespace SICER.MODEL
         public byte[] Password { get; set; }
         public int RolId { get; set; }
         public string SapBusinessPartnerCardCode { get; set; }
+        public int AreaId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AprobacionDocumento> AprobacionDocumento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Documento> Documento1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Documento> Documento2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoRendicion> DocumentoRendicion1 { get; set; }
         public virtual Rol Rol { get; set; }
         public virtual SapBusinessPartner SapBusinessPartner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -58,5 +49,9 @@ namespace SICER.MODEL
         public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioRoles> UsuarioRoles1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Documento> Documento1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Documento> Documento2 { get; set; }
     }
 }

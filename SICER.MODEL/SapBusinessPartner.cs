@@ -17,9 +17,8 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SapBusinessPartner()
         {
-            this.Documento = new HashSet<Documento>();
-            this.DocumentoRendicion = new HashSet<DocumentoRendicion>();
             this.Usuario = new HashSet<Usuario>();
+            this.Documento = new HashSet<Documento>();
         }
     
         public string SapBusinessPartnerCardCode { get; set; }
@@ -30,10 +29,8 @@ namespace SICER.MODEL
         public string CardCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Documento> Documento { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DocumentoRendicion> DocumentoRendicion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Documento> Documento { get; set; }
     }
 }

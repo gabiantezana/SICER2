@@ -1,0 +1,108 @@
+﻿@model SICER.VIEWMODEL.Administracion.Area.ListAreaViewModel
+@{
+    ViewBag.Title = "Listado de áreas";
+    ViewBag.Icon = "list";
+}
+
+@section Breadcrumbs{}
+
+<div class="panel-footer text-right">
+    <a class="btn btn-primary animsition-link" id="btn-crear" href="@(Url.Action("AddUpdate", "Area"))">
+        <i class="fa fa-plus"></i>
+        Nuevo
+    </a>
+</div>
+<div class="panel">
+    <div class="panel-body">
+        <br />
+        <div class="table-responsive">
+            @using (Html.BeginForm("AddUpdate", "Area", FormMethod.Post, new { Area = ConstantHelper.Area.ADMINISTRACION }))
+            {
+                <div class="form-group col-md-6">
+                    <div class="col-sm-11" style="padding-right:0px">
+                        @Html.DropDownListFor(x => Model.Filter, new SelectList(Model.ListDefault, "AreaId", "Descripcion"), new { @class = "form-control form-group-margin select2-busqueda" })
+                    </div>
+                    <div class="col-sm-1" style="padding:0px">
+                        <button type="button" class="btn btn-icon btn-primary"><i class="icon wb-search" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            }
+            <div id="partialList" style="padding: 30px;">
+                @Html.Partial("PartialView/_PagedList", Model.PagedList)
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script>
+        var _guid = '@Guid.NewGuid()';
+        $(function () {
+            $('.select2-busqueda').select2({
+                ajax: {
+                    url: '@Url.Action("JsonList", "NivelAprobacion", new { Area = ConstantHelper.Area.ADMINISTRACION})',
+                    dataType: 'json',
+                    type: 'POST',
+                    delay: 250,
+                    data: function (params) {
+                        var values = params.term;
+                        return {
+                            filter: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true,
+                },
+                tags: true,
+                createTag: function (newTag) {
+                    return {
+                        id: _guid + newTag.term,
+                        text: newTag.term + " (buscar)",
+                        isNew: true,
+                    };
+                },
+                minimumInputLength: 3,
+                allowClear: true,
+                language: 'es',
+                placeholder: 'Buscar',
+            });
+        });
+        $('.select2-busqueda').change(function () {
+            var value = this.value;
+            if (value.toString().startsWith(_guid) || value.toString() === '')
+                FilterTable(value.replace(_guid, ''));
+            else {
+                var redirectTo = '@Url.Action("AddUpdate", "Area", new { Area = ConstantHelper.Area.ADMINISTRACION, areaId = "areaId" })'.replace("_areaId", value);
+                window.location.href = redirectTo;
+            }
+        });
+
+        function FilterTable(filter) {
+            var $table = $('#partialList');
+            $.ajax({
+                type: 'POST',
+                url:
+                    '@Url.Action("_FilterList", "Area", new { Area = ConstantHelper.Area.ADMINISTRACION })',
+                cache: false,
+                data: { 'filter': filter },
+                beforeSend: function() {
+                    $('#main-loader').fadeIn();
+                },
+                success: function(data) {
+                    $table.empty();
+                    $table.append(data);
+                },
+                complete: function(data) {
+                    $('#main-loader').fadeOut();
+                }
+
+            });
+        }
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@model SICER.VIEWMODEL.Administracion.Documento.DocumentoDetalleViewModel
+<div style="display:none">
+    @*@Html.TextBoxFor(x => Model.Correlativo, new { @id = "ListDetalle[0].Correlativo", @Name = "ListDetalle[0].Correlativo" })*@
+    @Html.EditorFor(model => Model.Correlativo, new { htmlAttributes = new { @class = "form-control", @maxlength = "80", @id = "asfad", @Name = "asdad" } })
+    @*@Html.HiddenFor(x => Model.Correlativo, new { htmlAttributes = new { @name = "ListDetalle[0].Correlativo" } })*@
+    @Html.HiddenFor(x => Model.Fecha, new { htmlAttributes = new { name = "ListDetalle[0].Fecha" } })
+    @Html.HiddenFor(x => Model.IdCentroCosto1, new { htmlAttributes = new { @name = "ListDetalle[0].IdCentroCosto1" } })
+    @Html.HiddenFor(x => Model.IdCentroCosto2, new { htmlAttributes = new { @name = "ListDetalle[0].IdCentroCosto2" } })
+    @Html.HiddenFor(x => Model.IdCentroCosto3, new { htmlAttributes = new { @name = "ListDetalle[0].IdCentroCosto3" } })
+    @Html.HiddenFor(x => Model.IdCentroCosto4, new { htmlAttributes = new { @name = "ListDetalle[0].IdCentroCosto4" } })
+    @Html.HiddenFor(x => Model.IdCentroCosto5, new { htmlAttributes = new { @name = "ListDetalle[0].IdCentroCosto5" } })
+    @Html.HiddenFor(x => Model.IdConcepto, new { htmlAttributes = new { @name = "ListDetalle[0].IdConcepto" } })
+    @Html.HiddenFor(x => Model.IdDocumentoDetalle, new { htmlAttributes = new { @name = "ListDetalle[0].IdDocumentoDetalle" } })
+    @Html.HiddenFor(x => Model.IdMonedaDocumento, new { htmlAttributes = new { @name = "ListDetalle[0].IdMonedaDocumento" } })
+    @Html.HiddenFor(x => Model.IdMonedaDocumentoSAP, new { htmlAttributes = new { @name = "ListDetalle[0].IdMonedaDocumentoSAP" } })
+    @Html.HiddenFor(x => Model.IdProveedor, new { htmlAttributes = new { @name = "ListDetalle[0].IdProveedor" } })
+    @Html.HiddenFor(x => Model.ImporteAfecta, new { htmlAttributes = new { @name = "ListDetalle[0].ImporteAfecta" } })
+    @Html.HiddenFor(x => Model.ImporteIGV, new { htmlAttributes = new { @name = "ListDetalle[0].ImporteIGV" } })
+    @Html.HiddenFor(x => Model.ImporteNoAfecta, new { htmlAttributes = new { @name = "ListDetalle[0].ImporteNoAfecta" } })
+    @Html.HiddenFor(x => Model.ImporteTotal, new { htmlAttributes = new { @name = "ListDetalle[0].ImporteTotal" } })
+    @Html.HiddenFor(x => Model.Serie, new { htmlAttributes = new { @name = "ListDetalle[0].Serie" } })
+    @Html.HiddenFor(x => Model.TasaDeCambio, new { htmlAttributes = new { @name = "ListDetalle[0].TasaDeCambio" } })
+    @Html.HiddenFor(x => Model.TipoDocumento, new { htmlAttributes = new { @name = "ListDetalle[0].TipoDocumento" } })
+</div>

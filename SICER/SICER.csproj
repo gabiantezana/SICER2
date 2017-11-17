@@ -181,13 +181,25 @@
     <Compile Include="App_Start\MoneyMaskBundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Administracion\AdministracionAreaRegistration.cs" />
+    <Compile Include="Areas\Administracion\Controllers\ConfigController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\AreaController.cs" />
+    <Compile Include="Areas\Administracion\Controllers\NivelAprobacionController.cs" />
     <Compile Include="Areas\Administracion\Controllers\RolController.cs" />
     <Compile Include="Areas\Administracion\Controllers\UsuarioController.cs" />
-    <Compile Include="Areas\Sync\Controllers\SyncController.cs" />
+    <Compile Include="Areas\GestionDocumentos\Controllers\DocumentoController.cs" />
+    <Compile Include="Areas\GestionDocumentos\GestionDocumentosAreaRegistration.cs" />
+    <Compile Include="Areas\Sync\Controllers\SapBusinessPartnerController.cs" />
+    <Compile Include="Areas\Sync\Controllers\SapCentroCostoController.cs" />
+    <Compile Include="Areas\Sync\Controllers\SapConceptoController.cs" />
+    <Compile Include="Areas\Sync\Controllers\SapCuentaContableController.cs" />
+    <Compile Include="Areas\Sync\Controllers\SapIndicatorController.cs" />
+    <Compile Include="Areas\Sync\Controllers\SapMonedaController.cs" />
+    <Compile Include="Areas\Sync\Controllers\SapTipoCambioController.cs" />
     <Compile Include="Areas\Sync\SyncAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\AppRolAuthorizeAttribute.cs" />
+    <Compile Include="Filters\AppViewAndDocumentTypeAuthorizeAttribute.cs" />
     <Compile Include="Filters\AppViewAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -375,7 +387,39 @@
     <Content Include="Areas\Administracion\Views\Usuario\ListUsuarios.cshtml" />
     <Content Include="Areas\Administracion\Views\Usuario\PartialView\_ListUsuariosPartialView.cshtml" />
     <Content Include="Areas\Sync\Views\web.config" />
-    <Content Include="Areas\Sync\Views\Sync\Index.cshtml" />
+    <Content Include="Areas\Administracion\Views\NivelAprobacion\List.cshtml" />
+    <Content Include="Areas\Administracion\Views\NivelAprobacion\AddUpdate.cshtml" />
+    <Content Include="Areas\Administracion\Views\NivelAprobacion\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\web.config" />
+    <Content Include="Areas\Sync\Views\SapBusinessPartner\List.cshtml" />
+    <Content Include="Areas\Sync\Views\SapCentroCosto\List.cshtml" />
+    <Content Include="Areas\Sync\Views\SapConcepto\List.cshtml" />
+    <Content Include="Areas\Sync\Views\SapCuentaContable\List.cshtml" />
+    <Content Include="Areas\Sync\Views\SapIndicator\List.cshtml" />
+    <Content Include="Areas\Sync\Views\SapMoneda\List.cshtml" />
+    <Content Include="Areas\Sync\Views\SapTipoCambio\List.cshtml" />
+    <Content Include="Areas\Sync\Views\SapBusinessPartner\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\Administracion\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Sync\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Sync\Views\SapCentroCosto\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\Sync\Views\SapConcepto\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\Sync\Views\SapCuentaContable\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\Sync\Views\SapIndicator\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\Sync\Views\SapMoneda\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\Sync\Views\SapTipoCambio\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\Documento\AddUpdate.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\Documento\List.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\Documento\Modal\ModalRendicion.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\Documento\PartialView\_AddUpdateDetalleDocumento.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\Documento\PartialView\_RendicionList.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\Documento\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\GestionDocumentos\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administracion\Views\Config\AddEditConfig.cshtml" />
+    <Content Include="Areas\Administracion\Views\Config\LstConfigs.cshtml" />
+    <Content Include="Areas\Administracion\Views\Config\PartialView\_LstConfigPartialView.cshtml" />
+    <Content Include="Areas\Administracion\Views\Area\List.cshtml" />
+    <Content Include="Areas\Administracion\Views\Area\PartialView\_PagedList.cshtml" />
+    <Content Include="Areas\Administracion\Views\Area\AddUpdate.cshtml" />
     <None Include="Content\assets\js\jquery-1.10.2.intellisense.js" />
     <Content Include="Content\assets\js\jquery-1.10.2.js" />
     <Content Include="Content\assets\js\jquery-1.10.2.min.js" />
@@ -969,8 +1013,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administracion\Models\" />
+    <Folder Include="Areas\GestionDocumentos\Models\" />
+    <Folder Include="Areas\GestionDocumentos\Views\Shared\" />
     <Folder Include="Areas\Sync\Models\" />
     <Folder Include="Areas\Sync\Views\Shared\" />
+    <Folder Include="Areas\Sync\Views\Sync\" />
     <Folder Include="Content\assets\css\" />
     <Folder Include="Content\vendor\flag-icon-css\flags\" />
     <Folder Include="Models\" />
@@ -1025,7 +1072,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57238</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57238/</IISUrl>
+          <IISUrl>http://localhost:57239/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

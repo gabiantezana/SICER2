@@ -1,0 +1,33 @@
+﻿@model IPagedList<SICER.MODEL.SapTipoCambio>
+<table class="table table-hover">
+    <thead style="font-weight:bold">
+    <tr>
+        <td>RateDate</td>
+        <td>Currency</td>
+        <td>Rate</td>
+    </tr>
+    </thead>
+    <tbody>
+    @if (!Model.Any())
+    {
+        <tr><td style="font-style: italic" colspan="7">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.RateDate</td>
+            <td>@item.Currency</td>
+            <td>@item.Rate</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div id="myPager">
+    @Html.PagedListPager(Model, page => Url.Action("_PagedList",
+        new
+        {
+            page = page,
+            //MODEL PROPERTIES HERE:
+            filter = ViewBag.Filter,
+        }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("partialList"))
+</div>

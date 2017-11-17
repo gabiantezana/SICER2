@@ -15,7 +15,7 @@ namespace SICER.MODEL
     public partial class UsuarioNivelAprobacion
     {
         public int UsuarioNivelAprobacionId { get; set; }
-        public int NivelId { get; set; }
+        public int NivelAprobacionId { get; set; }
         public int UsuarioId { get; set; }
     
         public virtual NivelAprobacion NivelAprobacion { get; set; }

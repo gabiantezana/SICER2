@@ -11,7 +11,6 @@
 {
     @section Breadcrumbs{
         <li><a href="@Url.Action("ListUsuarios", "Usuario")">Listado de usuarios</a></li>
-
     }
 
     <div class="panel-footer text-right">
@@ -53,12 +52,22 @@
                 @Html.DropDownListFor(x => Model.RolId, new SelectList(Model.RolJList, "id", "text", 0), new { @class = "form-control form-group-margin select-rol", @data_plugin = "select2", @data_isedit = isEdit })
                 @Html.ValidationMessageFor(x => Model.RolId)
             </div>
+            <div class="form-group col-md-6 col-sm-12">
+                @Html.LabelFor(x => Model.AreaId, new { @class = "form-label " })
+                @Html.DropDownListFor(x => Model.AreaId, new SelectList(Model.AreaJList, "id", "text", 0), new { @class = "form-control form-group-margin select-rol", @data_plugin = "select2", @data_isedit = isEdit })
+                @Html.ValidationMessageFor(x => Model.AreaId)
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+                @Html.LabelFor(x => Model.SapBusinessPartnerCardCode, new { @class = "form-label " })
+                @Html.DropDownListFor(x => Model.SapBusinessPartnerCardCode, new SelectList(Model.SapBusinessPartnerJList, "id", "text"), new { @class = "form-control form-group-margin ", @data_plugin = "select2", @data_isedit = string.IsNullOrEmpty(Model.SapBusinessPartnerCardCode) } )
+                @Html.ValidationMessageFor(x => Model.SapBusinessPartnerCardCode)
+            </div>
         </div>
     </div>
 
     <div class="panel panel-subroles" style="display:  @(Model.RolId== (int)AppRol.GESTORDOCUMENTOS? "block":"none")">
         <div class="panel-heading">
-            <h4 class="panel-title"> <i class="fa fa-cubes" aria-hidden="true"></i> Permisos por documentos</h4> <br/>
+            <h4 class="panel-title"> <i class="fa fa-cubes" aria-hidden="true"></i> Permisos por documentos</h4> <br />
             <div class="panel-actions">
                 <a class="panel-action icon wb-minus" data-toggle="panel-collapse" aria-hidden="true"></a>
             </div>
@@ -83,6 +92,17 @@
                             <input type="checkbox" id="chk-@rol.Codigo" name="chk-@rol.Codigo" @(usuarioRol == null || !usuarioRol.Estado ? string.Empty : "checked") />
                             <label for="chk-@rol.Codigo">&nbsp; @rol.Descripcion</label>
                         </div>
+                        if (@rol.Codigo.Contains("APROBADOR"))
+                        {
+                            foreach (var nivelAprobacion in new SICEREntities().NivelAprobacion.Where(x => x.TipoDocumento.Codigo == item))
+                            {
+                                var nivelAprobacionUsuario = Model.NivelAprobacionIdList.ToList().FirstOrDefault(x => x == nivelAprobacion.NivelAprobacionId);
+                                    <div class="checkbox-custom checkbox-primary col-lg-offset-1 ">
+                                        <input type="checkbox" id="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId" name="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId" @(nivelAprobacionUsuario == 0? string.Empty : "checked") />
+                                        <label for="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId">&nbsp; @nivelAprobacion.Descripcion</label>
+                                    </div>
+                            }
+                        }
                     }
                 </div>
 
@@ -99,12 +119,51 @@
                 }
 @section Scripts{
     <script>
-        $(".select-rol").change(function () {
-          if(this.value =='@((int)AppRol.GESTORDOCUMENTOS)')
-              $(".panel-subroles").slideDown();
+        $(".select-rol").change(function() {
+            if (this.value == '@((int)AppRol.GESTORDOCUMENTOS)') {
+                
+                $(".panel-subroles").slideDown();
+            }
             else
                 $(".panel-subroles").slideUp();
-        })
+        });
+
+
+        $(function () {
+            var _guid = '@Guid.NewGuid()';
+            $('#SapBusinessPartnerCardCode').select2({
+                ajax: {
+                    url: '@Url.Action("GetJList", "SapBusinessPartner", new { Area = ConstantHelper.Area.SYNC})',
+                    dataType: 'json',
+                    type: 'POST',
+                    delay: 250,
+                    data: function (params) {
+                        var values = params.term;
+                        return {
+                            filter: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true,
+                },
+                tags: false,
+                createTag: function (newTag) {
+                    return {
+                        id: _guid + newTag.term,
+                        text: newTag.term + "(nuevo)",
+                        isNew: true,
+                    };
+                },
+                minimumInputLength: 3,
+                allowClear: true,
+                language: 'es',
+                placeholder: 'Buscar'
+            });
+        });
 
     </script>
 }

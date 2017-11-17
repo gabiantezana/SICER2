@@ -14,7 +14,16 @@ namespace SICER.MODEL
     
     public partial class SapIndicators
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SapIndicators()
+        {
+            this.Documento = new HashSet<Documento>();
+        }
+    
         public string Code { get; set; }
         public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Documento> Documento { get; set; }
     }
 }

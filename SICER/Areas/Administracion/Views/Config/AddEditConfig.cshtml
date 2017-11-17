@@ -1,0 +1,97 @@
+﻿@model SICER.VIEWMODEL.Administracion.Config.ConfigViewModel
+
+@{
+    ViewBag.Title = (!string.IsNullOrEmpty(Model.id)) ? "Editar Parámetro" : "Crear Parámetro";
+    ViewBag.Icon = (!string.IsNullOrEmpty(Model.id)) ? "edit" : "plus";
+    var activeTab = TempData.Get(TempDataKey.ParametrosActiveTab);
+}   
+
+@section Breadcrumbs{
+
+    <li><a href="@Url.Action("LstConfigs", "Config")">Listado de Parámetros</a></li>
+} 
+  
+<div class="panel">
+    <div class="panel-body">
+        <div class="example-wrap">
+            <div class="nav-tabs-horizontal nav-tabs-inverse nav-tabs-animate">
+                <ul class="nav nav-tabs" data-plugin="nav-tabs" role="tablist">
+                    <li class=@(activeTab.Equals(ActiveTab.InformacionParametros) ? "active" : "") role="presentation"><a data-toggle="tab" href="#clientInformation" aria-controls="clientInformation" role="tab">Información del Parámetro</a></li>
+              
+                </ul>
+                <div class="tab-content padding-top-20">
+             
+                    <div class="tab-pane  animation-scale-up @(activeTab.Equals(ActiveTab.InformacionParametros) ? "active" : "")" id="clientInformation" role="tabpanel">
+                        @using (Html.BeginForm("AddEditConfig", "Config", FormMethod.Post))
+                        {
+ 
+                            <div class="panel-body" id="basicInformation">
+                                <h4 class="example-title">Datos Generales</h4>
+
+                                <div class="panel-footer text-right">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Guardar</button>
+                                </div>
+                                  
+                                @if (!String.IsNullOrEmpty(Model.id))
+                                {
+                                    @Html.EditorFor(x => x.id, new { htmlAttributes = new { @class = "form-control", @data_max = 20, @readonly = "readonly" } })
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(x => x.id, new { htmlAttributes = new { @class = "form-control", @data_max = 20 } })
+                                }
+
+                                @Html.EditorFor(x => x.descripcion, new { htmlAttributes = new { @class = "form-control",@data_max = 190 } })
+                                @Html.EditorFor(x => x.valor, new { htmlAttributes = new { @class = "form-control", @data_max = 190} })
+                           
+                                <hr />
+                            </div>
+
+                            
+                        }
+                    </div>
+           
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+        <div class="alertify" id="alert-pending-changes" style="display: none;">
+            <div class="dialog">
+                <div>
+                    <p class="msg text-center">Aún tiene cambios pendientes en la pestaña de Información de paramétros que no han sigo guardados</p>
+                    <button class="ok btn btn-primary" onclick="closeAlertPendingChanges();">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    @section Scripts
+{
+        <script>
+
+            $(function () {
+
+                var someChangeHasMade = false;
+
+                $('.btn-prevent').click(function (event) {
+
+                    if (someChangeHasMade) {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        $('#alert-pending-changes').show();
+                    }
+
+                });
+
+
+            });
+
+            function closeAlertPendingChanges() {
+                $('#alert-pending-changes').hide();
+            }
+
+        </script>
+    }

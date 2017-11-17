@@ -68,6 +68,13 @@ namespace SICER.Controllers
                     {
                         Session.Set(SessionKey.Rol, Enum.Parse(typeof(AppRol), usuario.Rol.Codigo));
                         Session.Set(SessionKey.Vistas, usuario.Rol.VistaRol.Where(x => x.Estado).Select(x => x.Vista.Codigo).ToArray());
+                        if (usuario.Rol.Codigo == ConstantHelper.CODIGOROLGESTORDOCUMENTOS)
+                        {
+                            var vistasDeRolesUsuario = GetDataContext().Context.UsuarioRoles
+                                 .Where(x => x.UsuarioId == usuario.UsuarioId && x.Estado).SelectMany(x => x.Rol.VistaRol).Select(y => y.Vista.Codigo).ToArray();
+
+                            Session.Set(SessionKey.Vistas, vistasDeRolesUsuario);
+                        }
                     }
 
                     var defaultEncryptPassword = EncryptionHelper.EncryptTextToMemory(ConstantHelper.PASSWORD_DEFAULT, ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);

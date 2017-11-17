@@ -60,14 +60,17 @@
     <Compile Include="AprobacionDocumento.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Area.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CONFIG.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Counter.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataContext.cs" />
     <Compile Include="Documento.cs">
-      <DependentUpon>SICERModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DocumentoRendicion.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Excepcion.cs">
@@ -77,6 +80,12 @@
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Hash.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Invoice.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InvoiceLine.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Job.cs">
@@ -92,6 +101,9 @@
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="NivelAprobacion.cs">
+      <DependentUpon>SICERModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Payment.cs">
       <DependentUpon>SICERModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

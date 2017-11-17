@@ -53,15 +53,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\Area\AreaViewModel.cs" />
+    <Compile Include="Administracion\Area\ListAreaViewModel.cs" />
+    <Compile Include="Administracion\Config\ConfigViewModel.cs" />
+    <Compile Include="Administracion\Config\LstConfigViewModel.cs" />
     <Compile Include="Administracion\Rol\LstRolUsuarioViewModel.cs" />
     <Compile Include="Administracion\Rol\RolViewModel.cs" />
+    <Compile Include="Administracion\NivelAprobacion\ListNivelAprobacionViewModel.cs" />
+    <Compile Include="Administracion\NivelAprobacion\NivelAprobacionViewModel.cs" />
+    <Compile Include="Administracion\TipoDocumento\ListTipoDocumentoViewModel.cs" />
+    <Compile Include="Administracion\TipoDocumento\TipoDocumentoViewModel.cs" />
     <Compile Include="Administracion\Usuario\ListUsuariosViewModel.cs" />
     <Compile Include="Administracion\Usuario\LstUsuarioRolViewModel.cs" />
     <Compile Include="Administracion\Usuario\UsuarioRolesViewModel.cs" />
     <Compile Include="Administracion\Usuario\UsuarioViewModel.cs" />
     <Compile Include="General\ChangePasswordViewModel.cs" />
     <Compile Include="General\LoginViewModel.cs" />
+    <Compile Include="GestionDocumentos\DocumentoViewModel.cs" />
+    <Compile Include="GestionDocumentos\ListDocumentoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sync\ListSapTipoCambioViewModel.cs" />
+    <Compile Include="Sync\ListSapMonedaViewModel.cs" />
+    <Compile Include="Sync\ListSapIndicatorViewModel.cs" />
+    <Compile Include="Sync\ListSapCuentaContableViewModel.cs" />
+    <Compile Include="Sync\ListSapConceptoViewModel.cs.cs" />
+    <Compile Include="Sync\ListSapCentroCostoViewModel.cs" />
+    <Compile Include="Sync\ListSapBusinessPartnerViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SICER.HELPER\SICER.HELPER.csproj">
@@ -74,10 +91,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

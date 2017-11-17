@@ -1,0 +1,44 @@
+﻿@using SICER.Areas.Administracion.Controllers
+@using SICER.LOGIC.Administracion
+@using SICER.MODEL
+@model SICER.VIEWMODEL.Administracion.NivelAprobacion.NivelAprobacionViewModel
+    @{
+        ViewBag.Title = Model.NivelAprobacionId.HasValue ? "Editar nivel de aprobación" : "Crear nivel de aprobación";
+        ViewBag.Icon = Model.NivelAprobacionId.HasValue ? "edit" : "plus";
+        var isEdit = Model.NivelAprobacionId.HasValue ? "true" : "false";
+    }
+    @using (Html.BeginForm("AddUpdate", "NivelAprobacion", FormMethod.Post))
+    {
+        @section Breadcrumbs{
+            <li><a href="@Url.Action("List", "NivelAprobacion")">Listado de niveles de aprobación</a></li>
+
+        }
+
+        <div class="panel-footer text-right">
+            <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h5 class="panel-title">Datos del usuario</h5>
+            </div>
+            @if (Model.NivelAprobacionId.HasValue)
+            {
+                @Html.HiddenFor(x => Model.NivelAprobacionId)
+            }
+            <div class="panel-body">
+              
+                <div class="form-group col-md-6 col-sm-12">
+                    @Html.LabelFor(x => Model.TipoDocumentoId, new { @class = "form-label " })
+                    @Html.DropDownListFor(x => Model.TipoDocumentoId, new SelectList(Model.JListTipoDocumento, "id", "text", 0), new { @class = "form-control form-group-margin select-rol", @data_plugin = "select2", @data_isedit = isEdit })
+                    @Html.ValidationMessageFor(x => Model.TipoDocumentoId)
+                </div>
+                @Html.EditorFor(x => Model.NumeroNivel, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(x => Model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="panel-footer text-right">
+            <a class="btn btn-default animsition-link pull-left" href="@Url.Action("List", "NivelAprobacion", new { area = SICER.HELPER.ConstantHelper.Area.ADMINISTRACION })"><i class="fa fa-arrow-left"></i> Atrás</a>
+            <button class="btn btn-primary" id="btnGuardar"><i class="fa fa-save" aria-hidden="true"></i>&nbsp; Guardar</button>
+        </div>
+                    }

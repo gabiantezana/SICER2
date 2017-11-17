@@ -1,0 +1,33 @@
+﻿@model IPagedList<SICER.MODEL.CONFIG>
+
+
+@{ var pagedListOptions = PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(ConstantHelper.Bootstrap3Pager, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "LstConfigs", OnComplete = "complete" });}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td style="width:40%">Descripción</td>
+            <td>Valor</td> 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@(item.descripcion ?? item.Id)</td>
+                <td>@item.Valor</td>
+                <td class="text-nowrap text-center">
+                    <a href="@Url.Action("AddEditConfig", "Config", new { Area = "Administracion", ConfigID = item.Id  })" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+                        <i class="icon wb-wrench" aria-hidden="true"></i>
+                    </a>
+             
+                </td>
+          
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*<div id="myPager">
+    @Html.PagedListPager(Model, page => Url.Action("_LstConfigsPaged", new { p = page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("LstConfigs"))
+</div>*@

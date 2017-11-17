@@ -4,8 +4,10 @@ using System.Linq;
 using System.Web.Mvc;
 using PagedList;
 using SICER.DATAACCESS.Administracion;
+using SICER.DATAACCESS.Sync;
 using SICER.EXCEPTION;
 using SICER.HELPER;
+using SICER.LOGIC.Sync;
 using SICER.VIEWMODEL.Administracion.Usuario;
 using SICER.VIEWMODEL.General;
 using SICER.MODEL;
@@ -45,6 +47,17 @@ namespace SICER.LOGIC.Administracion
 
             //Fill all user roles
             model.RolUserList = new UsuarioDataAccess(dataContext).GetUsuarioRolesList(model.UsuarioId);
+
+            //Fill proveedor asociado
+            if (!string.IsNullOrEmpty(model.SapBusinessPartnerCardCode))
+                model.SapBusinessPartnerJList = SapBusinessPartnerLogic.GetJList(dataContext, model.SapBusinessPartnerCardCode);
+            //Fil áreas
+            model.AreaJList = AreaLogic.GetJList(dataContext, null);
+
+            //Fill list int of Niveles de aprobación
+            var usuarioId = model.UsuarioId;
+            model.NivelAprobacionIdList = dataContext.Context.UsuarioNivelAprobacion
+                .Where(x => x.UsuarioId == usuarioId).Select(x => x.NivelAprobacionId).ToList();
         }
 
         public static UsuarioViewModel GetUsuario(DataContext dataContext, int? usuarioId)
@@ -53,15 +66,17 @@ namespace SICER.LOGIC.Administracion
             return GetUsuarioViewModel(dataContext, usuario);
         }
 
-        public static int AddUpdateUsuario(DataContext dataContext, UsuarioViewModel model, FormCollection formCollection)
+        public static void AddUpdateUsuario(DataContext dataContext, UsuarioViewModel model, FormCollection formCollection)
         {
 
             ValidarDuplicado(dataContext, model);
 
             model.RolUserList = new List<UsuarioRoles>();
             var rolesUsuarioKey = formCollection.AllKeys.Where(x => x.StartsWith("chk-"));
-
+            var nivelesAprobacionIds = formCollection.AllKeys.Where(x => x.StartsWith("chkNivelAprobacion-"));
             var listadoRolesActivos = new List<Rol>();
+            var listadoNivelesDeAprobacion = new List<int>();
+
             if (model.RolId == (int)AppRol.GESTORDOCUMENTOS)
             {
                 foreach (var rolUsuarioKey in rolesUsuarioKey)
@@ -72,9 +87,16 @@ namespace SICER.LOGIC.Administracion
                     var rol = new RolDataAccess(dataContext).GetList(RolNivel.Secundario).FirstOrDefault(x => x.Codigo == rolCodigo);
                     listadoRolesActivos.Add(rol);
                 }
+                foreach (var nivelAprobacionKey in nivelesAprobacionIds)
+                {
+                    var value = formCollection[nivelesAprobacionIds.ToString()] == "on" || formCollection[nivelesAprobacionIds.ToString()] == "true";
+                    var nivelAprobacionId = nivelAprobacionKey.Split('-')[1];
+                    listadoNivelesDeAprobacion.Add(Convert.ToInt32(nivelAprobacionId));
+                }
             }
             model.RolList = listadoRolesActivos;
-            return new UsuarioDataAccess(dataContext).AddUpdateUsuario(model);
+            model.NivelAprobacionIdList = listadoNivelesDeAprobacion;
+            new UsuarioDataAccess(dataContext).AddUpdateUsuario(model);
         }
 
         public static void ChangePassword(DataContext dataContext, ChangePasswordViewModel model)
@@ -134,6 +156,19 @@ namespace SICER.LOGIC.Administracion
 
             return jsonEntities;
         }
+
+        public static IEnumerable<JsonEntity> GetUsuariosJsonList(DataContext dataContext, int? usuarioId)
+        {
+            var query = GetQueryUsuariosList(dataContext).Where(x=> x.UsuarioId == usuarioId);
+            var jsonEntities = query?.Select(x => new JsonEntity()
+            {
+                id = x.UsuarioId,
+                text = x.GetNombreCompleto(),
+            });
+
+            return jsonEntities;
+        }
+
     }
 
 }
