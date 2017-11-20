@@ -1,0 +1,12 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "SAP INDEX";
+}
+<a href="@Url.Action("GenerateDbSchema", "Sap", new {Area = ConstantHelper.Area.ADMINISTRACION})" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+    <i class="icon wb-wrench" aria-hidden="true"></i>
+</a>
+
+<a href="@Url.Action("StartSyncronization", "Sap", new {Area = ConstantHelper.Area.ADMINISTRACION})" class="btn btn-sm btn-icon btn-flat btn-default" data-toggle="tooltip" data-original-title="Editar">
+    <i class="icon wb-wrench" aria-hidden="true"></i>
+</a>

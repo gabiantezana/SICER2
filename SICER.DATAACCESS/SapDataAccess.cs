@@ -12,20 +12,50 @@ using SICER.MODEL;
 
 namespace SICER.DATAACCESS
 {
-    public class BaseDataAccess
+    public class SapDataAccess
     {
-        private DataContext DataContext { get; set; }
-        public BaseDataAccess(DataContext dataContext)
+        public string GenerateSapDbSchema(Company company)
         {
-            DataContext = dataContext;
-        }
+            var errorMessage = string.Empty;
 
-        public void GenerateDbSchema()
-        {
             var dBSchema = new UserModel().GetDBSchema();
-            dBSchema.TableList.ForEach(x => SapMethodsHelper.CreateTable(DataContext.Company, x));
-            dBSchema.FieldList.ForEach(x => SapMethodsHelper.CreateField(DataContext.Company, x));
-            dBSchema.UDOList.ForEach(x => SapMethodsHelper.CreateUdo(DataContext.Company, x));
+            foreach (var x in dBSchema.TableList)
+            {
+                try
+                {
+                    SapMethodsHelper.CreateTable(company, x);
+                }
+                catch (SapException ex)
+                {
+                    errorMessage += GetSapError(company);
+                }
+            }
+            foreach (var x in dBSchema.FieldList)
+            {
+                try
+                {
+                    SapMethodsHelper.CreateField(company, x);
+
+                }
+                catch (SapException ex)
+                {
+                    errorMessage += GetSapError(company);
+                }
+            }
+            foreach (var x in dBSchema.UDOList)
+            {
+                try
+                {
+
+                    SapMethodsHelper.CreateUdo(company, x);
+                }
+                catch (SapException ex)
+                {
+                    errorMessage += GetSapError(company);
+                }
+            }
+
+            return errorMessage;
         }
 
         #region Company 
@@ -39,17 +69,16 @@ namespace SICER.DATAACCESS
 
         public static void Connect(CompanyEntity model)
         {
-            if (Company == null)
-                Company = CreateNewCompanyFromModel(model);
-            if (!Company.Connected)
-                Connect();
+            var company = CreateNewCompanyFromModel(model);
+            if (!company.Connected)
+                Connect(company);
         }
 
         public static void ConnectNewCompany(CompanyEntity model)
         {
             Disconnect();
             Company = CreateNewCompanyFromModel(model);
-            Connect();
+            Connect(Company);
         }
 
         private static Company CreateNewCompanyFromModel(CompanyEntity model)
@@ -86,22 +115,14 @@ namespace SICER.DATAACCESS
             }
         }
 
-        private static void Connect()
+        private static void Connect(Company company)
         {
-            Int32 resultReturn = Company.Connect();
+            Int32 resultReturn = company.Connect();
             if (resultReturn != 0)
                 throw new SapException();
         }
 
-        public static void TryConnectCurrentCompany()
-        {
-            if (Company == null)
-                throw new CustomException("Any company for connect.");
-            if (!Company.Connected)
-                Connect();
-        }
-
-        public static SapExceptionEntity GetLastSapError()
+        public static SapExceptionEntity GetLastSapError(Company Company)
         {
             Int32 errorCode = default(Int32);
             String errorMessage = String.Empty;
@@ -112,6 +133,14 @@ namespace SICER.DATAACCESS
             }
             return new SapExceptionEntity { ErrorCode = errorCode, ErrorMessage = errorMessage };
         }
+
+        public static string GetSapError(Company Company)
+        {
+            var error = GetLastSapError(Company);
+            return error.ErrorCode + " " + error.ErrorMessage;
+        }
+
+
 
         #endregion
     }

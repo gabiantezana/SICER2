@@ -24,21 +24,23 @@ namespace SICER.HELPER
         }
 
 
-        public string GetSyncQuery(SyncEntity syncEntity) //TODO: CHANGE FOR SAP OR SQL QUERY SYNTAX
+        public string GetSyncQuery(SyncEntity syncEntity, CompanyEntity companyEntity) //TODO: CHANGE FOR SAP OR SQL QUERY SYNTAX
         {
             var resourceFullName = Assembly.GetCallingAssembly().GetManifestResourceNames().ToList().FirstOrDefault(x => x.Contains(syncEntity.ToString()));
             if (string.IsNullOrEmpty(resourceFullName))
                 throw new Exception("ResourceName not found for: " + syncEntity.ToString());
 
+            string query = string.Empty;
             using (var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceFullName))
             {
                 if (stream == null) throw new Exception("A problem was encountered while system has reading the file.");
                 using (var reader = new StreamReader(stream))
                 {
-                    return reader.ReadToEnd();
+                    query = reader.ReadToEnd();
                 }
             }
-            
+            query = query.Replace(ConstantHelper.SBO_TEST001, "[" + companyEntity.CompanyDB + "]");
+            return query;
         }
 
         public string GetUserFieldId()

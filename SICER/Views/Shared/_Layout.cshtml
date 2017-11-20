@@ -33,6 +33,8 @@
     <link href="~/Content/fonts/web-icons/web-icons.min.css" rel="stylesheet" />
     <link href="~/Content/fonts/material-design/css/materialdesignicons.min.css" rel='stylesheet' />
     @*<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' />*@
+    
+    
 
     <!--[if lt IE 9]>
     <script src="../global/vendor/html5shiv/html5shiv.min.js"></script>
@@ -41,6 +43,10 @@
     <script src="../global/vendor/media-match/media.match.min.js"></script>
     <script src="../global/vendor/respond/respond.min.js"></script>
     <![endif]-->
+    
+  
+    
+
     <!-- Scripts -->
     @RenderSection("Styles", false)
 
@@ -241,9 +247,16 @@
 
     <script src="~/Content/assets/js/jquery.validate.min.js"></script>
     <script src="~/Content/assets/js/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Content/assets/js/jquery.unobtrusive-ajax.min.js"></script>
- @*   <script src="~/Scripts/messages_es_PE.js"></script>*@
-    <script src="~/Content/js/bootstrap-datepicker.js"></script>
+<script src="~/Content/assets/js/jquery.unobtrusive-ajax.min.js"></script>
+    
+
+@*   <script src="~/Scripts/messages_es_PE.js"></script>*@
+<script src="~/Content/js/bootstrap-datepicker.js"></script>
+    
+
+@* REQUIREDIF MVC FOOLPROF *@
+<script src="/Scripts/expressive.annotations.validate.js"></script>`
+@*REQUIREDIF MVC FOOLPROF*@
 
     <script>
         //Para agregar listado de modals agregados.
@@ -256,7 +269,6 @@
         })(document, window, jQuery);
 
         $(function () {
-
             var today = new Date();
 
             $('.input-group.date').datepicker({
@@ -266,11 +278,10 @@
                 todayHighlight: true,
             });
 
-            jQuery.validator.methods["date"] = function (value, element) { return true; }
+            jQuery.validator.methods["date"] = function (value, element) { debugger; return true; }
 
 
             $('*[data-plugin="select2"]').select2({
-
                 language: 'es',
                 placeholder: "[ -- Seleccione -- ]",
                 allowClear: true
@@ -367,7 +378,7 @@
 
     //Confirm LogOut
     $("#btnLogOut").click(function () {
-        if (confirm('Se cerrará la sesión. ¿Desea continuar?')) {
+        if (confirm('Se cerrará la sesión.')) {
             return true;
         } else {
             return false;
@@ -403,6 +414,11 @@
         OnChangeDecimal(null, this, null)
     });
 
+    //Validación de fecha
+    @*@Scripts.Render("~/Scripts/jquery-3.1.1.js")
+    @Scripts.Render("~/Scripts/jquery.validate.min.js")
+    @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
+    @Scripts.Render("~/Scripts/moment.js")*@
 
 </script>
 </body>

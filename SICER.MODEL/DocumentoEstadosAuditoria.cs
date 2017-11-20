@@ -12,11 +12,16 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class Counter
+    public partial class DocumentoEstadosAuditoria
     {
-        public int Id { get; set; }
-        public string Key { get; set; }
-        public short Value { get; set; }
-        public Nullable<System.DateTime> ExpireAt { get; set; }
+        public int DocumentoEstadosAuditoriaId { get; set; }
+        public Nullable<int> DocumentoId { get; set; }
+        public Nullable<int> UsuarioId { get; set; }
+        public int Estado { get; set; }
+        public Nullable<int> NumeroNivel { get; set; }
+        public System.DateTime FechaAprobacion { get; set; }
+    
+        public virtual Documento Documento { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

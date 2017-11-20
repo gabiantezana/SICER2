@@ -12,8 +12,11 @@ namespace SICER.SAPUSERMODEL.Tables
     [SAPTable(IsSystemTable = true)]
     public class OCRN
     {
+        [SAPField(IsSystemField = true)]
         public string DocCurrCod { get; set; }
+        [SAPField(IsSystemField = true)]
         public string CurrName { get; set; }
+        [SAPField(IsSystemField = true)]
         public string Locked { get; set; }
     }
 }

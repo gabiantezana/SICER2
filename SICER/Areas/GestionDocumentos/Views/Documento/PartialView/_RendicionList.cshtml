@@ -1,74 +1,110 @@
 ﻿@using SICER.HELPER
-@model SICER.VIEWMODEL.GestionDocumentos.DocumentoViewModel
+@using SICER.LOGIC.GestionDocumentos
+@using SICER.MODEL
+@model IEnumerable<SICER.VIEWMODEL.GestionDocumentos.DocumentoViewModel>
 
 <table id="tableDetalle" class="table">
     <thead>
         <tr style="font-weight:bold">
             <td class=" text-right">#</td>
             <td>Proveedor</td>
+            <td>Tipo</td>
             <td>Serie</td>
             <td>Correlativo</td>
             <td>Fecha</td>
             <td>Concepto</td>
             <td>Moneda doc</td>
+            <td>Impuesto</td>
             <td>Total</td>
+            <td>Estado</td>
             <td>Opciones</td>
         </tr>
-        @if (Model.RendicionList.Count == 0)
+
+    </thead>
+    <tbody>
+        @if (!Model.Any())
         {
             <tr><td colspan="18">No existen registros aún</td></tr>
         }
-    </thead>
-    <tbody>
-        @{
-            for (int i = 0; i < Model.RendicionList.Count; i++)
+        else
+        {
+            int num = 1;
+            foreach (var item in Model)
             {
-                <tr>
-                    @Html.HiddenFor(x => Model.RendicionList[i].DocumentoId)
-                    <td class=" text-right">@(i + 1)</td>
-
-                    @Html.HiddenFor(x => Model.RendicionList[i].SapBusinessPartnerCardCode)
-                    <td>@Model.RendicionList[i].SapBusinessPartnerCardCode</td>
-
-                    @Html.HiddenFor(x => Model.RendicionList[i].Serie)
-                    <td>@Model.RendicionList[i].Serie</td>
-
-                    @Html.HiddenFor(x => Model.RendicionList[i].Correlativo)
-                    <td>@Model.RendicionList[i].Correlativo</td>
-
-                    @Html.HiddenFor(x => Model.RendicionList[i].FechaDocumento)
-                    <td>@Model.RendicionList[i].FechaDocumento</td>
-
-                    @Html.HiddenFor(x => Model.RendicionList[i].SapConceptoCode)
-                    <td>@Model.RendicionList[i].SapConceptoCode</td>
-
-                    @Html.HiddenFor(x => Model.RendicionList[i].SapMonedaDocCurrCode)
-                    <td>@Model.RendicionList[i].SapMonedaDocCurrCode</td>
-
-                    @Html.HiddenFor(x => Model.RendicionList[i].MontoTotal)
-                    <td>@Model.RendicionList[i].MontoTotal</td>
-
+                <tr ondblclick="window.location ='@Url.Action("AddUpdate", "Documento", new { Area = ConstantHelper.Area.GESTIONDOCUMENTOS , documentoId=item.DocumentoId, documentType = (DocumentType)item.TipoDocumentoId })'">
+                    <td>@num</td>
+                    <td> @item.SapBusinessPartnerCardCode</td>
+                    <td> @item.SapIndicatorCode</td>
+                    <td> @item.Serie </td>
+                    <td> @item.Correlativo </td>
+                    <td> @item.FechaDocumento.ToShortDateString() </td>
+                    <td> @item.SapConceptoCode</td>
+                    <td> @item.SapMonedaDocCurrCode </td>
+                    <td> @item.OstcCode </td>
+                    <td> @item.Monto </td>
                     <td class="text-nowrap text-center">
-                        <button type="button"
-                                class="btn btn-outline btn-default btn-xs btnModalDetalle"
-                                @Url.ModalHelperFor("ModalRendicion", "Documento")
-                                data-toggle="tooltip"
-                                data-original-title="Modificar"
-                                data-index="@i"
-                                data-id="@Model.RendicionList[i].DocumentoId">
-                            <i class="icon wb-pencil" aria-hidden="true"></i>
+                        @switch ((DocumentState)item.Estado)
+                        {
+                            case DocumentState.None:
+                                <a class="btn btn-xs btn-icon btn-default" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                                    <i class="icon wb-copy" aria-hidden="true"></i>Ninguno
+                                </a>
+                                break;
+                            case DocumentState.Pendiente:
+                                <a class="btn btn-xs btn-icon btn-warning" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                                    <i class="icon wb-alert" aria-hidden="true"></i>Pendiente
+                                </a>
+                                break;
+                            case DocumentState.Aprobado:
+                                <a class="btn btn-xs btn-icon btn-success" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                                    <i class="icon wb-check" aria-hidden="true"></i>Aprobado
+                                </a>
+                                break;
+                            case DocumentState.Rechazado:
+                                <a class="btn btn-xs btn-icon btn-danger" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                                    <i class="icon wb-close" aria-hidden="true"></i>Rechazado
+                                </a>
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                    </td>
+                    <td class="text-nowrap text-center">
+                        <button type="button" class="btn btn-outline btn-default btn-xs btnModalDetalle" @Url.ModalHelperFor("ModalRendicion", "Documento", new { documentoId = item.DocumentoId }, ModalSize.Large) data-toggle="tooltip" data-original-title="Modificar"
+                                data - id="@item.DocumentoId">
+                            <i class="icon wb-pencil" aria - hidden="true"></i>
                         </button>
-                        <a href="@Url.Action("DeleteDocumentoDetalle", "Documento")" class="btn btn-sm btn-icon btn-flat btn-default"
-                           data-toggle="tooltip" data-original-title="Eliminar">
-                        </a>
+                       
+                        @switch (item.ModoVistaDocumento)
+                        {
+                            case ModoVistaDocumento.Ver:
+                                break;
+                            case ModoVistaDocumento.Crear:
+                                break;
+                            case ModoVistaDocumento.Modificar:
+                                break;
+                            case ModoVistaDocumento.Aprobar:
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
+                    </td>
+                    <td>
+                        <input type="checkbox" class="" />
                     </td>
                 </tr>
+                num++;
             }
         }
     </tbody>
 </table>
 @section Scripts
 {
+    <script>
+
+    </script>
 
 }
 <style>

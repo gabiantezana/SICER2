@@ -20,18 +20,21 @@ namespace SICER.DATAACCESS.Sync
             DataContext = dataContext;
         }
 
-        public void Sync()
+        public void Sync(CompanyEntity companyEntity)
         {
             try
             {
                 //var query = new QueryHelper(DataContext.Company.DbServerType).GetSyncQuery(SyncEntity.OICD);
-                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OICD);
+                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OICD, companyEntity);
                 var sapTableType = typeof(OICD);
                 var localTableType = typeof(SapIndicators);
 
                 var localListDefault = DataContext.Context.SapIndicators.ToArray();
-                var localList = localListDefault.Select(item => item.ConvertTo(sapTableType))
-                                                    .Select(dummy => (OICD)dummy).ToList();
+                var localList = localListDefault.Select(x => new OICD()
+                {
+                    Name = x.Name,
+                    Code = x.Code
+                }).ToList();
                 var sapList = DataContext.Context.Database.SqlQuery<OICD>(query).ToArray();
 
                 var pendingToSyncList = sapList.ExceptUsingJSonCompare(localList)
@@ -39,23 +42,35 @@ namespace SICER.DATAACCESS.Sync
                                                     .GroupBy(x => x.Code)
                                                     .Select(y => y.FirstOrDefault()).ToArray();
 
-                var list = new List<Tuple<SyncType, dynamic>>();
 
                 foreach (var item in pendingToSyncList)
                 {
-                    var itemInLocal = localListDefault.FirstOrDefault(x => x.Code == item.Code);
+                    var itemInLocal = DataContext.Context.SapIndicators.Find(item.Code);
                     if (itemInLocal != null)
                     {
                         var itemInSap = sapList.FirstOrDefault(x => x.Code == item.Code);
-                        list.Add(itemInSap != null
-                            ? new Tuple<SyncType, dynamic>(SyncType.Update, ConvertToEntity(SyncType.Update, itemInLocal, item))
-                            : new Tuple<SyncType, dynamic>(SyncType.Delete, ConvertToEntity(SyncType.Delete, itemInLocal, item)));
+                        if (itemInSap != null)
+                        {
+                            DataContext.Context.Entry(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
+                        else
+                        {
+                            DataContext.Context.SapIndicators.Remove(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
                     }
                     else
-                        list.Add(new Tuple<SyncType, dynamic>(SyncType.Create, ConvertToEntity(SyncType.Create, itemInLocal, item)));
-                }
+                    {
+                        DataContext.Context.SapIndicators.Add(new SapIndicators()
+                        {
+                            Code = item.Code,
+                            Name = item.Name,
+                        });
 
-                new SyncDataAccess(DataContext).SaveToDb(localTableType, list);
+                        DataContext.Context.SaveChanges();
+                    }
+                }
             }
             catch (Exception e)
             {

@@ -20,19 +20,25 @@ namespace SICER.DATAACCESS.Sync
             DataContext = dataContext;
         }
 
-        public void Sync()
+        public void Sync(CompanyEntity companyEntity)
         {
             try
             {
-                //TODO: ONLY FOR TESTS:
-                //var query = new QueryHelper(DataContext.Company?.DbServerType).GetSyncQuery(SyncEntity.OCRD);
-                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OCRD);
+                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OCRD, companyEntity);
                 var sapTableType = typeof(OCRD);
                 var localTableType = typeof(SapBusinessPartner);
 
                 var localListDefault = DataContext.Context.SapBusinessPartner.ToArray();
-                var localList = localListDefault.Select(item => item.ConvertTo(sapTableType))
-                                                    .Select(dummy => (OCRD)dummy).ToList();
+
+                var localList = localListDefault.Select(x => new OCRD()
+                {
+                    CardCode = x.CardCode,
+                    LictradNum = x.LictradNum,
+                    CardName = x.CardName,
+                    CardType = x.CardType,
+                    validFor = x.validFor
+                }).ToList();
+
                 var sapList = DataContext.Context.Database.SqlQuery<OCRD>(query).ToArray();
 
                 var pendingToSyncList = sapList.ExceptUsingJSonCompare(localList)
@@ -40,23 +46,41 @@ namespace SICER.DATAACCESS.Sync
                                                     .GroupBy(x => x.CardCode)
                                                     .Select(y => y.FirstOrDefault()).ToArray();
 
-                var list = new List<Tuple<SyncType, dynamic>>();
-
                 foreach (var item in pendingToSyncList)
                 {
                     var itemInLocal = DataContext.Context.SapBusinessPartner.Find(item.CardCode);
                     if (itemInLocal != null)
                     {
                         var itemInSap = sapList.FirstOrDefault(x => x.CardCode == item.CardCode);
-                        list.Add(itemInSap != null
-                            ? new Tuple<SyncType, dynamic>(SyncType.Update, ConvertToEntity(SyncType.Update, itemInLocal, item))
-                            : new Tuple<SyncType, dynamic>(SyncType.Delete, ConvertToEntity(SyncType.Delete, itemInLocal, item)));
+                        if (itemInSap != null)
+                        {
+                            itemInLocal.CardName = itemInSap.CardName;
+                            itemInLocal.CardType = itemInSap.CardType;
+                            itemInLocal.LictradNum = itemInSap.LictradNum;
+
+                            DataContext.Context.Entry(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
+                        else
+                        {
+                            DataContext.Context.SapBusinessPartner.Remove(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
                     }
                     else
-                        list.Add(new Tuple<SyncType, dynamic>(SyncType.Create, ConvertToEntity(SyncType.Create, itemInLocal, item)));
+                    {
+                        DataContext.Context.SapBusinessPartner.Add(new SapBusinessPartner()
+                        {
+                            SapBusinessPartnerCardCode = item.CardCode,
+                            CardCode = item.CardCode,
+                            CardName = item.CardName,
+                            CardType = item.CardType,
+                            LictradNum = item.LictradNum,
+                            validFor = item.validFor,
+                        });
+                        DataContext.Context.SaveChanges();
+                    }
                 }
-
-                new SyncDataAccess(DataContext).SaveToDb(localTableType, list);
             }
             catch (Exception e)
             {

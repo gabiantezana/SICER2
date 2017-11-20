@@ -12,10 +12,19 @@ namespace SICER.SAPUSERMODEL.Tables
     [SAPTable(IsSystemTable = true)]
     public class OCRD
     {
+        [SAPField(IsSystemField = true)]
         public string CardCode { get; set; }
+
+        [SAPField(IsSystemField = true)]
         public string LictradNum { get; set; }
+
+        [SAPField(IsSystemField = true)]
         public string CardName { get; set; }
+
+        [SAPField(IsSystemField = true)]
         public string validFor { get; set; }
+
+        [SAPField(IsSystemField = true)]
         public string CardType { get; set; }
     }
 

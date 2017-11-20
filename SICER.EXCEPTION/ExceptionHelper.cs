@@ -12,6 +12,7 @@ namespace SICER.EXCEPTION
 
         public static void LogException(Exception exc)
         {
+            StoreException(exc, null, DateTime.Now);
             String route = @"C:\LOG\asdf\" + GetProjectName();
             String fileName = DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
             String logFile = route + @"\" + fileName;

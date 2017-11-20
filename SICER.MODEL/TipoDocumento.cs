@@ -18,8 +18,8 @@ namespace SICER.MODEL
         public TipoDocumento()
         {
             this.AprobacionDocumento = new HashSet<AprobacionDocumento>();
-            this.NivelAprobacion = new HashSet<NivelAprobacion>();
             this.Documento = new HashSet<Documento>();
+            this.NivelAprobacion = new HashSet<NivelAprobacion>();
         }
     
         public int TipoDocumentoId { get; set; }
@@ -29,8 +29,8 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AprobacionDocumento> AprobacionDocumento { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<NivelAprobacion> NivelAprobacion { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NivelAprobacion> NivelAprobacion { get; set; }
     }
 }

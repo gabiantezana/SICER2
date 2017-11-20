@@ -8,16 +8,17 @@ using SICER.MODEL;
 
 namespace SICER.LOGIC
 {
-    public class BaseLogic
+    public class SapLogic
     {
-        public void InitializeApplication(DataContext dataContext)
+        public static string GenerateSapDbSchema(Company company)
         {
-            new BaseDataAccess(dataContext).GenerateDbSchema();
+           return  new SapDataAccess().GenerateSapDbSchema(company);
+
         }
 
         #region Company 
 
-        public void ConnectCompany(String xml)
+        public void ConnectCompany(string xml)
         {
             if (String.IsNullOrEmpty(xml))
                 ConnectCompanyFromConstantResource();
@@ -28,16 +29,16 @@ namespace SICER.LOGIC
         private void ConnectCompanyFromConstantResource()
         {
             CompanyEntity model = GetCompanyEntityFromFile();
-            BaseDataAccess.ConnectNewCompany(model);
+            SapDataAccess.ConnectNewCompany(model);
 
         }
 
-        private void ConnectCompanyFromXML(String xml)
+        private void ConnectCompanyFromXML(string xml)
         {
             if (!string.IsNullOrEmpty(xml))
             {
                 CompanyEntity model = SerializeHelper.XMLToObject(xml, typeof(CompanyEntity));
-                BaseDataAccess.ConnectNewCompany(model);
+                SapDataAccess.ConnectNewCompany(model);
             }
             else
                 throw new CustomException("You need to specify a xml string with your company data");
@@ -45,20 +46,14 @@ namespace SICER.LOGIC
 
         public void DisconnectCompany()
         {
-            BaseDataAccess.Disconnect();
+            SapDataAccess.Disconnect();
         }
 
         public Company ConnectAndGetCurrentCompany()
         {
             CompanyEntity model = GetCompanyEntityFromFile();
-            BaseDataAccess.Connect(model);
-            return BaseDataAccess.GetCommpany();
-
-        }
-
-        public SapExceptionEntity GetLastSapError()
-        {
-            return BaseDataAccess.GetLastSapError();
+            SapDataAccess.Connect(model);
+            return SapDataAccess.GetCommpany();
         }
 
         public String GetLastDocEntry()
@@ -76,9 +71,21 @@ namespace SICER.LOGIC
             return sNewObjCode;
         }
 
+        public string GetLastError(Company Company)
+        {
+            Int32 errorCode = default(Int32);
+            String errorMessage = String.Empty;
+            if (Company != null)
+            {
+                errorCode = Company.GetLastErrorCode();
+                errorMessage = Company.GetLastErrorDescription();
+            }
+            return errorCode + " - " + errorMessage;
+        }
+
         public CompanyEntity GetCurrentCompany()
         {
-            Company company = BaseDataAccess.GetCommpany();
+            Company company = SapDataAccess.GetCommpany();
             //TODOG: Not working on server client, just local
             /*CompanyEntity model = ReflectionHelper.CopyAToB(company, typeof(CompanyEntity), true);*/
 
@@ -90,7 +97,7 @@ namespace SICER.LOGIC
                 model.DbPassword = company.DbPassword;
                 model.DbServerType = company.DbServerType;
                 model.DbUserName = company.DbUserName;
-                model.language = company.language;
+                model.BoSuppLangs = company.language;
                 model.LicenseServer = company.LicenseServer;
                 model.Password = company.Password;
                 model.Server = company.Server;
@@ -102,9 +109,9 @@ namespace SICER.LOGIC
             return model;
         }
 
-        private CompanyEntity GetCompanyEntityFromFile()
+        public CompanyEntity GetCompanyEntityFromFile()
         {
-            String xml = System.IO.File.ReadAllText(XMLParametersPath);
+            var xml = System.IO.File.ReadAllText(XMLParametersPath);
             CompanyEntity model = SerializeHelper.XMLToObject(xml, typeof(CompanyEntity));
 
             return model;
@@ -120,7 +127,24 @@ namespace SICER.LOGIC
                 return localPath;
             }
         }
-
+        
         #endregion
     }
+    public static class ExtensionHelper
+    {
+        public static BoDataServerTypes GetDataServerTypes(this DataContext dataContext)
+        {
+            if (dataContext.Company == null)
+            {
+                dataContext.Company = new SapLogic().ConnectAndGetCurrentCompany();
+            }
+            return dataContext.Company.DbServerType;
+        }
+        public static Company GetAndConnectCurrentCompany(this DataContext dataContext)
+        {
+            dataContext.Company = new SapLogic().ConnectAndGetCurrentCompany();
+            return dataContext.Company;
+        }
+    }
+
 }

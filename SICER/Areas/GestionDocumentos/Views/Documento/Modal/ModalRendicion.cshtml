@@ -1,7 +1,8 @@
-﻿@model SICER.VIEWMODEL.GestionDocumentos.DocumentoViewModel
+﻿@using SICER.HELPER
+@model SICER.VIEWMODEL.GestionDocumentos.DocumentoViewModel
 @{
     Layout = "~/Views/Shared/_ModalLayout.cshtml";
-    ViewBag.Title = "Agregar rendición";
+    ViewBag.Title = Model.DocumentoId.HasValue ? "Modificar rendicion" : "Agregar rendición";
     ViewBag.Form = true;
     ViewBag.UrlValidation = Url.Action("_RendicionList", "Documento");
 }
@@ -11,13 +12,20 @@
     {
         @Html.HiddenFor(x => Model.DocumentoId)
     }
+    @Html.HiddenFor(x => Model.SubTipoDocumento)
+    @Html.HiddenFor(x => Model.AperturaDocumentoId)
     @Html.HiddenFor(x => Model.DocumentoId)
+    @Html.HiddenFor(x => Model.FechaSolicitud)
+    @Html.HiddenFor(x => Model.FechaContabilizacion)
+    @Html.HiddenFor(x => Model.Estado)
+
     <div class="form-horizontal">
-        <div class="col-md-4">
+        <div class="col-md-6">
+
             <div class="form-group">
                 @Html.LabelFor(x => Model.SapIndicatorCode, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.DropDownListFor(x => Model.SapIndicatorCode, new SelectList(Model.SapIndicatorJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                    @Html.DropDownListFor(x => Model.SapIndicatorCode, new SelectList(Model.SapIndicatorJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.SapIndicatorCode != null).ToString().ToLower() })
                     @Html.ValidationMessageFor(x => x.SapIndicatorCode)
                 </div>
             </div>
@@ -32,17 +40,91 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => Model.Serie, new {@class = "col-sm-3 control-label"})
+                @Html.LabelFor(x => Model.Serie, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(x => Model.Serie, new {@class = "form-control "})
+                    @Html.TextBoxFor(x => Model.Serie, new { @class = "form-control " })
                     @Html.ValidationMessageFor(x => x.Serie)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(x => Model.Correlativo, new {@class = "col-sm-3 control-label"})
+                @Html.LabelFor(x => Model.Correlativo, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(x => Model.Correlativo, new {@class = "form-control "})
+                    @Html.TextBoxFor(x => Model.Correlativo, new { @class = "form-control " })
                     @Html.ValidationMessageFor(x => x.Correlativo)
+                </div>
+            </div>
+            <hr />
+            <h5>Centros de costo</h5>
+            <div id="divCentrosCosto">
+                <div class="form-group">
+                    @Html.LabelFor(x => Model.C_1SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => Model.C_1SapCentroCostoOcrCode, new SelectList(Model.C_1SapCentroCostoJList, "id", "text"), new
+                   {
+                       @class = "form-control form-group",
+                       @data_plugin = "select2",
+                       @data_isedit = (Model.C_1SapCentroCostoOcrCode != null).ToString().ToLower()
+                       //@data_isedit = (!string.IsNullOrEmpty(Model.C_1SapCentroCostoOcrCode)).ToString().ToLower()
+                   })
+                        @Html.ValidationMessageFor(x => x.C_1SapCentroCostoOcrCode)
+                    </div>
+                    <div class="col-md-1">
+                        <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                            <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group" style="display: none">
+                    @Html.LabelFor(x => Model.C_2SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => Model.C_2SapCentroCostoOcrCode, new SelectList(Model.C_2SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.C_2SapCentroCostoOcrCode != null).ToString().ToLower() })
+                        @Html.ValidationMessageFor(x => x.C_2SapCentroCostoOcrCode)
+                    </div>
+                    <div class="col-md-1">
+                        <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                            <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                            <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group" style="display: none">
+                    @Html.LabelFor(x => Model.C_3SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => Model.C_3SapCentroCostoOcrCode, new SelectList(Model.C_3SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.C_3SapCentroCostoOcrCode != null).ToString().ToLower() })
+                        @Html.ValidationMessageFor(x => x.C_3SapCentroCostoOcrCode)
+                    </div>
+                    <div class="col-md-1">
+                        <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                            <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                            <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group" style="display: none">
+                    @Html.LabelFor(x => Model.C_4SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => Model.C_4SapCentroCostoOcrCode, new SelectList(Model.C_4SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.C_4SapCentroCostoOcrCode != null).ToString().ToLower() })
+                        @Html.ValidationMessageFor(x => x.C_4SapCentroCostoOcrCode)
+                    </div>
+                    <div class="col-md-1">
+                        <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                            <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                            <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group" style="display: none">
+                    @Html.LabelFor(x => Model.C_5SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => Model.C_5SapCentroCostoOcrCode, new SelectList(Model.C_5SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.C_5SapCentroCostoOcrCode != null).ToString().ToLower() })
+                        @Html.ValidationMessageFor(x => x.C_5SapCentroCostoOcrCode)
+                    </div>
+                    <div class="col-md-1">
+                        <a class=" col-sm-1 btn btn-sm btn-icon btn-flat btn-default">
+                            <i class="btnAddCentroCostos fa fa-plus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Agregar otro centro de costos"></i>
+                            <i class="btnRemoveCentroCostos fa fa-minus-circle fa-lg" aria-hidden="true" data-toggle="tooltip" data-original-title="Quitar centro de costos"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,7 +132,7 @@
             <div class="form-group">
                 @Html.LabelFor(x => Model.SapBusinessPartnerCardCode, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.DropDownListFor(x => Model.SapBusinessPartnerCardCode, new SelectList(Model.SapBusinessPartnerJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                    @Html.DropDownListFor(x => Model.SapBusinessPartnerCardCode, new SelectList(Model.SapBusinessPartnerJList, "id", "text"), new { @class = "  spb  form-control form-group", @data_plugin = "select2", @data_isedit = (Model.SapBusinessPartnerCardCode != null).ToString().ToLower() })
                     @Html.ValidationMessageFor(x => x.SapBusinessPartnerCardCode)
                 </div>
             </div>
@@ -58,7 +140,7 @@
             <div class="form-group">
                 @Html.LabelFor(x => Model.SapConceptoCode, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.DropDownListFor(x => Model.SapConceptoCode, new SelectList(Model.SapConceptoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                    @Html.DropDownListFor(x => Model.SapConceptoCode, new SelectList(Model.SapConceptoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.SapConceptoCode!= null).ToString().ToLower() })
                     @Html.ValidationMessageFor(x => x.SapConceptoCode)
                 </div>
             </div>
@@ -66,88 +148,48 @@
             <div class="form-group">
                 @Html.LabelFor(x => Model.SapMonedaDocCurrCode, new { @class = "col-sm-3 control-label" })
                 <div class="col-sm-9">
-                    @Html.DropDownListFor(x => Model.SapMonedaDocCurrCode, new SelectList(Model.SapMonedaJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
+                    @Html.DropDownListFor(x => Model.SapMonedaDocCurrCode, new SelectList(Model.SapMonedaJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.SapMonedaDocCurrCode != null).ToString().ToLower() })
                     @Html.ValidationMessageFor(x => x.SapMonedaDocCurrCode)
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-2">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    @Html.LabelFor(x => Model.MontoAfecto, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(x => Model.MontoAfecto, new { @class = "form-control  text-right moneda" })
-                        @Html.ValidationMessageFor(x => x.MontoAfecto)
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(x => Model.MontoNoAfecto, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(x => Model.MontoNoAfecto, new { @class = "form-control  text-right moneda" })
-                        @Html.ValidationMessageFor(x => x.MontoNoAfecto)
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(x => Model.MontoIgv, new { @class = "col-sm-3 control-label" })
-                    <div class="col-sm-9">
-                        @Html.TextBoxFor(x => Model.MontoIgv, new { @class = "form-control  text-right moneda" })
-                        @Html.ValidationMessageFor(x => x.MontoIgv)
-                    </div>
+            <div class="form-group">
+                @Html.LabelFor(x => Model.OstcCode, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(x => Model.OstcCode, new SelectList(Model.OstcJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (Model.OstcCode != null).ToString().ToLower() })
+                    @Html.ValidationMessageFor(x => x.OstcCode)
                 </div>
             </div>
-        </div>
-    </div>
-
-    @*<div class="form-group">
-            @Html.LabelFor(x => Model.ImporteTotal, new { @class = "col-sm-3 control-label" })
-            <div class="col-sm-9">
-                @Html.TextBoxFor(x => Model.ImporteTotal, new { @class = "form-control   text-right moneda" })
-                @Html.ValidationMessageFor(x => x.ImporteTotal)
+            <div class="form-group">
+                @Html.LabelFor(x => Model.Monto, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
+                    @Html.TextBoxFor(x => Model.Monto, new { @class = "form-control " })
+                    @Html.ValidationMessageFor(x => x.Monto)
+                </div>
             </div>
-        </div>*@
-    <div class="form-group">
-        @Html.LabelFor(x => Model.C_1SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.DropDownListFor(x => Model.C_1SapCentroCostoOcrCode, new SelectList(Model.C_1SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
-            @Html.ValidationMessageFor(x => x.C_1SapCentroCostoOcrCode)s
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => Model.C_2SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.DropDownListFor(x => Model.C_2SapCentroCostoOcrCode, new SelectList(Model.C_2SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
-            @Html.ValidationMessageFor(x => x.C_2SapCentroCostoOcrCode)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => Model.C_3SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.DropDownListFor(x => Model.C_3SapCentroCostoOcrCode, new SelectList(Model.C_3SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
-            @Html.ValidationMessageFor(x => x.C_3SapCentroCostoOcrCode)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => Model.C_4SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.DropDownListFor(x => Model.C_4SapCentroCostoOcrCode, new SelectList(Model.C_4SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
-            @Html.ValidationMessageFor(x => x.C_4SapCentroCostoOcrCode)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(x => Model.C_5SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
-        <div class="col-sm-9">
-            @Html.DropDownListFor(x => Model.C_5SapCentroCostoOcrCode, new SelectList(Model.C_5SapCentroCostoJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = "true" })
-            @Html.ValidationMessageFor(x => x.C_5SapCentroCostoOcrCode)
+
+
         </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
+        debugger;
         $(".fecha").datepicker();
     });
+
+
+    $(".btnAddCentroCostos").click(function () {
+        $(this).parent().hide();
+        $(this).parent().parent().parent().next().show();
+    });
+    $(".btnRemoveCentroCostos").click(function () {
+        $(this).parent().parent().parent().hide();
+        $(this).parent().parent().parent().prev().find("a").show();
+        $(this).parent().parent().parent().find("select").val(null).trigger("change");
+    });
+
 
 </script>
 <style>

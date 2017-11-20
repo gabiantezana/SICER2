@@ -24,15 +24,12 @@ namespace SICER.Controllers
         protected SICEREntities context { get; set; }
         private string currentCulture { get; set; }
         protected HttpBrowserCapabilitiesBase Browser { get; set; }
-        private Company Company => new BaseLogic().ConnectAndGetCurrentCompany();
 
         public BaseController()
         {
             if (context == null)
                 context = new SICEREntities();
             currentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture.ToString();
-            //_company = new BaseLogic().ConnectAndGetCurrentCompany();
-
         }
 
         public DataContext GetDataContext()
@@ -112,14 +109,6 @@ namespace SICER.Controllers
             //PostMessage(MessageType.Warning, filterContext.Exception.Message);
         }
 
-        public void InitializeApplication()
-        {
-            //new BaseDataAccess(GetDataContext()).GenerateDbSchema();
-            //TODO: VALIDATE SAP MODEL STRUCTURE 
-
-
-        }
-
         public JsonResult AjaxException(TypeAjaxException type, Exception exception)
         {
             Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -137,5 +126,8 @@ namespace SICER.Controllers
             Error,
             Warning
         }
+
     }
+
+
 }

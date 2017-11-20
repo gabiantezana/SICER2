@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using SAPbobsCOM;
 using SICER.MODEL;
 
 namespace SICER.HELPER
@@ -15,7 +16,6 @@ namespace SICER.HELPER
             return usuario?.Nombres.ToSafeString() + " " + usuario?.Apellidos.ToSafeString();
         }
 
-
-
+       
     }
 }

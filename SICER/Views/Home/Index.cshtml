@@ -9,10 +9,10 @@
 
 
 <div>
-    <br/>
+    <br />
     <h5>Bienvenido, @Session.GetNombresUsuario()</h5>
     @*<a class="btn btn-primary" @Url.ModalHelperFor("EditComentario", "Home")><i class="fa fa-wpforms" aria-hidden="true"></i> Ejemplo de Modal</a>
-        <a class="btn btn-primary" data-mensaje="Desea guardar la solicitud X" id="btnConfirm" onclick="onClickConfirm(this)"> Ejemplo Mensaje de confirmación</a>*@
+    <a class="btn btn-primary" data-mensaje="Ingrese motivo" id="btnConfirm" onclick="onClickConfirm(this)"> Ejemplo Mensaje de confirmación</a>*@
 </div>
 
 @section Scripts{
@@ -25,13 +25,13 @@
             var $this = $(button);
             var message = $this.data('mensaje');
 
-            alertify.okBtn("Aceptar").cancelBtn("Cancelar").confirm(message, function () {
-                //se clickeo ok
-                alert('Aceptar');
-            }, function () {
-                //se clickeo cancelar
-                alert('Canceñar');
-            });
+            alertify.alertify.okBtn("Aceptar").cancelBtn("Cancelar").confirm(message, function () {
+                    //se clickeo ok
+                    alert('Aceptar');
+                }, function () {
+                    //se clickeo cancelar
+                    alert('Canceñar');
+                });
 
             $('.cancel').addClass('btn');
             $('.cancel').addClass('btn-default');

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using SAPbobsCOM;
 
 namespace SICER.HELPER
@@ -31,6 +32,7 @@ namespace SICER.HELPER
         public String Mensaje { get; set; }
     }
 
+    [XmlRoot("object")] //Para deserealizar el xml
     public class CompanyEntity
     {
         public bool? XMLAsString { get; set; }
@@ -42,7 +44,7 @@ namespace SICER.HELPER
         public string CompanyDB { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public BoSuppLangs language { get; set; }
+        public BoSuppLangs BoSuppLangs { get; set; }
         public bool UseTrusted { get; set; }
         public bool Connected { get; set; }
 

@@ -31,7 +31,7 @@ namespace SICER.LOGIC.Sync
             return GetList(dataContext, filter).Select(x => new JsonEntityTwoString()
             {
                 id = x.Code,
-                text = x.U_MSS_ACCT + ConstantHelper.SEPARADOR_NOMBRE_DESCRIPCION_SELECT + x.U_MSS_DSCRPT,
+                text = x.U_MSS_ACC + ConstantHelper.SEPARADOR_NOMBRE_DESCRIPCION_SELECT + x.U_MSS_DSC,
             });
         }
 

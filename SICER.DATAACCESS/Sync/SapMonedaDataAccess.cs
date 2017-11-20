@@ -18,18 +18,21 @@ namespace SICER.DATAACCESS.Sync
         {
             DataContext = dataContext;
         }
-        public void Sync()
+        public void Sync(CompanyEntity companyEntity)
         {
             try
             {
-                //var query = new QueryHelper(DataContext.Company.DbServerType).GetSyncQuery(SyncEntity.OCRN);
-                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OCRN);
+                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OCRN, companyEntity);
                 var sapTableType = typeof(OCRN);
                 var localTableType = typeof(SapMoneda);
 
                 var localListDefault = DataContext.Context.SapMoneda.ToArray();
-                var localList = localListDefault.Select(item => item.ConvertTo(sapTableType))
-                                                    .Select(dummy => (OCRN)dummy).ToList();
+                var localList = localListDefault.Select(x => new OCRN()
+                {
+                    CurrName = x.CurrName,
+                    Locked = x.Locked,
+                    DocCurrCod = x.SapMonedaDocCurrCod
+                }).ToList();
                 var sapList = DataContext.Context.Database.SqlQuery<OCRN>(query).ToArray();
 
                 var pendingToSyncList = sapList.ExceptUsingJSonCompare(localList)
@@ -37,24 +40,35 @@ namespace SICER.DATAACCESS.Sync
                                                     .GroupBy(x => x.DocCurrCod)
                                                     .Select(y => y.FirstOrDefault()).ToArray();
 
-                var list = new List<Tuple<SyncType, dynamic>>();
-
                 foreach (var item in pendingToSyncList)
                 {
-                    var itemInLocal = localListDefault.FirstOrDefault(x => x.SapMonedaDocCurrCod == item.DocCurrCod);
+                    var itemInLocal = DataContext.Context.SapMoneda.Find(item.DocCurrCod);
                     if (itemInLocal != null)
                     {
                         var itemInSap = sapList.FirstOrDefault(x => x.DocCurrCod == item.DocCurrCod);
-                        list.Add(itemInSap != null
-                            ? new Tuple<SyncType, dynamic>(SyncType.Update, ConvertToEntity(SyncType.Update, itemInLocal, item))
-                            : new Tuple<SyncType, dynamic>(SyncType.Delete, ConvertToEntity(SyncType.Delete, itemInLocal, item)));
+                        if (itemInSap != null)
+                        {
+                            DataContext.Context.Entry(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
+                        else
+                        {
+                            DataContext.Context.SapMoneda.Remove(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
                     }
                     else
-                        list.Add(new Tuple<SyncType, dynamic>(SyncType.Create, ConvertToEntity(SyncType.Create, itemInLocal, item)));
+                    {
+                        DataContext.Context.SapMoneda.Add(new SapMoneda()
+                        {
+                            SapMonedaDocCurrCod = item.DocCurrCod,
+                            CurrName = item.CurrName,
+                            Locked = item.Locked,
+                        });
+
+                        DataContext.Context.SaveChanges();
+                    }
                 }
-
-                new SyncDataAccess(DataContext).SaveToDb(localTableType, list);
-
             }
             catch (Exception e)
             {

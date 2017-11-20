@@ -16,12 +16,12 @@ namespace SAPADDON.HELPER
 
         public static void CreateTable(Company company, SAPTableEntity table)
         {
-            //CreateTable(company, table.TableName, table.TableDescription, table.TableType);
+            CreateTable(company, table.TableName, table.TableDescription, table.TableType);
         }
 
         public static void CreateField(Company company, SapFieldEntity userField)
         {
-            //CreateField(company, userField.TableName, userField.FieldName, userField.FieldDescription, userField.FieldType, userField.FieldSubType, userField.FieldSize, userField.IsRequired, userField.ValidValues, userField.ValidDescription, userField.DefaultValue, userField.VinculatedTable);
+            CreateField(company, userField.TableName, userField.FieldName, userField.FieldDescription, userField.FieldType, userField.FieldSubType, userField.FieldSize, userField.IsRequired, userField.ValidValues, userField.ValidDescription, userField.DefaultValue, userField.VinculatedTable);
         }
 
         private static void _CreateUDO(Company company, SAPUDOEntity udo)
@@ -69,8 +69,8 @@ namespace SAPADDON.HELPER
                 vinculatedTable = vinculatedTable ?? String.Empty;
 
                 //string _tableName = "@" + tableName;
-                int iFieldID = GetUserFieldId(_Company, tableName, fieldName);
-                if (!oUserFieldsMD.GetByKey(tableName, iFieldID))
+                //int iFieldID = GetUserFieldId(_Company, tableName, fieldName);
+                //if (!oUserFieldsMD.GetByKey(tableName, iFieldID))
 
                 //CUFD udf = new SBODemoCLEntities().CUFD.FirstOrDefault(x => x.TableID == tableName && x.AliasID.ToString() == fieldName);
                 //if (udf == null)

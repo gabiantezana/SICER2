@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<object>
+  <XMLAsString>true</XMLAsString>
+  <Server>LAPTOP-GAP\SQL2012</Server>
+  <LicenseServer>LAPTOP-GAP:30000</LicenseServer>
+  <DbServerType>dst_MSSQL2012</DbServerType>
+  <DbUserName>sa</DbUserName>
+  <DbPassword >root</DbPassword>
+  <CompanyDB>SBO_JHOMERON</CompanyDB>
+  <UserName>manager</UserName>
+  <Password>1234</Password>
+  <language></language>
+  <UseTrusted>true</UseTrusted>
+  <BoSuppLangs>ln_Spanish_Ar</BoSuppLangs>
+</object>

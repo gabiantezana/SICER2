@@ -131,6 +131,11 @@ namespace SICER.HELPER
         /// TIPOS DE CAMBIO
         /// </summary>
         ORTT = 6,
+
+        /// <summary>
+        /// CÓDIGO DE IMPUESTOS
+        /// </summary>
+        OSTC =7
     }
 
     public enum SourceType

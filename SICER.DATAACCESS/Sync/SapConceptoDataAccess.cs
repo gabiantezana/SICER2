@@ -18,18 +18,23 @@ namespace SICER.DATAACCESS.Sync
         {
             DataContext = dataContext;
         }
-        public void Sync()
+        public void Sync(CompanyEntity companyEntity)
         {
             try
             {
-                //var query = new QueryHelper(DataContext.Company.DbServerType).GetSyncQuery(SyncEntity.MSS_SICER_CCPT);
-                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.MSS_SICER_CCPT);
+                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.MSS_SICER_CCPT, companyEntity);
                 var sapTableType = typeof(OOCR);
                 var localTableType = typeof(SapConcepto);
 
                 var localListDefault = DataContext.Context.SapConcepto.ToArray();
-                var localList = localListDefault.Select(item => item.ConvertTo(sapTableType))
-                                                    .Select(dummy => (MSS_SICER_CCPT)dummy).ToList();
+                var localList = localListDefault.Select(x => new MSS_SICER_CCPT()
+                {
+                    Name = x.Name,
+                    Code =  x.Code,
+                    U_MSS_ACC = x.U_MSS_ACC,
+                    U_MSS_DSC = x.U_MSS_ACC
+                });
+
                 var sapList = DataContext.Context.Database.SqlQuery<MSS_SICER_CCPT>(query).ToArray();
 
                 var pendingToSyncList = sapList.ExceptUsingJSonCompare(localList)
@@ -37,23 +42,36 @@ namespace SICER.DATAACCESS.Sync
                                                     .GroupBy(x => x.Code)
                                                     .Select(y => y.FirstOrDefault()).ToArray();
 
-                var list = new List<Tuple<SyncType, dynamic>>();
-
                 foreach (var item in pendingToSyncList)
                 {
-                    var itemInLocal = localListDefault.FirstOrDefault(x => x.Code == item.Code);
+                    var itemInLocal = DataContext.Context.SapConcepto.Find(item.Code);
                     if (itemInLocal != null)
                     {
                         var itemInSap = sapList.FirstOrDefault(x => x.Code == item.Code);
-                        list.Add(itemInSap != null
-                            ? new Tuple<SyncType, dynamic>(SyncType.Update, ConvertToEntity(SyncType.Update, itemInLocal, item))
-                            : new Tuple<SyncType, dynamic>(SyncType.Delete, ConvertToEntity(SyncType.Delete, itemInLocal, item)));
+                        if (itemInSap != null)
+                        {
+                            DataContext.Context.Entry(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
+                        else
+                        {
+                            DataContext.Context.SapConcepto.Remove(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
                     }
                     else
-                        list.Add(new Tuple<SyncType, dynamic>(SyncType.Create, ConvertToEntity(SyncType.Create, itemInLocal, item)));
-                }
+                    {
+                        DataContext.Context.SapConcepto.Add(new SapConcepto()
+                        {
+                            Code = item.Code,
+                            Name = item.Name,
+                            U_MSS_ACC = item.U_MSS_ACC,
+                            U_MSS_DSC = item.U_MSS_DSC
+                        });
 
-               new SyncDataAccess(DataContext).SaveToDb(localTableType, list);
+                        DataContext.Context.SaveChanges();
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -93,8 +111,8 @@ namespace SICER.DATAACCESS.Sync
                     break;
                 case SyncType.Update:
                     localEnttity.Name = sapEntity.Name;
-                    localEnttity.U_MSS_ACCT = sapEntity.U_MSS_ACCT;
-                    localEnttity.U_MSS_DSCRPT = sapEntity.U_MSS_ACCT;
+                    localEnttity.U_MSS_ACC= sapEntity.U_MSS_ACC;
+                    localEnttity.U_MSS_DSC = sapEntity.U_MSS_ACC;
                     break;
                 case SyncType.Delete:
                     break;
@@ -109,7 +127,7 @@ namespace SICER.DATAACCESS.Sync
             var query = DataContext.Context.SapConcepto.AsQueryable();
             if (!string.IsNullOrEmpty(filter))
             {
-                query = filter.ToLower().Split(' ').Aggregate(query, (current, token) => current.Where(x => x.U_MSS_ACCT.ToLower().Contains(token) || x.U_MSS_DSCRPT.ToLower().Contains(token)));
+                query = filter.ToLower().Split(' ').Aggregate(query, (current, token) => current.Where(x => x.U_MSS_ACC.ToLower().Contains(token) || x.U_MSS_DSC.ToLower().Contains(token)));
             }
             return query;
         }

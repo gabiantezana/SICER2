@@ -84,9 +84,10 @@
     <Compile Include="Administracion\NivelAprobacionLogic.cs" />
     <Compile Include="Administracion\RolLogic.cs" />
     <Compile Include="Administracion\UsuarioLogic.cs" />
-    <Compile Include="BaseLogic.cs" />
+    <Compile Include="SapLogic.cs" />
     <Compile Include="GestionDocumentos\DocumentoLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sync\OstcLogic.cs" />
     <Compile Include="Sync\SapCuentaContableLogic.cs" />
     <Compile Include="Sync\SapCentroCostoLogic.cs" />
     <Compile Include="Sync\SapConceptoLogic.cs" />

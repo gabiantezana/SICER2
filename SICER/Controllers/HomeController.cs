@@ -98,6 +98,10 @@ namespace SICER.Controllers
             return RedirectToAction(nameof(this.Login));
         }
 
+        public ContentResult KeepAlive()
+        {
+            return Content(String.Empty);
+        }
 
         public ActionResult ChangePassword()
         {
@@ -138,6 +142,5 @@ namespace SICER.Controllers
         {
             return View();
         }
-
     }
 }

@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="Interop.SAPbobsCOM">
       <HintPath>..\packages\sapb1\Interop.SAPbobsCOM.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,12 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefaultUserTable.cs" />
-    <Compile Include="Sample\Conductor\MSS_CDTR.cs" />
-    <Compile Include="Sample\Conductor\MSS_CDTR_DIR.cs" />
-    <Compile Include="Sample\Conductor\MSS_UDO_CDTR.cs" />
     <Compile Include="EntityModel.cs" />
-    <Compile Include="Sample\MSS_USERS\MSS_USERS.cs" />
-    <Compile Include="Sample\OITM\OITM.cs" />
     <Compile Include="Tables\MSS_SICER_CCPT.cs" />
     <Compile Include="Tables\MSS_SICER_ACCT.cs" />
     <Compile Include="Tables\OCRD.cs" />

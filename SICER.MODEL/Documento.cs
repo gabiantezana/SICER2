@@ -18,6 +18,7 @@ namespace SICER.MODEL
         public Documento()
         {
             this.Documento1 = new HashSet<Documento>();
+            this.DocumentoEstadosAuditoria = new HashSet<DocumentoEstadosAuditoria>();
             this.Documento11 = new HashSet<Documento>();
         }
     
@@ -53,9 +54,10 @@ namespace SICER.MODEL
         public string MotivoRechazo { get; set; }
         public string Error { get; set; }
         public System.DateTime CreacionFecha { get; set; }
-        public Nullable<int> CreacionUsuarioid { get; set; }
+        public int CreacionUsuarioid { get; set; }
         public Nullable<System.DateTime> ModificacionFecha { get; set; }
         public Nullable<int> ModificacionUsuarioid { get; set; }
+        public string OstcCode { get; set; }
     
         public virtual SapCentroCosto SapCentroCosto { get; set; }
         public virtual SapCentroCosto SapCentroCosto1 { get; set; }
@@ -68,6 +70,8 @@ namespace SICER.MODEL
         public virtual SapCuentaContable SapCuentaContable { get; set; }
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DocumentoEstadosAuditoria> DocumentoEstadosAuditoria { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento11 { get; set; }
         public virtual Documento Documento3 { get; set; }
         public virtual SapCuentaContable SapCuentaContable1 { get; set; }
@@ -77,5 +81,6 @@ namespace SICER.MODEL
         public virtual SapIndicators SapIndicators { get; set; }
         public virtual SapMoneda SapMoneda { get; set; }
         public virtual TipoDocumento TipoDocumento { get; set; }
+        public virtual OSTC OSTC { get; set; }
     }
 }

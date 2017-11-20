@@ -24,11 +24,11 @@
     <div class="modal-footer">
         @if (ViewBag.DeshabilitarCerrarFooter == null || !ViewBag.DeshabilitarCerrarFooter)
         {
-            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
         }
         @if (ViewBag.Form != null)
         {
-            <button type="button" class="btn btn-primary" id="@buttonSaveId"><i class="fa fa-check"></i> Aceptar</button>
+        <button type="button" class="btn btn-primary" id="@buttonSaveId"><i class="fa fa-check"></i> Aceptar</button>
         }
         @RenderSection("ModalFooter", false)
     </div>
@@ -45,14 +45,13 @@
 
 @if (ViewBag.Response == null)
 {
-   <script>
+    <script>
         var urlModalRedirect = '';
         var urlValidation = '@ViewBag.UrlValidation';
 
-
         $(function () {
             debugger;
-            $('#@buttonSaveId').click(function (e) {
+            $('#@buttonSaveId').click(function(e) {
                 debugger;
                 e.preventDefault();
                 var $form = $('#@ViewBag.GUID form');
@@ -60,61 +59,129 @@
                 //Validate form
                 $form.validate();
 
-                //Generate lines
-                var _ListDetalle = [];
-                var rows = $('#tableDetalle tbody tr').length;
-                for (var i = 0; i < rows; i++)
-                {
-                    var _object = getDocumentoDetalleObject(i);
-                    _ListDetalle.push(ConvertSerializedArrayToObject(_object));
-                }
                 //Generate model
                 var _model = ConvertSerializedArrayToObject($form.serializeArray());
 
                 //Send by ajax
-                if ($form.valid())
-                {
+                if ($form.valid()) {
                     $.ajax({
                         type: 'POST',
                         url: urlValidation,
-                        data: { "model": _model, "currentList": _ListDetalle },
-                        success: function (value) {
+                        data: { "model": _model },
+                        success: function(value) {
                             debugger;
                             $("#_PartialDetalleDocumentos").empty();
                             $("#_PartialDetalleDocumentos").append(value);
                             $("#_PartialDetalleDocumentos").html(value);
                             $form.closest('.modal').modal('hide');
                         },
-                        error: function (error) {
+                        error: function(error) {
                             ShowMessage("SUCCESS", error);
                             debugger;
                             return false;
                         },
-                        finally: function(err)
-                        {
+                        finally: function(err) {
                             debugger;
                         }
                     });
                 }
-            })
+            });
         });
+        //    console.log('modal');
+        //    $('*[data-plugin="select2"]').select2({
+        //        language: 'es',
+        //        placeholder: "[ -- Seleccione -- ]",
+        //        allowClear: true
+        //    });
 
-            console.log('modal');
+        //$('*[data-plugin="select2"]').next('.select2').find('.select2-selection').one('focus', select2Focus).on('blur',
+        //    function() {
+        //        $(this).one('focus', select2Focus);
+        //    });
+
+        //$(".modal").on('hidden.bs.modal', function () {
+        //    $(this).remove();
+        //    $('.pac-container').remove();
+        //    $('iframe[name=gm-master]').remove();
+        //    console.log('modal close');
+        //});
+
+        //$(".fecha").click(function () {
+        //    jQuery.validator.methods["date"] = function (value, element) {
+        //        debugger;
+        //        return true;
+        //    }
+        //});
+
+        //////////////////////77
+
+        $(function () {
+            var today = new Date();
+
+            $('.input-group.date').datepicker({
+                orientation: "bottom auto",
+                language: 'es',
+                changeYear: true,
+                todayHighlight: true,
+            });
+
+            jQuery.validator.methods["date"] = function (value, element) { debugger; return true; }
+
+
             $('*[data-plugin="select2"]').select2({
                 language: 'es',
                 placeholder: "[ -- Seleccione -- ]",
                 allowClear: true
+
             });
+            setPlaceHolderToSelect2();
+        });
+        function setPlaceHolderToSelect2(ispartial) {
+            var select2InPage = $('*[data-plugin="select2"]');//.val('').trigger('change');
+            select2InPage.each(function (i, e) {
+                var $this = $(e);
+                if ($this.data('isedit') != null)
+                    if ($this.data('isedit') == false) {
+                        $this.val('').trigger('change');
+                    }
+            });
+        }
 
-            $('*[data-plugin="select2"]').next('.select2').find('.select2-selection').one('focus', select2Focus).on('blur', function () {
-                $(this).one('focus', select2Focus)
-            })
-
-        $(".modal").on('hidden.bs.modal', function () {
-            $(this).remove();
-            $('.pac-container').remove();
-            $('iframe[name=gm-master]').remove();
-            console.log('modal close');
+        $(function () {
+            var _guid = '@Guid.NewGuid()';
+            debugger;
+            $('.spb').select2({
+                ajax: {
+                    url: '@Url.Action("GetJList", "SapBusinessPartner", new { Area = ConstantHelper.Area.SYNC})',
+                    dataType: 'json',
+                    type: 'POST',
+                    delay: 250,
+                    data: function (params) {
+                        var values = params.term;
+                        return {
+                            filter: params.term
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: data
+                        };
+                    },
+                    cache: true,
+                },
+                tags: true,
+                createTag: function (newTag) {
+                    return {
+                        id: _guid + newTag.term,
+                        text: newTag.term + "(nuevo)",
+                        isNew: true,
+                    };
+                },
+                minimumInputLength: 3,
+                allowClear: true,
+                language: 'es',
+                placeholder: 'Buscar'
+            });
         });
     </script>
 }

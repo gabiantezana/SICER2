@@ -45,7 +45,7 @@
             default:
                 throw new ArgumentOutOfRangeException();
         }
-        <tr>
+        <tr ondblclick="window.location ='@Url.Action("AddUpdate", "Documento", new { Area = ConstantHelper.Area.GESTIONDOCUMENTOS , documentoId=item.DocumentoId, documentType = (DocumentType)ViewBag.DocumentType })'">
             <td>@item.Codigo</td>
             <td>@item.Usuario.GetNombreCompleto()</td>
             <td>@item.SapBusinessPartner.CardCode </td>
@@ -70,7 +70,7 @@
                     case DocumentState.Aprobado:
                         <a class="btn btn-xs btn-icon btn-success" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
                             <i class="icon wb-check" aria-hidden="true"></i>Aprobado
-                        </a>    
+                        </a>
                         break;
                     case DocumentState.Rechazado:
                         <a class="btn btn-xs btn-icon btn-danger" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
@@ -101,3 +101,4 @@
                         filter = ViewBag.Filter,
                     }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("partialList"))
 </div>
+s

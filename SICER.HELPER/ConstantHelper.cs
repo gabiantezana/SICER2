@@ -11,7 +11,7 @@ namespace SICER.HELPER
     {
         public static readonly byte[] ENCRIPT_KEY = { 45, 12, 45, 78, 2, 45, 12, 65, 87, 12, 45, 32, 20, 58, 15, 36, 47, 85, 96, 20, 24, 23, 65, 24 };
         public static readonly byte[] ENCRIPT_METHOD = { 87, 10, 65, 35, 12, 66, 21, 65 };
-        public static int NUMEROFILASPORPAGINA = 1;
+        public static int NUMEROFILASPORPAGINA = 10;
         public static object MENSAJE_TABLA_VACIA = "No se encontraron registros.";
         public static int DefaulSuccessSAPNumber = 0;
 
@@ -25,6 +25,7 @@ namespace SICER.HELPER
         public const string CAJACHICA = "CAJACHICA";
         public const string ENTREGARENDIR = "ENTREGARENDIR";
         public const string REEMBOLSO = "REEMBOLSO";
+        public const string SBO_TEST001 = "[SBO_TEST001]";
 
         public static class Rol
         {

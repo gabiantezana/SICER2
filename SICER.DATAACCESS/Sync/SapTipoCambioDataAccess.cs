@@ -21,13 +21,12 @@ namespace SICER.DATAACCESS.Sync
             DataContext = dataContext;
         }
 
-        public void Sync()
+        public void Sync(CompanyEntity companyEntity)
         {
             try
             {
-                //var query = new QueryHelper(DataContext.Company.asdf).GetSyncQuery(SyncEntity.ORTT);
                 DataContext.Context = new SICEREntities();
-                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.ORTT);
+                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.ORTT, companyEntity);
                 var localTableType = typeof(SapTipoCambio);
                 var sapList = DataContext.Context.Database.SqlQuery<ORTT>(query).ToArray();
                 var list = sapList.Select(item => new Tuple<SyncType, dynamic>(SyncType.Create, ConvertToEntity(SyncType.Create, new SapTipoCambio(), item))).ToList();

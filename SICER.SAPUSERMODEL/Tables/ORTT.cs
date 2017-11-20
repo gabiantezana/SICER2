@@ -12,8 +12,11 @@ namespace SICER.SAPUSERMODEL.Tables
     [SAPTable(IsSystemTable = true)]
     public class ORTT
     {
+        [SAPField(IsSystemField = true)]
         public DateTime RateDate { get; set; }
+        [SAPField(IsSystemField = true)]
         public string Currency { get; set; }
+        [SAPField(IsSystemField = true)]
         public decimal Rate { get; set; }
     }
 }

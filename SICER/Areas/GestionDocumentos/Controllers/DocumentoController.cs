@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using PagedList;
 using SICER.Controllers;
@@ -104,12 +105,13 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         [HttpPost]
         public ActionResult AddUpdate(DocumentoViewModel model)
         {
-            //if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
                     DocumentoLogic.AddUpdateApertura(GetDataContext(), model);
-                    return RedirectToAction(nameof(List), model.DocumentType);
+                    PostMessage(MessageType.Success);
+                    return RedirectToAction(nameof(List), new { documentType = model.DocumentType });
                 }
                 catch (CustomException ex)
                 {
@@ -129,22 +131,27 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         public ActionResult ApproveApertura(DocumentoViewModel model)
         {
             DocumentoLogic.ApproveApertura(GetDataContext(), model);
-            return View(nameof(List));
+            PostMessage(MessageType.Success, "Documento aprobado exitosamente.");
+            return RedirectToAction(nameof(List), new { documentType = model.DocumentType });
         }
 
+        [HttpPost]
+        public ActionResult RechazarDocumento(DocumentoViewModel model)
+        {
+            DocumentoLogic.RechazarApertura(GetDataContext(), model.DocumentoId, model.MotivoRechazo);
+            PostMessage(MessageType.Success, "Documento rechazado exitosamente.");
+            return RedirectToAction(nameof(List), new { documentType = model.DocumentType });
+        }
 
         #endregion
 
         #region Modals
 
-        public ActionResult ModalRendicion(DocumentoViewModel model)
+        public ActionResult ModalRendicion(int? aperturaDocumentoId, int? documentoId)
         {
             ModelState.Clear();
-            if (model?.DocumentoId == null)
-            {
-                model = DocumentoLogic.GetApertura(GetDataContext(), null);
-            }
 
+            var model = DocumentoLogic.GetRendicion(GetDataContext(), aperturaDocumentoId, documentoId);
             DocumentoLogic.FillJLists(GetDataContext(), ref model);
 
             return View("Modal/ModalRendicion", model);
@@ -167,21 +174,57 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         /// <param name="currentList"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult _RendicionList(DocumentoViewModel model, List<DocumentoViewModel> currentList)
+        public ActionResult _RendicionListCopy(DocumentoViewModel model, List<DocumentoViewModel> currentList)
         {
-            try
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        //TODO: VALIDATE 
+            //        DocumentoLogic.AddUpdateRendicion(GetDataContext(), model);
+
+            //        currentList = currentList ?? new List<DocumentoViewModel>();
+            //        currentList.Add(model);
+
+            //        DocumentoViewModel modelToReturn = new DocumentoViewModel { RendicionList = currentList };
+            //        return PartialView("PartialView/_RendicionList", modelToReturn);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        return AjaxException(TypeAjaxException.Error, ex);
+            //    }
+            //}
+            //else //TODO:
+            return AjaxException(TypeAjaxException.Error, "Modelo no válido");
+        }
+
+        [HttpPost]
+        public ActionResult _RendicionList(DocumentoViewModel model)
+        {
+            if (ModelState.IsValid)
             {
-                //TODO: VALIDATE 
+                try
+                {
+                    //TODO: VALIDATE 
+                    //Agrega o modifica rendición
+                    DocumentoLogic.AddUpdateRendicion(GetDataContext(), model);
 
-                currentList = currentList ?? new List<DocumentoViewModel>();
-                currentList.Add(model);
+                    //Devuelve nuevo listado
+                    var list = DocumentoLogic.GetRendicionesList(GetDataContext(), model.AperturaDocumentoId, null);
 
-                DocumentoViewModel modelToReturn = new DocumentoViewModel { RendicionList = currentList };
-                return PartialView("PartialView/_RendicionList", modelToReturn);
+                    return PartialView("PartialView/_RendicionList", list);
+                }
+                catch (Exception ex)
+                {
+                    return AjaxException(TypeAjaxException.Error, ex);
+                }
             }
-            catch (Exception ex)
+            else //TODO:
             {
-                return AjaxException(TypeAjaxException.Error, ex);
+                var errors = ModelState.Select(x => x.Value.Errors)
+                    .Where(y => y.Count > 0)
+                    .ToList();
+                return AjaxException(TypeAjaxException.Error, "Error de validación");
             }
         }
 
@@ -218,7 +261,7 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         public ActionResult _FilterList(string filter)
         {
             ViewBag.filter = filter;
-           // var list = NivelAprobacionLogic.GetPagedList(GetDataContext(), filter, null);
+            // var list = NivelAprobacionLogic.GetPagedList(GetDataContext(), filter, null);
             return PartialView("PartialView/_PagedList", null);
         }
 

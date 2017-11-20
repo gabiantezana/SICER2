@@ -20,18 +20,23 @@ namespace SICER.DATAACCESS.Sync
             DataContext = dataContext;
         }
 
-        public void Sync()
+        public void Sync(CompanyEntity companyEntity)
         {
             try
             {
                 //var query = new QueryHelper(DataContext.Company.DbServerType).GetSyncQuery(SyncEntity.OOCR);
-                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OOCR);
+                var query = new QueryHelper(BoDataServerTypes.dst_MSSQL).GetSyncQuery(SyncEntity.OOCR, companyEntity);
                 var sapTableType = typeof(OOCR);
                 var localTableType = typeof(SapCentroCosto);
 
                 var localListDefault = DataContext.Context.SapCentroCosto.ToArray();
-                var localList = localListDefault.Select(item => item.ConvertTo(sapTableType))
-                                                    .Select(dummy => (OOCR)dummy).ToList();
+                var localList = localListDefault.Select(x => new OOCR()
+                {
+                    OcrCode = x.OcrCode,
+                    OcrName = x.OcrName,
+                    Locked = x.Locked
+                }).ToList(); 
+
                 var sapList = DataContext.Context.Database.SqlQuery<OOCR>(query).ToArray();
 
                 var pendingToSyncList = sapList.ExceptUsingJSonCompare(localList)
@@ -39,24 +44,33 @@ namespace SICER.DATAACCESS.Sync
                                                     .GroupBy(x => x.OcrCode)
                                                     .Select(y => y.FirstOrDefault()).ToArray();
 
-                var list = new List<Tuple<SyncType, dynamic>>();
-
                 foreach (var item in pendingToSyncList)
                 {
-                    var itemInLocal = localListDefault.FirstOrDefault(x => x.OcrCode == item.OcrCode);
+                    var itemInLocal = DataContext.Context.SapCentroCosto.Find(item.DimCode);
                     if (itemInLocal != null)
                     {
-                        var itemInSap = sapList.FirstOrDefault(x => x.OcrCode == item.OcrCode);
-                        list.Add(itemInSap != null
-                            ? new Tuple<SyncType, dynamic>(SyncType.Update, ConvertToEntity(SyncType.Update, itemInLocal, item))
-                            : new Tuple<SyncType, dynamic>(SyncType.Delete, ConvertToEntity(SyncType.Delete, itemInLocal, item)));
+                        var itemInSap = sapList.FirstOrDefault(x => x.DimCode == item.DimCode);
+                        if (itemInSap != null)
+                        {
+                            DataContext.Context.Entry(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
+                        else
+                        {
+                            DataContext.Context.SapCentroCosto.Remove(itemInLocal);
+                            DataContext.Context.SaveChanges();
+                        }
                     }
                     else
-                        list.Add(new Tuple<SyncType, dynamic>(SyncType.Create, ConvertToEntity(SyncType.Create, itemInLocal, item)));
+                    {
+                        DataContext.Context.SapCentroCosto.Add(new SapCentroCosto()
+                        {
+                          OcrCode = item.OcrCode,
+                          OcrName = item.OcrName,
+                        });
+                        DataContext.Context.SaveChanges();
+                    }
                 }
-
-                new SyncDataAccess(DataContext).SaveToDb(localTableType, list);
-
             }
             catch (Exception e)
             {

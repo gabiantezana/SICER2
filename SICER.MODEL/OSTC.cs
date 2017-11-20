@@ -12,26 +12,19 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class Job
+    public partial class OSTC
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Job()
+        public OSTC()
         {
-            this.JobParameter = new HashSet<JobParameter>();
-            this.State = new HashSet<State>();
+            this.Documento = new HashSet<Documento>();
         }
     
-        public int Id { get; set; }
-        public Nullable<int> StateId { get; set; }
-        public string StateName { get; set; }
-        public string InvocationData { get; set; }
-        public string Arguments { get; set; }
-        public System.DateTime CreatedAt { get; set; }
-        public Nullable<System.DateTime> ExpireAt { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public Nullable<decimal> Rate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JobParameter> JobParameter { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<State> State { get; set; }
+        public virtual ICollection<Documento> Documento { get; set; }
     }
 }

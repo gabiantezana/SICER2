@@ -8,7 +8,7 @@ using SICER.MODEL;
 
 namespace SICER.LOGIC.Sync
 {
-    public  class SyncLogic
+    public class SyncLogic
     {
         private DataContext DataContext { get; set; }
 
@@ -17,12 +17,16 @@ namespace SICER.LOGIC.Sync
             DataContext = dataContext;
         }
 
-        public void SyncAll() //TODO: CALL BY NAVEGADOR
+        public void SyncAll()
         {
-            while (true)
-            {
-
-            }
+            new SapBusinessPartnerDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
+            new SapCentroCostoDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
+            new SapConceptoDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
+            new SapCuentaContableDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
+            new SapIndicatorDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
+            new SapMonedaDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
+            new SapTipoCambioDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
+            new OstcDataAccess(DataContext).Sync(new SapLogic().GetCompanyEntityFromFile());
         }
     }
 }

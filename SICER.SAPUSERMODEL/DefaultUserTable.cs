@@ -8,7 +8,9 @@ namespace SICER.SAPUSERMODEL
 {
     public class DefaultUserTable
     {
+        [SAPField(IsSystemField = true)]
         public string Code { get; set; }
+        [SAPField(IsSystemField = true)]
         public string Name { get; set; }
     }
 }

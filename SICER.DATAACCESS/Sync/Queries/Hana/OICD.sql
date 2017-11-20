@@ -1,4 +1,4 @@
-SELECT Code, Name FROM [SBO_TAWA_CONSULTING_SAC]..OIDC															--INDICATORS
+SELECT Code, Name FROM [SBO_TEST001]..OIDC															--INDICATORS
  
 
 

@@ -30,6 +30,7 @@ namespace SICER.DATAACCESS.Sync
 
         public void SaveToDb(Type entityType, IReadOnlyCollection<Tuple<SyncType, dynamic>> tupleList)
         {
+            DataContext.Context = new SICEREntities();
             //DELETE
             var listToDelete = tupleList.Where(x => x.Item1 == SyncType.Delete).Select(x => x.Item2).ToList();
             if (listToDelete.Any())

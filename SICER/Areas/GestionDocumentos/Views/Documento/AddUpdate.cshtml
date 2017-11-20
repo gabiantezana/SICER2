@@ -63,6 +63,7 @@
         case ModoVistaDocumento.Aprobar:
             <div class="panel-footer text-right">
                 <button type="submit" class="btn btn-success"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Aprobar</button>
+                <a class="btn btn-danger" data-mensaje="Ingrese motivo" id="btnConfirm" onclick="onClickConfirm2(this)">Rechazar<i class="fa fa-floppy-o" aria-hidden="true"></i></a>
             </div>
             break;
         default:
@@ -76,18 +77,30 @@
                 <a class="panel-action icon wb-minus" data-toggle="panel-collapse" aria-hidden="true"></a>
             </div>
         </div>
+        @Html.HiddenFor(x => Model.DocumentType)
+        @Html.HiddenFor(x => Model.SubTipoDocumento)
         @if (Model.DocumentoId.HasValue)
         {
             @Html.HiddenFor(x => Model.DocumentoId)
-            @Html.HiddenFor(x => Model.SubTipoDocumento)
             @Html.HiddenFor(x => Model.Codigo)
             @Html.HiddenFor(x => Model.Estado)
             @Html.HiddenFor(x => Model.SapIndicatorCode)
+            @Html.HiddenFor(x => Model.MotivoRechazo)
         }
         @Html.HiddenFor(x => Model.DocumentType)
         <div class="panel-body">
             <div class=" col-md-6">
                 <div class="form-horizontal">
+                    @if (Model.Estado == (int)DocumentState.Rechazado)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.MotivoRechazo, new { @class = "col-sm-3 control-label " })
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(x => Model.MotivoRechazo, new { @class = "form-control text-danger", @readonly = "readonly" })
+                                @Html.ValidationMessageFor(x => x.MotivoRechazo)
+                            </div>
+                        </div>
+                    }
                     @if (Model.DocumentoId.HasValue)
                     {
                         <div class="form-group">
@@ -149,10 +162,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(x => Model.MontoNoAfecto, new { @class = "col-sm-3 control-label" })
+                        @Html.LabelFor(x => Model.OstcCode, new { @class = "col-sm-3 control-label" })
                         <div class="col-sm-9">
-                            @Html.TextBoxFor(x => Model.MontoNoAfecto, new { @class = "form-control  text-right moneda" })
-                            @Html.ValidationMessageFor(x => x.MontoNoAfecto)
+                            @Html.DropDownListFor(x => Model.OstcCode, new SelectList(Model.OstcJList, "id", "text"), new { @class = "form-control form-group", @data_plugin = "select2", @data_isedit = (!string.IsNullOrEmpty(Model.OstcCode)).ToString().ToLower() })
+                            @Html.ValidationMessageFor(x => x.OstcCode)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.Monto, new { @class = "col-sm-3 control-label" })
+                        <div class="col-sm-9">
+                            @Html.TextBoxFor(x => Model.Monto, new { @class = "form-control  text-right moneda" })
+                            @Html.ValidationMessageFor(x => x.Monto)
                         </div>
                     </div>
                     <div class="col-sm-12">
@@ -161,10 +181,14 @@
                     </div>
                     <div id="divCentrosCosto">
                         <div class="form-group">
-                            @Html.LabelFor(x => Model.C_1SapCentroCostoOcrCode, new {@class = "col-sm-3 control-label"})
+                            @Html.LabelFor(x => Model.C_1SapCentroCostoOcrCode, new { @class = "col-sm-3 control-label" })
                             <div class="col-sm-8">
-                                @Html.DropDownListFor(x => Model.C_1SapCentroCostoOcrCode, new SelectList(Model.C_1SapCentroCostoJList, "id", "text"), new {@class = "form-control form-group", @data_plugin = "select2", @data_isedit = (!string.IsNullOrEmpty(Model.C_1SapCentroCostoOcrCode)).ToString().ToLower()
-                                })
+                                @Html.DropDownListFor(x => Model.C_1SapCentroCostoOcrCode, new SelectList(Model.C_1SapCentroCostoJList, "id", "text"), new
+                           {
+                               @class = "form-control form-group",
+                               @data_plugin = "select2",
+                               @data_isedit = (!string.IsNullOrEmpty(Model.C_1SapCentroCostoOcrCode)).ToString().ToLower()
+                           })
                                 @Html.ValidationMessageFor(x => x.C_1SapCentroCostoOcrCode)
                             </div>
                             <div class="col-md-1">
@@ -225,11 +249,6 @@
                                 </a>
                             </div>
                         </div>
-                        @*@for (int i = 0; i < Model.ListDetalle.Count - 1; i++)
-                            {
-                                @Html.HiddenFor(x => Model.ListDetalle[i])
-
-                            }*@
                     </div>
                 </div>
             </div>
@@ -250,22 +269,21 @@
                 </div>
             </div>
             <div class="panel-body">
-                <button type="button" class=" btn btn-info" @Url.ModalHelperFor("ModalRendicion", "Documento", ModalSize.Large)>
-                    <i class="fa fa-plus"></i>Agregar
-                </button>
+                @if (Model.UserCanAddRendicion)
+                {
+                    <button type="button" class=" btn btn-info" @Url.ModalHelperFor("ModalRendicion", "Documento", new { aperturaDocumentoId = Model.DocumentoId }, ModalSize.Large)>
+                        <i class="fa fa-plus"></i>Agregar
+                    </button>
+                }
                 <div class="panel-container col-md-12">
                     <div class="table-responsive" id="_PartialDetalleDocumentos">
-                        @Html.Partial("PartialView/_RendicionList", Model)
+                        @Html.Partial("PartialView/_RendicionList", Model.RendicionList)
                     </div>
                 </div>
             </div>
         </div>
     }
-
 }
-
-
-
 
 @section Scripts
 {
@@ -275,82 +293,46 @@
             debugger;
             var object = $("#FormAddUpdateDocumento :input[id^=RendicionList_" + index + "]").serializeArray();
             //Change name of elements:
-            object.forEach(function (item) {
+            object.forEach(function(item) {
                 item.name = item.name.replace('RendicionList[' + index + '].', '');
             });
             return object;
         }
 
-        $(".btnModalDetalle").on("click",
-            function(e) {
-                debugger;
-                var index = $(this).data("index");
-                var object = ConvertSerializedArrayToObject(getDocumentoDetalleObject(index));
-                var url = '@Url.Action("ModalRendicionPost", "Documento")';
-                var data = $.param(object);
-                url = url + "?" + data;
-                $(this).attr('data-source-url', url);
-                return true;
-            });
-        var _guid = '@Guid.NewGuid()';
+        $(".btnAddCentroCostos").click(function() {
+            $(this).parent().hide();
+            $(this).parent().parent().parent().next().show();
+        });
+        $(".btnRemoveCentroCostos").click(function() {
+            $(this).parent().parent().parent().hide();
+            $(this).parent().parent().parent().prev().find("a").show();
+            $(this).parent().parent().parent().find("select").val(null).trigger("change");
+        });
 
-        @*$('#FormAddUpdateDocumento').submit(function () {
-            event.preventDefault();
-            debugger;
-            var data = { // DocumentoViewModel
-                "Asunto": $("#Asunto").val(),
-                "Motivo": $("#Motivo").val(),
-                "FechaDocumento": $("#FechaDocumento").val(),
-                "DocumentType": 1,
-                "IdDocumento": $("#IdDocumento").val(),
-                "IdProveedorSolicitante": $("#IdProveedorSolicitante").val(),
-                "ListProveedorSolicitante": null,
-                "IdMoneda": $("#IdMoneda").val(),
-                "ListMonedas": null,
-                "IdMetodoPago": $("#IdMetodoPago").val(),
-                "ListMetodosPago": null,
-                "IdCentroCosto1": $("#IdCentroCosto1").val(),
-                "IdCentroCosto2": $("#IdCentroCosto2").val(),
-                "IdCentroCosto3": $("#IdCentroCosto3").val(),
-                "IdCentroCosto4": $("#IdCentroCosto4").val(),
-                "IdCentroCosto5": $("#IdCentroCosto5").val(),
-                "IdCentroCosto6": $("#IdCentroCosto6").val(),
-                "ListCentrosCosto": null,
-                "Observaciones": null,
-                "DocumentState":1,
-                "ListDetalle": ListDetalle,
-            }
+        function onClickConfirm2(button) {
+            var $this = $(button);
+            var message = $this.data('mensaje');
+            alertify.prompt(message,
+                function(evt, value) {
+                    if (evt === "") {
+                        alert("Debe ingresar un mensaje");
+                    } else {
+                        $("#MotivoRechazo").val(evt);
+                        $("#FormAddUpdateDocumento")[0].action =
+                            '@Url.Action("RechazarDocumento", "Documento", new {Area = @ConstantHelper.Area.GESTIONDOCUMENTOS})';
+                        $("#FormAddUpdateDocumento").submit();
+                    }
+                });
+            $('.cancel').addClass('btn');
+            $('.cancel').addClass('btn-default');
 
-            var _data = JSON.stringify(data);
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("AddUpdateDocumento", "Documento")',
-                data: JSON.stringify(data) ,
-                dataType: 'JSON',
-                contentType: "application/json",
-                success: function (value) {
-                    alert(value);
-                },
-                error: function (error) {
-                    ShowMessage("", error.responseJSON);
-                    alert(error);
-                },
-                finally: function (err) {
-                    alert(err);
-                }
-            });
-            return false;
-        });*@
+            $('.ok').addClass('btn');
+            $('.ok').addClass('btn-primary');
+        };
 
-    $(".btnAddCentroCostos").click(function () {
-        $(this).parent().hide();
-        $(this).parent().parent().parent().next().show();
-    })
-    $(".btnRemoveCentroCostos").click(function () {
-        $(this).parent().parent().parent().hide();
-        $(this).parent().parent().parent().prev().find("a").show();
-        $(this).parent().parent().parent().find("select").val(null).trigger("change");
-    })
+        $(".sendRendicion").click(function() {
+            alert("");
+        });
 
     </script>
 }
