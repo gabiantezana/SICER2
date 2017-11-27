@@ -38,10 +38,12 @@ namespace SICER.MODEL
         public byte[] Password { get; set; }
         public int RolId { get; set; }
         public string SapBusinessPartnerCardCode { get; set; }
-        public int AreaId { get; set; }
+        public Nullable<int> AreaId { get; set; }
+        public Nullable<int> CompanyId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AprobacionDocumento> AprobacionDocumento { get; set; }
+        public virtual Company Company { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -49,7 +51,6 @@ namespace SICER.MODEL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocumentoEstadosAuditoria> DocumentoEstadosAuditoria { get; set; }
         public virtual Rol Rol { get; set; }
-        public virtual SapBusinessPartner SapBusinessPartner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UsuarioNivelAprobacion> UsuarioNivelAprobacion { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

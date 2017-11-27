@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SICER.SAPUSERMODEL.Tables
 {
     /// <summary>
-    /// Sap monedas
+    /// Sap indicators
     /// </summary>
     [SAPTable(IsSystemTable = true)]
     public class OICD : DefaultUserTable

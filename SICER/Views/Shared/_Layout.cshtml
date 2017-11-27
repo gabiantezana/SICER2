@@ -7,7 +7,6 @@
     <meta name="description" content="bootstrap admin template">
     <meta name="author" content="">
 
-
     <!-- Stylesheets -->
     <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap-extend.min.css" rel="stylesheet" />
@@ -33,8 +32,8 @@
     <link href="~/Content/fonts/web-icons/web-icons.min.css" rel="stylesheet" />
     <link href="~/Content/fonts/material-design/css/materialdesignicons.min.css" rel='stylesheet' />
     @*<link href='http://fonts.googleapis.com/css?family=Roboto:400,400italic,700' rel='stylesheet' />*@
-    
-    
+
+
 
     <!--[if lt IE 9]>
     <script src="../global/vendor/html5shiv/html5shiv.min.js"></script>
@@ -43,10 +42,6 @@
     <script src="../global/vendor/media-match/media.match.min.js"></script>
     <script src="../global/vendor/respond/respond.min.js"></script>
     <![endif]-->
-    
-  
-    
-
     <!-- Scripts -->
     @RenderSection("Styles", false)
 
@@ -114,6 +109,23 @@
                                 <i></i>
                             </span>
                             <span>@Session.GetNombresUsuario()</span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="divider" role="presentation"></li>
+                            <li role="presentation">
+                                <a class="animsition-link" id="btnLogOut" href="@Url.Action("Logout", "Home", new { Area = String.Empty})" role="menuitem"><i class="icon wb-power" aria-hidden="true"></i> Salir</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
+                    <li class="dropdown">
+                        <a class="navbar-avatar dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" data-animation="scale-up" role="button">
+                            <span class="">
+                                <img width="115" alt="..." src="~/Content/recursos/sap1.png"/>
+                                <i></i>
+                            </span>
+                            <span> Estás conectado a: @Session.GetCompanyName()</span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="divider" role="presentation"></li>
@@ -247,16 +259,16 @@
 
     <script src="~/Content/assets/js/jquery.validate.min.js"></script>
     <script src="~/Content/assets/js/jquery.validate.unobtrusive.min.js"></script>
-<script src="~/Content/assets/js/jquery.unobtrusive-ajax.min.js"></script>
-    
+    <script src="~/Content/assets/js/jquery.unobtrusive-ajax.min.js"></script>
 
-@*   <script src="~/Scripts/messages_es_PE.js"></script>*@
-<script src="~/Content/js/bootstrap-datepicker.js"></script>
-    
 
-@* REQUIREDIF MVC FOOLPROF *@
-<script src="/Scripts/expressive.annotations.validate.js"></script>`
-@*REQUIREDIF MVC FOOLPROF*@
+    @*   <script src="~/Scripts/messages_es_PE.js"></script>*@
+    <script src="~/Content/js/bootstrap-datepicker.js"></script>
+
+
+    @* REQUIREDIF MVC FOOLPROF *@
+    <script src="/Scripts/expressive.annotations.validate.js"></script>`
+    @*REQUIREDIF MVC FOOLPROF*@
 
     <script>
         //Para agregar listado de modals agregados.
@@ -306,7 +318,7 @@
     @RenderSection("scripts", required: false)
 
 
-<script>
+    <script>
     $(document).on("click", "table tbody tr", function (e) {
         $(this).addClass("active").siblings().removeClass("active");
     });
@@ -314,7 +326,7 @@
         $('.select2').css('width', '');
     })
 
-       
+
 
     function OnChangeDecimal(e, input, decimals) {
         var $this = $(input);
@@ -420,6 +432,6 @@
     @Scripts.Render("~/Scripts/jquery.validate.unobtrusive.min.js")
     @Scripts.Render("~/Scripts/moment.js")*@
 
-</script>
+    </script>
 </body>
 </html>

@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeHelper.cs" />
+    <Compile Include="CompanyHelper.cs" />
     <Compile Include="ComparerHelper.cs" />
     <Compile Include="ConstantHelper.cs" />
     <Compile Include="ConvertHelper.cs" />

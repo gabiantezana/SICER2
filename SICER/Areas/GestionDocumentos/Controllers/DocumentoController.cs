@@ -34,7 +34,6 @@ namespace SICER.Areas.GestionDocumentos.Controllers
             }
         }
 
-        [AppViewAuthorize(ConstantHelper.Vistas.Documento.CajaChica.LISTAR)]
         public ActionResult ListCC()
         {
             var model = DocumentoLogic.GetListDocumentoViewModel(GetDataContext(), DocumentType.CajaChica, null, null);
@@ -42,7 +41,6 @@ namespace SICER.Areas.GestionDocumentos.Controllers
             return View("List", model);
         }
 
-        [AppViewAuthorize(ConstantHelper.Vistas.Documento.EntregaRendir.LISTAR)]
         public ActionResult ListER()
         {
             var model = DocumentoLogic.GetListDocumentoViewModel(GetDataContext(), DocumentType.EntregaARendir, null, null);
@@ -50,7 +48,6 @@ namespace SICER.Areas.GestionDocumentos.Controllers
             return View("List", model);
         }
 
-        [AppViewAuthorize(ConstantHelper.Vistas.Documento.Reembolso.LISTAR)]
         public ActionResult ListRE()
         {
             var model = DocumentoLogic.GetListDocumentoViewModel(GetDataContext(), DocumentType.Reembolso, null, null);
@@ -74,26 +71,25 @@ namespace SICER.Areas.GestionDocumentos.Controllers
             }
         }
 
-        [AppViewAuthorize(ConstantHelper.Vistas.Documento.CajaChica.CREAR, ConstantHelper.Vistas.Documento.CajaChica.APROBAR)]
         public ActionResult AddUpdateCC(int? documentoId)
         {
-            var model = DocumentoLogic.GetApertura(GetDataContext(), documentoId);
+            ModelState.Remove("Serie");
+            var model = DocumentoLogic.GetOpening(GetDataContext(), documentoId);
             model.DocumentType = DocumentType.CajaChica;
+            model.TipoDocumentoId = (int) DocumentType.CajaChica;
             return View("AddUpdate", model);
         }
 
-        [AppViewAuthorize(ConstantHelper.Vistas.Documento.CajaChica.CREAR, ConstantHelper.Vistas.Documento.CajaChica.APROBAR)]
         public ActionResult AddUpdateER(int? documentoId)
         {
-            var model = DocumentoLogic.GetApertura(GetDataContext(), documentoId);
+            var model = DocumentoLogic.GetOpening(GetDataContext(), documentoId);
             model.DocumentType = DocumentType.CajaChica;
             return View("AddUpdate", model);
         }
 
-        [AppViewAuthorize(ConstantHelper.Vistas.Documento.CajaChica.CREAR, ConstantHelper.Vistas.Documento.CajaChica.APROBAR)]
         public ActionResult AddUpdateRE(int? documentoId)
         {
-            var model = DocumentoLogic.GetApertura(GetDataContext(), documentoId);
+            var model = DocumentoLogic.GetOpening(GetDataContext(), documentoId);
             model.DocumentType = DocumentType.CajaChica;
             return View("AddUpdate", model);
         }
@@ -105,11 +101,14 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         [HttpPost]
         public ActionResult AddUpdate(DocumentoViewModel model)
         {
+            ModelState.Remove("Serie");
+            ModelState.Remove("Correlativo");
+            ModelState.Remove("SapConceptoCode");
             if (ModelState.IsValid)
             {
                 try
                 {
-                    DocumentoLogic.AddUpdateApertura(GetDataContext(), model);
+                    DocumentoLogic.AddUpdateDocument(GetDataContext(), model, model.SubmitType);
                     PostMessage(MessageType.Success);
                     return RedirectToAction(nameof(List), new { documentType = model.DocumentType });
                 }
@@ -117,6 +116,13 @@ namespace SICER.Areas.GestionDocumentos.Controllers
                 {
                     PostMessage(ex);
                 }
+            }
+            else
+            {
+                var errors = ModelState.Select(x => x.Value.Errors)
+                    .Where(y => y.Count > 0)
+                    .ToList();
+                DocumentoLogic.FillJLists(GetDataContext(), ref model);
             }
             return View(model);
         }
@@ -130,7 +136,7 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         [HttpPost]
         public ActionResult ApproveApertura(DocumentoViewModel model)
         {
-            DocumentoLogic.ApproveApertura(GetDataContext(), model);
+            DocumentoLogic.ApproveDocument(GetDataContext(), model);
             PostMessage(MessageType.Success, "Documento aprobado exitosamente.");
             return RedirectToAction(nameof(List), new { documentType = model.DocumentType });
         }
@@ -138,7 +144,7 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         [HttpPost]
         public ActionResult RechazarDocumento(DocumentoViewModel model)
         {
-            DocumentoLogic.RechazarApertura(GetDataContext(), model.DocumentoId, model.MotivoRechazo);
+            DocumentoLogic.RefuseDocument(GetDataContext(), model.DocumentoId, model.MotivoRechazo);
             PostMessage(MessageType.Success, "Documento rechazado exitosamente.");
             return RedirectToAction(nameof(List), new { documentType = model.DocumentType });
         }
@@ -149,9 +155,8 @@ namespace SICER.Areas.GestionDocumentos.Controllers
 
         public ActionResult ModalRendicion(int? aperturaDocumentoId, int? documentoId)
         {
-            ModelState.Clear();
-
-            var model = DocumentoLogic.GetRendicion(GetDataContext(), aperturaDocumentoId, documentoId);
+            //ModelState.Clear();
+            var model = DocumentoLogic.GetExpenditure(GetDataContext(), aperturaDocumentoId, documentoId);
             DocumentoLogic.FillJLists(GetDataContext(), ref model);
 
             return View("Modal/ModalRendicion", model);
@@ -201,30 +206,20 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         [HttpPost]
         public ActionResult _RendicionList(DocumentoViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    //TODO: VALIDATE 
-                    //Agrega o modifica rendición
-                    DocumentoLogic.AddUpdateRendicion(GetDataContext(), model);
+                //TODO: VALIDATE 
+                //Agrega o modifica rendición
+                DocumentoLogic.AddUpdateDocument(GetDataContext(), model, model.SubmitType);
 
-                    //Devuelve nuevo listado
-                    var list = DocumentoLogic.GetRendicionesList(GetDataContext(), model.AperturaDocumentoId, null);
+                //Devuelve nuevo listado
+                var list = DocumentoLogic.GetExpenditureList(GetDataContext(), model.AperturaDocumentoId, null);
 
-                    return PartialView("PartialView/_RendicionList", list);
-                }
-                catch (Exception ex)
-                {
-                    return AjaxException(TypeAjaxException.Error, ex);
-                }
+                return PartialView("PartialView/_RendicionList", list);
             }
-            else //TODO:
+            catch (Exception ex)
             {
-                var errors = ModelState.Select(x => x.Value.Errors)
-                    .Where(y => y.Count > 0)
-                    .ToList();
-                return AjaxException(TypeAjaxException.Error, "Error de validación");
+                return AjaxException(TypeAjaxException.Error, ex);
             }
         }
 
@@ -249,7 +244,7 @@ namespace SICER.Areas.GestionDocumentos.Controllers
         {
             ViewBag.filter = model.Filter;
             ViewBag.DocumentType = model.DocumentType;
-            model.PagedList = DocumentoLogic.GetPagedList(GetDataContext(), model.DocumentType, model.Filter, page);
+            model.PagedList = DocumentoLogic.GetOpeningPagedList(GetDataContext(), model.DocumentType, model.Filter, page);
             return PartialView("PartialView/_PagedList", model.PagedList);
         }
 

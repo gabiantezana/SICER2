@@ -66,6 +66,33 @@ namespace SICER.HELPER
 
         #endregion
 
+        #region GetCompanyName
+
+        public static string GetCompanyName(this HttpSessionStateBase Session)
+        {
+            return (string)Get(Session, SessionKey.CompanyName);
+        }
+        public static string GetCompanyName(this HttpSessionState session)
+        {
+            return (string)Get(session, SessionKey.CompanyName);
+        }
+
+        #endregion
+
+
+        #region GetCompanyId
+
+        public static int? GetCompanyId(this HttpSessionStateBase Session)
+        {
+            return (int?)Get(Session, SessionKey.CompanyId);
+        }
+        public static int? GetCompanyId(this HttpSessionState session)
+        {
+            return (int?)Get(session, SessionKey.CompanyId);
+        }
+
+        #endregion
+
         #region GetUserName
 
         public static String GetUserName(this HttpSessionStateBase Session)

@@ -29,27 +29,18 @@ namespace SICER.MODEL
     
         public virtual DbSet<AprobacionDocumento> AprobacionDocumento { get; set; }
         public virtual DbSet<Area> Area { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<CONFIG> CONFIG { get; set; }
         public virtual DbSet<Documento> Documento { get; set; }
         public virtual DbSet<DocumentoEstadosAuditoria> DocumentoEstadosAuditoria { get; set; }
         public virtual DbSet<Excepcion> Excepcion { get; set; }
         public virtual DbSet<GrupoVista> GrupoVista { get; set; }
-        public virtual DbSet<Invoice> Invoice { get; set; }
-        public virtual DbSet<InvoiceLine> InvoiceLine { get; set; }
         public virtual DbSet<NivelAprobacion> NivelAprobacion { get; set; }
-        public virtual DbSet<OSTC> OSTC { get; set; }
-        public virtual DbSet<Payment> Payment { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<SapBusinessPartner> SapBusinessPartner { get; set; }
-        public virtual DbSet<SapCentroCosto> SapCentroCosto { get; set; }
-        public virtual DbSet<SapConcepto> SapConcepto { get; set; }
-        public virtual DbSet<SapCuentaContable> SapCuentaContable { get; set; }
-        public virtual DbSet<SapIndicators> SapIndicators { get; set; }
-        public virtual DbSet<SapMoneda> SapMoneda { get; set; }
-        public virtual DbSet<SapTipoCambio> SapTipoCambio { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumento { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
+        public virtual DbSet<UsuarioDocumento> UsuarioDocumento { get; set; }
         public virtual DbSet<UsuarioNivelAprobacion> UsuarioNivelAprobacion { get; set; }
         public virtual DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         public virtual DbSet<Vista> Vista { get; set; }

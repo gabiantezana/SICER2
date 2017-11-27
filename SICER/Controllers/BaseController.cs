@@ -3,16 +3,10 @@ using SICER.HELPER;
 using SICER.MODEL;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Routing;
-using SAPbobsCOM;
-using SICER.Areas.Sync.Controllers;
-using SICER.DATAACCESS;
-using SICER.LOGIC;
 
 namespace SICER.Controllers
 {

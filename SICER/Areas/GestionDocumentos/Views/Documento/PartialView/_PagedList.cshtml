@@ -1,6 +1,6 @@
 ﻿@using PagedList.Mvc
 @using SICER.HELPER
-@model PagedList.IPagedList<SICER.MODEL.Documento>
+@model PagedList.IPagedList<SICER.VIEWMODEL.GestionDocumentos.DocumentoViewModel>
 
 <table class="table table-hover">
     <thead style="font-weight:bold">
@@ -13,8 +13,7 @@
             <td>Asunto</td>
             <td>Motivo</td>
             <td>Indicator</td>
-            <td>Serie</td>
-            <td>Correlativo</td>
+            <td>Mensaje SAP</td>
             <td>Estado</td>
             <td>Opciones</td>
         </tr>
@@ -47,20 +46,27 @@
         }
         <tr ondblclick="window.location ='@Url.Action("AddUpdate", "Documento", new { Area = ConstantHelper.Area.GESTIONDOCUMENTOS , documentoId=item.DocumentoId, documentType = (DocumentType)ViewBag.DocumentType })'">
             <td>@item.Codigo</td>
-            <td>@item.Usuario.GetNombreCompleto()</td>
-            <td>@item.SapBusinessPartner.CardCode </td>
-            <td>@item.SapMoneda.SapMonedaDocCurrCod</td>
-            <td>@item.MontoNoAfecto</td>
+            <td>@item.CreacionUsuarioid</td>
+            <td>@item.SapBusinessPartnerCardCode</td>
+            <td>@item.SapMonedaDocCurrCode</td>
+            <td>@item.Monto</td>
             <td>@item.Asunto</td>
             <td>@item.Motivo</td>
-            <td>@item.SapIndicators.Name</td>
-            <td>@item.Serie</td>
-            <td>@item.Correlativo</td>
+            <td>@item.SapIndicatorCode</td>
+            @if (@item.Error != null)
+            {
+                <td style="color:red" data-toggle="tooltip" data-original-title="@item.Error"> @(item.Error.Length > 10 ? item.Error.Substring(0, 9) : item.Error)</td>
+            }
+            else
+            {
+                <td>-</td>
+            }
 
             <td class="text-nowrap text-center">
                 @switch ((DocumentState)item.Estado)
                 {
                     case DocumentState.None:
+                        <H6>-</H6>
                         break;
                     case DocumentState.Pendiente:
                         <a class="btn btn-xs btn-icon btn-warning" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
@@ -75,6 +81,11 @@
                     case DocumentState.Rechazado:
                         <a class="btn btn-xs btn-icon btn-danger" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
                             <i class="icon wb-close" aria-hidden="true"></i>Rechazado
+                        </a>
+                        break;
+                    case DocumentState.AprobadoConErroresDeMigracion:
+                        <a class="btn btn-xs btn-icon btn-danger" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                            <i class="icon wb-close" aria-hidden="true"></i>Aprobado/Error SAP
                         </a>
                         break;
                     default:

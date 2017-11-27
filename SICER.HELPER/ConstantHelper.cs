@@ -78,6 +78,51 @@ namespace SICER.HELPER
                     public const string LISTAR = PREFIX + "LISTAR";
                     public const string CREAR = PREFIX + "CREAR";
                 }
+
+               
+            }
+            public static class Documento
+            {
+                private const string PARENTPREFIX = "GESTORDOCUMENTOS.";
+
+                public static class CajaChica
+                {
+                    private const string PREFIX = PARENTPREFIX + "CAJACHICA.";
+
+                    public const string APERTURA_LISTAR = PREFIX + "APERTURA.LISTAR";
+                    public const string APERTURA_CREAR = PREFIX + "APERTURA.CREAR";
+                    public const string APERTURA_APROBAR = PREFIX + "APERTURA.APROBAR";
+
+                    public const string RENDICION_LISTAR = PREFIX + "RENDICION.LISTAR";
+                    public const string RENDICION_CREAR = PREFIX + "RENDICION.CREAR";
+                    public const string RENDICION_APROBAR = PREFIX + "RENDICION.LISTAR";
+                }
+
+                public static class EntregaRendir
+                {
+                    private const string PREFIX = PARENTPREFIX + "ENTREGARENDIR.";
+
+                    public const string APERTURA_LISTAR = PREFIX + "APERTURA.LISTAR";
+                    public const string APERTURA_CREAR = PREFIX + "APERTURA.CREAR";
+                    public const string APERTURA_APROBAR = PREFIX + "APERTURA.APROBAR";
+
+                    public const string RENDICION_LISTAR = PREFIX + "RENDICION.LISTAR";
+                    public const string RENDICION_CREAR = PREFIX + "RENDICION.CREAR";
+                    public const string RENDICION_APROBAR = PREFIX + "RENDICION.LISTAR";
+                }
+
+                public static class Reembolso
+                {
+                    private const string PREFIX = PARENTPREFIX + "REEMBOLSO.";
+
+                    public const string APERTURA_LISTAR = PREFIX + "APERTURA.LISTAR";
+                    public const string APERTURA_CREAR = PREFIX + "APERTURA.CREAR";
+                    public const string APERTURA_APROBAR = PREFIX + "APERTURA.APROBAR";
+
+                    public const string RENDICION_LISTAR = PREFIX + "RENDICION.LISTAR";
+                    public const string RENDICION_CREAR = PREFIX + "RENDICION.CREAR";
+                    public const string RENDICION_APROBAR = PREFIX + "RENDICION.LISTAR";
+                }
             }
 
             public static class Sincronizacion
@@ -85,42 +130,7 @@ namespace SICER.HELPER
                 private const string PARENTPREFIX = "SINCRONIZACION";
             }
 
-            public static class Documento
-            {
-                private const string PARENTPREFIX = "DOCUMENTO.";
-
-                public static class CajaChica
-                {
-                    private const string PREFIX = PARENTPREFIX + "CAJACHICA.";
-
-                    public const string LISTAR = PREFIX + "LISTAR";
-                    public const string CREAR = PREFIX + "CREAR";
-                    public const string APROBAR = PREFIX + "APROBAR";
-                    public const string LIQUIDAR = PREFIX + "LIQUIDAR";
-                }
-
-                public static class EntregaRendir
-                {
-                    private const string PREFIX = PARENTPREFIX + "ENTREGARENDIR.";
-
-                    public const string LISTAR = PREFIX + "LISTAR";
-                    public const string CREAR = PREFIX + "CREAR";
-                    public const string APROBAR = PREFIX + "APROBAR";
-                    public const string LIQUIDAR = PREFIX + "LIQUIDAR";
-                }
-
-                public static class Reembolso
-                {
-                    private const string PREFIX = PARENTPREFIX + "REEMBOLSO.";
-
-                    public const string LISTAR = PREFIX + "LISTAR";
-                    public const string CREAR = PREFIX + "CREAR";
-                    public const string APROBAR = PREFIX + "APROBAR";
-                    public const string LIQUIDAR = PREFIX + "LIQUIDAR";
-                }
-
-
-            }
+           
 
         }
 

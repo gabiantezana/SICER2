@@ -61,6 +61,13 @@ namespace SICER.Areas.Administracion.Controllers
         [HttpPost]
         public ActionResult AddUpdateUsuario(UsuarioViewModel model, FormCollection formCollection)
         {
+            if (GetDataContext().Session.GetRol() == AppRol.SISTEMAS
+                || GetDataContext().Session.GetRol() == AppRol.SUPERADMIN)
+            {
+                ModelState.Remove("AreaId");
+                ModelState.Remove("SapBusinessPartnerCardCode");
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -80,10 +87,10 @@ namespace SICER.Areas.Administracion.Controllers
                           .Where(y => y.Count > 0)
                           .ToList();
             }
+
+            UsuarioLogic.FillJLists(GetDataContext(), ref model);
             return View(model);
         }
-
-
 
         #endregion
 

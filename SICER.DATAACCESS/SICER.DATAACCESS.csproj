@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Administracion\AreaDataAccess.cs" />
+    <Compile Include="Administracion\CompanyDataAccess.cs" />
     <Compile Include="Administracion\ConfigDataAccess.cs" />
     <Compile Include="Administracion\TipoDocumentoDataAccess.cs" />
     <Compile Include="Administracion\NivelAprobacionDataAccess.cs" />
@@ -69,14 +70,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Administracion\UsuarioDataAccess.cs" />
     <Compile Include="Sync\OstcDataAccess.cs" />
-    <Compile Include="Sync\SapIndicatorDataAccess.cs" />
-    <Compile Include="Sync\SapMonedaDataAccess.cs" />
-    <Compile Include="Sync\SyncDataAccess.cs" />
-    <Compile Include="Sync\SapCuentaContableDataAccess.cs" />
-    <Compile Include="Sync\SapConceptoDataAccess.cs" />
-    <Compile Include="Sync\SapCentroCostoDataAccess.cs" />
-    <Compile Include="Sync\SapBusinessPartnerDataAccess.cs" />
-    <Compile Include="Sync\SapTipoCambioDataAccess.cs" />
+    <Compile Include="Sync\OcrdDataAccess.cs" />
+    <Compile Include="Sync\OocrDataAccess.cs" />
+    <Compile Include="Sync\%40MSS_SICER_CCPTDataAccess.cs" />
+    <Compile Include="Sync\%40MSS_SICER_AACTDataAccess.cs" />
+    <Compile Include="Sync\OicdDataAccess.cs" />
+    <Compile Include="Sync\OcrnDataAccess.cs" />
+    <Compile Include="Sync\OrttDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SICER.EXCEPTION\SICER.EXCEPTION.csproj">
@@ -102,58 +102,43 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Global\Queries\Hana\" />
+    <Folder Include="Sync\Queries\Default\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\%40MSS_SICER_CONF.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\OCRD.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\OCRN.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\OICD.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\OOCR.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\%40MSS_SICER_CCPT.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\ORTT.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Global\Queries\Sql\GetFieldId.sql" />
+    <EmbeddedResource Include="Sync\Queries\Hana\%40MSS_SICER_ACCT_GetList.sql" />
+    <EmbeddedResource Include="Sync\Queries\Hana\%40MSS_SICER_CCPT_GetList.sql" />
+    <EmbeddedResource Include="Sync\Queries\Hana\OCRD_GetList.sql" />
+    <EmbeddedResource Include="Sync\Queries\Hana\OCRN_GetList.sql" />
+    <EmbeddedResource Include="Sync\Queries\Hana\OICD_GetList.sql" />
+    <EmbeddedResource Include="Sync\Queries\Hana\OOCR_GetList.sql" />
+    <EmbeddedResource Include="Sync\Queries\Hana\ORTT_GetList.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\OSTC_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Hana\%40MSS_SICER_CCPT.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\%40MSS_SICER_ACCT_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Hana\%40MSS_SICER_ACCT.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\%40MSS_SICER_CCPT_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Hana\OCRD.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\OCRD_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Hana\OCRN.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\OCRN_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Hana\OICD.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\OICD_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Hana\OOCR.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\OOCR_GetList.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Hana\ORTT.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Sync\Queries\Sql\OSTC.sql" />
+    <EmbeddedResource Include="Sync\Queries\Sql\ORTT_GetList.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

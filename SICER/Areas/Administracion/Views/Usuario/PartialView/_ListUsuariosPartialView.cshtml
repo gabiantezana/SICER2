@@ -2,6 +2,11 @@
 <table class="table table-hover">
     <thead style="font-weight:bold">
         <tr>
+            @if (Session.GetRol() == AppRol.SUPERADMIN
+                || Session.GetRol() == AppRol.SISTEMAS)
+            {
+                <td>Company</td>
+            }
             <td>Username</td>
             <td>Nombres</td>
             <td>Rol</td>
@@ -13,12 +18,17 @@
     </thead>
     <tbody>
         @if (!Model.Any())
-        {
+            {
             <tr><td style="font-style: italic" colspan="7">@ConstantHelper.MENSAJE_TABLA_VACIA</td></tr>
         }
         @foreach (var item in Model)
-        {
+            {
             <tr ondblclick="window.location = '@Url.Action("AddUpdateUsuario", "Usuario", new {Area = ConstantHelper.Area.ADMINISTRACION, usuarioId = item.UsuarioId})'">
+                @if (Session.GetRol() == AppRol.SUPERADMIN
+                     || Session.GetRol() == AppRol.SISTEMAS)
+                {
+                    <td>@(item.Company?.DbName)</td>
+                }
                 <td>@item.UserName</td>
                 <td>@(item.Nombres + " " + item.Apellidos)</td>
                 <td>@item.Rol.Descripcion</td>

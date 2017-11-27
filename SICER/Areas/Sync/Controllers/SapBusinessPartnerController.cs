@@ -10,48 +10,11 @@ using SICER.HELPER;
 using SICER.LOGIC.Administracion;
 using SICER.LOGIC.Sync;
 using SICER.VIEWMODEL.Administracion.NivelAprobacion;
-using SICER.VIEWMODEL.Sync;
 
 namespace SICER.Areas.Sync.Controllers
 {
     public class SapBusinessPartnerController : BaseController
     {
-        /// <summary>
-        /// Vista principal
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult List()
-        {
-            var model = SapBusinessPartnerLogic.GetListViewModel(GetDataContext());
-            return View(model);
-        }
-
-        /// <summary>
-        /// Lista paginada
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="page"></param>
-        /// <returns></returns>
-        public ActionResult _PagedList(ListSapBusinessPartnerViewModel model, string filter, int? page)
-        {
-            ViewBag.filter = model.Filter;
-            model.PagedList = SapBusinessPartnerLogic.GetPagedList(GetDataContext(), filter, page);
-            return PartialView("PartialView/_PagedList", model.PagedList);
-        }
-
-        /// <summary>
-        /// Lista filtrada
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        [AppViewAuthorize(ConstantHelper.Vistas.Administracion.Usuario.LISTAR)]
-        public ActionResult _FilterList(string filter)
-        {
-            ViewBag.filter = filter;
-            var list = SapBusinessPartnerLogic.GetPagedList(GetDataContext(), filter, null);
-            return PartialView("PartialView/_PagedList", list);
-        }
-
         /// <summary>
         /// Fill select2
         /// </summary>

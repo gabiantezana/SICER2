@@ -12,44 +12,34 @@ namespace SICER.VIEWMODEL.GestionDocumentos
 {
     public class DocumentoViewModel
     {
-        public DocumentType DocumentType { get; set; }
 
-        public int TipoDocumentoId { get; set; }
-        public int? SubTipoDocumento { get; set; }
-        public int Estado { get; set; }
+        #region Propiedades internas
+
+        public SubmitType SubmitType { get; set; }
+        public DocumentType DocumentType { get; set; }
+        public ModoVistaDocumentoApertura ModoVistaDocumento { get; set; } 
+        public IEnumerable<ModoVistaDocumentoApertura> ModosVistaDocumentoList { get; set; }
+        public bool MigrateToSap { get; set; } = false;
+
+        public bool UserCanAddRendicion { get; set; } = false;
+        public bool UserCanSendRendicion { get; set; }
+        public bool UserCanApproveRendicion { get; set; }
+        public bool UserCanRefuseRendicion { get; set; }
+
+        #endregion
+
+        #region Propiedades compartidas
 
         public int? DocumentoId { get; set; }
+        public int TipoDocumentoId { get; set; }
+        public int? SubTipoDocumento { get; set; }
 
-        public IEnumerable<DocumentoViewModel> RendicionList { get; set; } = new List<DocumentoViewModel>();
 
-        public int? AperturaDocumentoId { get; set; }
-
-        public int EntregaRendirDocumentoId { get; set; }
-
-        public string Codigo { get; set; }
-
-        [DisplayName("Solicitante")]
-        public int? CreacionUsuarioid { get; set; }
-        public IEnumerable<JsonEntity> UsuarioJList { get; set; } = new List<JsonEntity>();
-
-        [RequiredIf("SubTipoDocumento == 1", ErrorMessage = "Campo requerido")]
-        public string Asunto { get; set; }
-
-        public string Motivo { get; set; }
-
-        public ModoVistaDocumento ModoVistaDocumento { get; set; } = ModoVistaDocumento.Ver;
-        public bool UserCanAddRendicion { get; set; } = false;
-
+        [DisplayName("Estado")]
+        public int Estado { get; set; }
 
         [DisplayName("Nivel de aprobación")]
         public int? NivelAprobacion { get; set; }
-
-
-        [RequiredIf("SubTipoDocumento == 2", ErrorMessage = "Campo requerido")]
-        public string Serie { get; set; }
-
-        [RequiredIf("SubTipoDocumento == 2", ErrorMessage = "Campo requerido")]
-        public string Correlativo { get; set; }
 
         [Required]
         [DisplayName("Fecha solicitud")]
@@ -67,9 +57,45 @@ namespace SICER.VIEWMODEL.GestionDocumentos
         [DisplayName("Monto")]
         public decimal Monto { get; set; }
 
+        [DisplayName("Listado de rendiciones")]
+        public IEnumerable<DocumentoViewModel> RendicionList { get; set; } = new List<DocumentoViewModel>();
+
+        #endregion
+
+        #region Apertura
+        [DisplayName("Código")]
+        public string Codigo { get; set; }
+
+        [Required]
+        public string Asunto { get; set; }
+
+        public string Motivo { get; set; }
+
+        [DisplayName("Solicitante")]
+        public int? CreacionUsuarioid { get; set; }
+        public IEnumerable<JsonEntity> UsuarioJList { get; set; } = new List<JsonEntity>();
+
+        [DisplayName("Motivo")]
         public string MotivoRechazo { get; set; }
 
-        public bool MigrateToSap { get; set; } = false;
+
+        #endregion
+
+        #region Rendicion
+
+        public int? AperturaDocumentoId { get; set; }
+
+
+        public int EntregaRendirDocumentoId { get; set; }
+
+        [Required]
+        public string Serie { get; set; }
+
+        [Required]
+        public string Correlativo { get; set; }
+
+        #endregion
+
 
         #region Campos para SAP
 
@@ -93,14 +119,7 @@ namespace SICER.VIEWMODEL.GestionDocumentos
         public string SapMonedaDocCurrCode { get; set; }
         public IEnumerable<JsonEntityTwoString> SapMonedaJList { get; set; } = new List<JsonEntityTwoString>();
 
-        [DisplayName("Cuenta contable")]
-        public string AsociadaSapCuentaContableCode { get; set; }
-        public IEnumerable<JsonEntityTwoString> AsociadaSapCuentaContableJList { get; set; } = new List<JsonEntityTwoString>();
-
-        public string GastoSapCuentaContableCode { get; set; }
-        public IEnumerable<JsonEntityTwoString> GastoSapCuentaContableJList { get; set; } = new List<JsonEntityTwoString>();
-
-        [RequiredIf("SubTipoDocumento == 2", ErrorMessage = "Campo requerido")]
+        [Required]
         [DisplayName("Concepto")]
         public string SapConceptoCode { get; set; }
         public IEnumerable<JsonEntityTwoString> SapConceptoJList { get; set; } = new List<JsonEntityTwoString>();
@@ -126,8 +145,10 @@ namespace SICER.VIEWMODEL.GestionDocumentos
         public string C_5SapCentroCostoOcrCode { get; set; }
         public IEnumerable<JsonEntityTwoString> C_5SapCentroCostoJList { get; set; } = new List<JsonEntityTwoString>();
 
+        public string Error { get; set; }
+
         #endregion
 
-    }
 
+    }
 }

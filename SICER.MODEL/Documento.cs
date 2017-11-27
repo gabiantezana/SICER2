@@ -57,30 +57,18 @@ namespace SICER.MODEL
         public int CreacionUsuarioid { get; set; }
         public Nullable<System.DateTime> ModificacionFecha { get; set; }
         public Nullable<int> ModificacionUsuarioid { get; set; }
-        public string OstcCode { get; set; }
+        public string SapOstcCode { get; set; }
     
-        public virtual SapCentroCosto SapCentroCosto { get; set; }
-        public virtual SapCentroCosto SapCentroCosto1 { get; set; }
-        public virtual SapCentroCosto SapCentroCosto2 { get; set; }
-        public virtual SapCentroCosto SapCentroCosto3 { get; set; }
-        public virtual SapCentroCosto SapCentroCosto4 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento1 { get; set; }
         public virtual Documento Documento2 { get; set; }
-        public virtual SapCuentaContable SapCuentaContable { get; set; }
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocumentoEstadosAuditoria> DocumentoEstadosAuditoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Documento> Documento11 { get; set; }
         public virtual Documento Documento3 { get; set; }
-        public virtual SapCuentaContable SapCuentaContable1 { get; set; }
         public virtual Usuario Usuario1 { get; set; }
-        public virtual SapBusinessPartner SapBusinessPartner { get; set; }
-        public virtual SapConcepto SapConcepto { get; set; }
-        public virtual SapIndicators SapIndicators { get; set; }
-        public virtual SapMoneda SapMoneda { get; set; }
         public virtual TipoDocumento TipoDocumento { get; set; }
-        public virtual OSTC OSTC { get; set; }
     }
 }

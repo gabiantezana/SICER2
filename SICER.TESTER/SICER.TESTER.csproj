@@ -56,27 +56,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SICER.DATAACCESS\SICER.DATAACCESS.csproj">
-      <Project>{e0db3bd3-e166-49c0-98c9-fed88334ff88}</Project>
-      <Name>SICER.DATAACCESS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SICER.EXCEPTION\SICER.EXCEPTION.csproj">
-      <Project>{1D022DFA-AD2C-4A13-AB22-9C89678A0FF1}</Project>
-      <Name>SICER.EXCEPTION</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SICER.HELPER\SICER.HELPER.csproj">
       <Project>{105061C3-3586-47F4-A737-D47E9CDD0F58}</Project>
       <Name>SICER.HELPER</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SICER.MODEL\SICER.MODEL.csproj">
-      <Project>{7625219E-48B1-4C83-B215-19FE95577F7D}</Project>
-      <Name>SICER.MODEL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SICER.SAPUSERMODEL\SICER.SAPUSERMODEL.csproj">
-      <Project>{735FD06B-2987-4C0B-9FAF-6011D4282EA9}</Project>
-      <Name>SICER.SAPUSERMODEL</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

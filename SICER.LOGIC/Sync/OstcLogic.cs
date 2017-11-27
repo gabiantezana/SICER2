@@ -7,22 +7,12 @@ using PagedList;
 using SICER.DATAACCESS.Sync;
 using SICER.HELPER;
 using SICER.MODEL;
-using SICER.VIEWMODEL.Sync;
+using SICER.SAPUSERMODEL.Tables;
 
 namespace SICER.LOGIC.Sync
 {
     public class OstcLogic
     {
-        public static ListOstcViewModel GetListViewModel(DataContext dataContext)
-        {
-            return new ListOstcViewModel()
-            {
-                PagedList = GetPagedList(dataContext, null, 1),
-                ListDefault = new List<OSTC>(),
-                Filter = string.Empty
-            };
-        }
-
         public static IEnumerable<OSTC> GetList(DataContext dataContext, string filter)
         {
             return new OstcDataAccess(dataContext).GetList(filter);

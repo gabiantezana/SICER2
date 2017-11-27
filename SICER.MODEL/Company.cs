@@ -12,19 +12,18 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SapMoneda
+    public partial class Company
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SapMoneda()
+        public Company()
         {
-            this.Documento = new HashSet<Documento>();
+            this.Usuario = new HashSet<Usuario>();
         }
     
-        public string SapMonedaDocCurrCod { get; set; }
-        public string CurrName { get; set; }
-        public string Locked { get; set; }
+        public int CompanyId { get; set; }
+        public string DbName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Documento> Documento { get; set; }
+        public virtual ICollection<Usuario> Usuario { get; set; }
     }
 }

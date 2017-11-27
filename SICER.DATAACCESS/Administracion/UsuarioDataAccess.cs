@@ -20,6 +20,28 @@ namespace SICER.DATAACCESS.Administracion
         private IQueryable<Usuario> QueryUsuarios(string filtro, int? usuarioId = null)
         {
             var query = DataContext.Context.Usuario.AsQueryable();
+
+            switch (DataContext.Session.GetRol())
+            {
+                case AppRol.SUPERADMIN:
+                    break;
+                case AppRol.SISTEMAS:
+                    query = query.Where(x => x.Rol.Codigo == AppRol.ADMIN.ToString());
+                    break;
+                case AppRol.ADMIN:
+                case AppRol.GESTORDOCUMENTOS:
+                    var companyId = DataContext.Session.GetCompanyId();
+                    //query = query.Where(x=> x.Rol.Codigo != AppRol.)
+                    query = query.Where(x => x.CompanyId == companyId);
+
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+
+
+
             if (usuarioId.HasValue)
                 query = query.Where(x => x.UsuarioId == usuarioId);
 
@@ -31,10 +53,18 @@ namespace SICER.DATAACCESS.Administracion
                                 || x.UserName.ToLower().Contains(token)
                                 || x.Documento.Contains(filtro)
                                 || x.Correo.Contains(filtro)
-                                || x.SapBusinessPartner.CardName.Contains(filtro)
-                                || x.SapBusinessPartner.SapBusinessPartnerCardCode.Contains(filtro)
                     ));
             }
+
+
+            //-----------------------Remove super admin from list-----------------------
+            if (DataContext.Session.GetRol() != AppRol.SUPERADMIN)
+                query = query.Where(x => x.RolId != (int)AppRol.SUPERADMIN);
+
+            //-----------------------Remove current user from list/-----------------------
+            var currentUserId = DataContext.Session.GetIdUsuario();
+            query = query.Where(x => x.UsuarioId != currentUserId);
+
             return query;
         }
 
@@ -66,6 +96,7 @@ namespace SICER.DATAACCESS.Administracion
                     var byteArrayPassword = EncryptionHelper.EncryptTextToMemory(ConstantHelper.PASSWORD_DEFAULT,
                         ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);
                     usuario.Password = byteArrayPassword;
+                    usuario.CompanyId = model.CompanyId;
                 }
 
                 usuario.UserName = model.UserName;

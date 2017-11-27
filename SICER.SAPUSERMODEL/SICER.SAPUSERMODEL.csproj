@@ -52,6 +52,7 @@
     <Compile Include="Tables\OCRN.cs" />
     <Compile Include="Tables\OICD.cs" />
     <Compile Include="Tables\OOCR.cs" />
+    <Compile Include="Tables\OSTC.cs" />
     <Compile Include="Tables\ORTT.cs" />
     <Compile Include="UserModel.cs" />
     <Compile Include="AttributesModel.cs" />

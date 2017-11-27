@@ -12,11 +12,10 @@ namespace SICER.MODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SapTipoCambio
+    public partial class UsuarioDocumento
     {
-        public int SapTipoCambioId { get; set; }
-        public Nullable<System.DateTime> RateDate { get; set; }
-        public string Currency { get; set; }
-        public Nullable<decimal> Rate { get; set; }
+        public int UsuarioDocumentoId { get; set; }
+        public int UsuarioId { get; set; }
+        public int DocumentoId { get; set; }
     }
 }

@@ -31,6 +31,14 @@
                     @Html.CheckBoxFor(x => Model.Estado, new { @data_plugin = "switchery" })
                 </div>
             </div>
+            @if (Session.GetRol() == AppRol.SISTEMAS)
+            {
+                <div class="form-group col-md-6 col-sm-12">
+                    @Html.LabelFor(x => Model.CompanyId, new { @class = "form-label " })
+                    @Html.DropDownListFor(x => Model.CompanyId, new SelectList(Model.CompanyJList, "id", "text", 0), new { @class = "form-control form-group-margin select-rol", @data_plugin = "select2", @data_isedit = isEdit })
+                    @Html.ValidationMessageFor(x => Model.CompanyId)
+                </div>
+            }
             @Html.EditorFor(x => Model.UserName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Nombres, new { htmlAttributes = new { @class = "form-control" } })
             @Html.EditorFor(x => Model.Apellidos, new { htmlAttributes = new { @class = "form-control" } })
@@ -52,16 +60,23 @@
                 @Html.DropDownListFor(x => Model.RolId, new SelectList(Model.RolJList, "id", "text", 0), new { @class = "form-control form-group-margin select-rol", @data_plugin = "select2", @data_isedit = isEdit })
                 @Html.ValidationMessageFor(x => Model.RolId)
             </div>
-            <div class="form-group col-md-6 col-sm-12">
-                @Html.LabelFor(x => Model.AreaId, new { @class = "form-label " })
-                @Html.DropDownListFor(x => Model.AreaId, new SelectList(Model.AreaJList, "id", "text", 0), new { @class = "form-control form-group-margin select-rol", @data_plugin = "select2", @data_isedit = isEdit })
-                @Html.ValidationMessageFor(x => Model.AreaId)
-            </div>
-            <div class="form-group col-md-6 col-sm-12">
-                @Html.LabelFor(x => Model.SapBusinessPartnerCardCode, new { @class = "form-label " })
-                @Html.DropDownListFor(x => Model.SapBusinessPartnerCardCode, new SelectList(Model.SapBusinessPartnerJList, "id", "text"), new { @class = "form-control form-group-margin ", @data_plugin = "select2", @data_isedit = string.IsNullOrEmpty(Model.SapBusinessPartnerCardCode) } )
-                @Html.ValidationMessageFor(x => Model.SapBusinessPartnerCardCode)
-            </div>
+
+            @if (Session.GetRol() != AppRol.SISTEMAS & Session.GetRol() != AppRol.SUPERADMIN)
+            {
+                @Html.HiddenFor(x=> Model.CompanyId)   
+                <div class="form-group col-md-6 col-sm-12">
+                    @Html.LabelFor(x => Model.AreaId, new {@class = "form-label "})
+                    @Html.DropDownListFor(x => Model.AreaId, new SelectList(Model.AreaJList, "id", "text", 0), new {@class = "form-control form-group-margin", @data_plugin = "select2", @data_isedit = isEdit})
+                    @Html.ValidationMessageFor(x => Model.AreaId)
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    @Html.LabelFor(x => Model.SapBusinessPartnerCardCode, new {@class = "form-label "})
+                    @Html.DropDownListFor(x => Model.SapBusinessPartnerCardCode, new SelectList(Model.SapBusinessPartnerJList, "id", "text"), new {@class = "form-control form-group-margin ", @data_plugin = "select2", @data_isedit = string.IsNullOrEmpty(Model.SapBusinessPartnerCardCode)})
+                    @Html.ValidationMessageFor(x => Model.SapBusinessPartnerCardCode)
+                </div>
+            }
+          
+
         </div>
     </div>
 
@@ -97,10 +112,10 @@
                             foreach (var nivelAprobacion in new SICEREntities().NivelAprobacion.Where(x => x.TipoDocumento.Codigo == item))
                             {
                                 var nivelAprobacionUsuario = Model.NivelAprobacionIdList.ToList().FirstOrDefault(x => x == nivelAprobacion.NivelAprobacionId);
-                                    <div class="checkbox-custom checkbox-primary col-lg-offset-1 ">
-                                        <input type="checkbox" id="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId" name="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId" @(nivelAprobacionUsuario == 0? string.Empty : "checked") />
-                                        <label for="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId">&nbsp; @nivelAprobacion.Descripcion</label>
-                                    </div>
+                                <div class="checkbox-custom checkbox-primary col-lg-offset-1 ">
+                                    <input type="checkbox" id="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId" name="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId" @(nivelAprobacionUsuario == 0 ? string.Empty : "checked") />
+                                    <label for="chkNivelAprobacion-@nivelAprobacion.NivelAprobacionId">&nbsp; @nivelAprobacion.Descripcion</label>
+                                </div>
                             }
                         }
                     }
@@ -121,7 +136,7 @@
     <script>
         $(".select-rol").change(function() {
             if (this.value == '@((int)AppRol.GESTORDOCUMENTOS)') {
-                
+
                 $(".panel-subroles").slideDown();
             }
             else

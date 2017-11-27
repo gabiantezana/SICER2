@@ -22,7 +22,11 @@ namespace SICER.Controllers
 
         public ActionResult Login()
         {
-            return View();
+            var model = new LoginViewModel()
+            {
+                CompanyJList = CompanyLogic.GetJList(GetDataContext(), null)
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -43,6 +47,20 @@ namespace SICER.Controllers
                 Usuario usuario = GetDataContext().Context.Usuario.Include(x => x.Rol.VistaRol.Select(y => y.Vista)).FirstOrDefault(x => x.UserName == model.Codigo);
                 if (usuario != null)
                 {
+                    if (usuario.Rol.Codigo != AppRol.SUPERADMIN.ToString()
+                       && usuario.Rol.Codigo != AppRol.SISTEMAS.ToString()
+                       )
+                    {
+                        usuario = GetDataContext().Context.Usuario.Include(x => x.Rol.VistaRol.Select(y => y.Vista))
+                            .FirstOrDefault(x => x.UserName == model.Codigo && x.CompanyId == model.CompanyId);
+                        if (usuario == null)
+                        {
+                            PostMessage(MessageType.Error, "Su usuario no tiene permiso para esta compañía.");
+                            return RedirectToAction(nameof(this.Login));
+                        }
+
+                    }
+
                     var byteArrayPassword = EncryptionHelper.EncryptTextToMemory(model.Password, ConstantHelper.ENCRIPT_KEY, ConstantHelper.ENCRIPT_METHOD);
                     if (!byteArrayPassword.SequenceEqual(usuario.Password))
                     {
@@ -58,6 +76,8 @@ namespace SICER.Controllers
                     Session.Set(SessionKey.NombresUsuario, usuario.Nombres + " " + usuario.Apellidos);
                     Session.Set(SessionKey.UserName, usuario.UserName);
                     Session.Set(SessionKey.UsuarioId, usuario.UsuarioId);
+                    Session.Set(SessionKey.CompanyName, usuario.Company?.DbName);
+                    Session.Set(SessionKey.CompanyId, usuario.CompanyId);
 
                     if (usuario.Rol.Codigo == ConstantHelper.CODIGOROLSUPERADMINISTRADOR)
                     {

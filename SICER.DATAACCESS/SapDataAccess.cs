@@ -8,7 +8,6 @@ using SAPADDON.HELPER;
 using SAPbobsCOM;
 using SICER.EXCEPTION;
 using SICER.HELPER;
-using SICER.MODEL;
 
 namespace SICER.DATAACCESS
 {

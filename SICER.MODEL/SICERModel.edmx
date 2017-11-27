@@ -20,6 +20,13 @@
           <Property Name="AreaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DbName" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="CONFIG">
           <Key>
             <PropertyRef Name="Id" />
@@ -67,7 +74,7 @@
           <Property Name="CreacionUsuarioid" Type="int" Nullable="false" />
           <Property Name="ModificacionFecha" Type="datetime" />
           <Property Name="ModificacionUsuarioid" Type="int" />
-          <Property Name="OstcCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="SapOstcCode" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="DocumentoEstadosAuditoria">
           <Key>
@@ -101,45 +108,6 @@
           <Property Name="Codigo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="Invoice">
-          <Key>
-            <PropertyRef Name="InvoiceId" />
-          </Key>
-          <Property Name="InvoiceId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DocEntry" Type="int" />
-          <Property Name="CardCode" Type="nvarchar(max)" />
-          <Property Name="Indicator" Type="nvarchar(max)" />
-          <Property Name="ControlAccount" Type="nvarchar(max)" />
-          <Property Name="Series" Type="int" />
-          <Property Name="DocType" Type="int" />
-          <Property Name="DocCurrency" Type="nvarchar(max)" />
-          <Property Name="JOurnalMemo" Type="nvarchar(max)" />
-          <Property Name="Comments" Type="nvarchar(max)" />
-          <Property Name="PaymentMethod" Type="nvarchar(max)" />
-          <Property Name="NumAtCard" Type="nvarchar(max)" />
-          <Property Name="FolioPrefixString" Type="nvarchar(max)" />
-          <Property Name="FolioNumber" Type="int" />
-          <Property Name="DocDate" Type="datetime" />
-          <Property Name="DocDueDate" Type="datetime" />
-          <Property Name="TaxDate" Type="datetime" />
-          <Property Name="DocSubType" Type="int" />
-        </EntityType>
-        <EntityType Name="InvoiceLine">
-          <Key>
-            <PropertyRef Name="InvoiceLineId" />
-          </Key>
-          <Property Name="InvoiceLineId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InvoiceId" Type="int" Nullable="false" />
-          <Property Name="AccountCode" Type="nvarchar(max)" />
-          <Property Name="TaxCode" Type="nvarchar(max)" />
-          <Property Name="LineTotal" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="CostingCode" Type="nvarchar(max)" />
-          <Property Name="CostingCode2" Type="nvarchar(max)" />
-          <Property Name="CostingCode3" Type="nvarchar(max)" />
-          <Property Name="CostingCode4" Type="nvarchar(max)" />
-          <Property Name="CostingCode5" Type="nvarchar(max)" />
-          <Property Name="ItemDescription" Type="nvarchar(max)" />
-        </EntityType>
         <EntityType Name="NivelAprobacion">
           <Key>
             <PropertyRef Name="NivelAprobacionId" />
@@ -149,31 +117,6 @@
           <Property Name="NumeroNivel" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="OSTC">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
-        </EntityType>
-        <EntityType Name="Payment">
-          <Key>
-            <PropertyRef Name="PaymentId" />
-          </Key>
-          <Property Name="PaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="InvoiceId" Type="int" Nullable="false" />
-          <Property Name="CardCode" Type="nvarchar(max)" />
-          <Property Name="DocDate" Type="datetime" />
-          <Property Name="TaxDate" Type="datetime" />
-          <Property Name="DueDate" Type="datetime" />
-          <Property Name="TransferDate" Type="datetime" />
-          <Property Name="DocCurrency" Type="nvarchar(max)" />
-          <Property Name="CounterReference" Type="nvarchar(max)" />
-          <Property Name="TransferAccount" Type="nvarchar(max)" />
-          <Property Name="Remarks" Type="nvarchar(max)" />
-          <Property Name="JournalRemarks" Type="nvarchar(max)" />
-        </EntityType>
         <EntityType Name="Rol">
           <Key>
             <PropertyRef Name="RolId" />
@@ -182,70 +125,6 @@
           <Property Name="Codigo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
           <Property Name="nivel" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SapBusinessPartner">
-          <Key>
-            <PropertyRef Name="SapBusinessPartnerCardCode" />
-          </Key>
-          <Property Name="SapBusinessPartnerCardCode" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CardName" Type="nvarchar(max)" />
-          <Property Name="CardType" Type="nvarchar(max)" />
-          <Property Name="LictradNum" Type="nvarchar(max)" />
-          <Property Name="validFor" Type="nvarchar(max)" />
-          <Property Name="CardCode" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="SapCentroCosto">
-          <Key>
-            <PropertyRef Name="SapCentroCostoOcrCode" />
-          </Key>
-          <Property Name="SapCentroCostoOcrCode" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="OcrCode" Type="nvarchar(max)" />
-          <Property Name="OcrName" Type="nvarchar(max)" />
-          <Property Name="DimCode" Type="int" />
-          <Property Name="Locked" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="SapConcepto">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="U_MSS_DSC" Type="nvarchar(max)" />
-          <Property Name="U_MSS_ACC" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="SapCuentaContable">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-          <Property Name="U_MSS_DSC" Type="nvarchar(max)" />
-          <Property Name="U_MSS_IBA" Type="nvarchar(max)" />
-          <Property Name="U_MSS_ACC" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="SapIndicators">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="SapMoneda">
-          <Key>
-            <PropertyRef Name="SapMonedaDocCurrCod" />
-          </Key>
-          <Property Name="SapMonedaDocCurrCod" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="CurrName" Type="nvarchar(max)" />
-          <Property Name="Locked" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="SapTipoCambio">
-          <Key>
-            <PropertyRef Name="SapTipoCambioId" />
-          </Key>
-          <Property Name="SapTipoCambioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="RateDate" Type="date" />
-          <Property Name="Currency" Type="nvarchar(max)" />
-          <Property Name="Rate" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -281,7 +160,16 @@
           <Property Name="Password" Type="varbinary(max)" Nullable="false" />
           <Property Name="RolId" Type="int" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="nvarchar" MaxLength="128" />
-          <Property Name="AreaId" Type="int" Nullable="false" />
+          <Property Name="AreaId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+        </EntityType>
+        <EntityType Name="UsuarioDocumento">
+          <Key>
+            <PropertyRef Name="UsuarioDocumentoId" />
+          </Key>
+          <Property Name="UsuarioDocumentoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="DocumentoId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="UsuarioNivelAprobacion">
           <Key>
@@ -344,66 +232,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___1Sap__7FEAFD3E">
-          <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="_1SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___2Sap__00DF2177">
-          <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="_2SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___3Sap__01D345B0">
-          <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="_3SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___4Sap__02C769E9">
-          <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="_4SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___5Sap__03BB8E22">
-          <End Role="SapCentroCosto" Type="Self.SapCentroCosto" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="_5SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Documento__Apert__7A3223E8">
           <End Role="Documento" Type="Self.Documento" Multiplicity="0..1" />
           <End Role="Documento1" Type="Self.Documento" Multiplicity="*" />
@@ -413,18 +241,6 @@
             </Principal>
             <Dependent Role="Documento1">
               <PropertyRef Name="AperturaDocumentoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__Asoci__04AFB25B">
-          <End Role="SapCuentaContable" Type="Self.SapCuentaContable" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCuentaContable">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="AsociadaSapCuentaContableCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -464,18 +280,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Gasto__05A3D694">
-          <End Role="SapCuentaContable" Type="Self.SapCuentaContable" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCuentaContable">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="GastoSapCuentaContableCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Documento__Modif__0880433F">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
@@ -485,54 +289,6 @@
             </Principal>
             <Dependent Role="Documento">
               <PropertyRef Name="ModificacionUsuarioid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__SapBu__7EF6D905">
-          <End Role="SapBusinessPartner" Type="Self.SapBusinessPartner" Multiplicity="1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapBusinessPartner">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__SapCo__0697FACD">
-          <End Role="SapConcepto" Type="Self.SapConcepto" Multiplicity="0..1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapConcepto">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapConceptoCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__SapIn__7D0E9093">
-          <End Role="SapIndicators" Type="Self.SapIndicators" Multiplicity="1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapIndicators">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapIndicatorCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__SapMo__7E02B4CC">
-          <End Role="SapMoneda" Type="Self.SapMoneda" Multiplicity="1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapMoneda">
-              <PropertyRef Name="SapMonedaDocCurrCod" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapMonedaDocCurrCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -560,18 +316,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__InvoiceLi__Invoi__6166761E">
-          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
-          <End Role="InvoiceLine" Type="Self.InvoiceLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="InvoiceId" />
-            </Principal>
-            <Dependent Role="InvoiceLine">
-              <PropertyRef Name="InvoiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__NivelApro__TipoD__1BC821DD">
           <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
           <End Role="NivelAprobacion" Type="Self.NivelAprobacion" Multiplicity="*" />
@@ -584,18 +328,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Payment__Invoice__6442E2C9">
-          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
-          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="InvoiceId" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="InvoiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Usuario__RolId__44FF419A">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -605,18 +337,6 @@
             </Principal>
             <Dependent Role="Usuario">
               <PropertyRef Name="RolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Usuario__SapBusi__45F365D3">
-          <End Role="SapBusinessPartner" Type="Self.SapBusinessPartner" Multiplicity="0..1" />
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapBusinessPartner">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -716,42 +436,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Documento_OSTC">
-          <End Role="OSTC" Type="Self.OSTC" Multiplicity="1" />
-          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+        <Association Name="FK_Usuario_Companies">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="OSTC">
-              <PropertyRef Name="Code" />
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
             </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="OstcCode" />
+            <Dependent Role="Usuario">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SICERModelStoreContainer">
           <EntitySet Name="AprobacionDocumento" EntityType="Self.AprobacionDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONFIG" EntityType="Self.CONFIG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Documento" EntityType="Self.Documento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentoEstadosAuditoria" EntityType="Self.DocumentoEstadosAuditoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Excepcion" EntityType="Self.Excepcion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GrupoVista" EntityType="Self.GrupoVista" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="InvoiceLine" EntityType="Self.InvoiceLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NivelAprobacion" EntityType="Self.NivelAprobacion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="OSTC" EntityType="Self.OSTC" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SapBusinessPartner" EntityType="Self.SapBusinessPartner" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SapCentroCosto" EntityType="Self.SapCentroCosto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SapConcepto" EntityType="Self.SapConcepto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SapCuentaContable" EntityType="Self.SapCuentaContable" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SapIndicators" EntityType="Self.SapIndicators" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SapMoneda" EntityType="Self.SapMoneda" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SapTipoCambio" EntityType="Self.SapTipoCambio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsuarioDocumento" EntityType="Self.UsuarioDocumento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioNivelAprobacion" EntityType="Self.UsuarioNivelAprobacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UsuarioRoles" EntityType="Self.UsuarioRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vista" EntityType="Self.Vista" Schema="dbo" store:Type="Tables" />
@@ -764,33 +475,9 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AprobacionDocumento" EntitySet="AprobacionDocumento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___1Sap__7FEAFD3E" Association="Self.FK__Documento___1Sap__7FEAFD3E">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___2Sap__00DF2177" Association="Self.FK__Documento___2Sap__00DF2177">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___3Sap__01D345B0" Association="Self.FK__Documento___3Sap__01D345B0">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___4Sap__02C769E9" Association="Self.FK__Documento___4Sap__02C769E9">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___5Sap__03BB8E22" Association="Self.FK__Documento___5Sap__03BB8E22">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
           <AssociationSet Name="FK__Documento__Apert__7A3223E8" Association="Self.FK__Documento__Apert__7A3223E8">
             <End Role="Documento" EntitySet="Documento" />
             <End Role="Documento1" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__Asoci__04AFB25B" Association="Self.FK__Documento__Asoci__04AFB25B">
-            <End Role="SapCuentaContable" EntitySet="SapCuentaContable" />
-            <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
           <AssociationSet Name="FK__Documento__Creac__078C1F06" Association="Self.FK__Documento__Creac__078C1F06">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -804,28 +491,8 @@
             <End Role="Documento" EntitySet="Documento" />
             <End Role="Documento1" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Gasto__05A3D694" Association="Self.FK__Documento__Gasto__05A3D694">
-            <End Role="SapCuentaContable" EntitySet="SapCuentaContable" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
           <AssociationSet Name="FK__Documento__Modif__0880433F" Association="Self.FK__Documento__Modif__0880433F">
             <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapBu__7EF6D905" Association="Self.FK__Documento__SapBu__7EF6D905">
-            <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapCo__0697FACD" Association="Self.FK__Documento__SapCo__0697FACD">
-            <End Role="SapConcepto" EntitySet="SapConcepto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapIn__7D0E9093" Association="Self.FK__Documento__SapIn__7D0E9093">
-            <End Role="SapIndicators" EntitySet="SapIndicators" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapMo__7E02B4CC" Association="Self.FK__Documento__SapMo__7E02B4CC">
-            <End Role="SapMoneda" EntitySet="SapMoneda" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
           <AssociationSet Name="FK__Documento__TipoD__7C1A6C5A" Association="Self.FK__Documento__TipoD__7C1A6C5A">
@@ -836,24 +503,12 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoEstadosAuditoria" EntitySet="DocumentoEstadosAuditoria" />
           </AssociationSet>
-          <AssociationSet Name="FK__InvoiceLi__Invoi__6166761E" Association="Self.FK__InvoiceLi__Invoi__6166761E">
-            <End Role="Invoice" EntitySet="Invoice" />
-            <End Role="InvoiceLine" EntitySet="InvoiceLine" />
-          </AssociationSet>
           <AssociationSet Name="FK__NivelApro__TipoD__1BC821DD" Association="Self.FK__NivelApro__TipoD__1BC821DD">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
             <End Role="NivelAprobacion" EntitySet="NivelAprobacion" />
           </AssociationSet>
-          <AssociationSet Name="FK__Payment__Invoice__6442E2C9" Association="Self.FK__Payment__Invoice__6442E2C9">
-            <End Role="Invoice" EntitySet="Invoice" />
-            <End Role="Payment" EntitySet="Payment" />
-          </AssociationSet>
           <AssociationSet Name="FK__Usuario__RolId__44FF419A" Association="Self.FK__Usuario__RolId__44FF419A">
             <End Role="Rol" EntitySet="Rol" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Usuario__SapBusi__45F365D3" Association="Self.FK__Usuario__SapBusi__45F365D3">
-            <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
             <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioNi__Nivel__1EA48E88" Association="Self.FK__UsuarioNi__Nivel__1EA48E88">
@@ -888,9 +543,9 @@
             <End Role="Vista" EntitySet="Vista" />
             <End Role="VistaRol" EntitySet="VistaRol" />
           </AssociationSet>
-          <AssociationSet Name="FK_Documento_OSTC" Association="Self.FK_Documento_OSTC">
-            <End Role="OSTC" EntitySet="OSTC" />
-            <End Role="Documento" EntitySet="Documento" />
+          <AssociationSet Name="FK_Usuario_Companies" Association="Self.FK_Usuario_Companies">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -901,27 +556,18 @@
           <FunctionImport Name="SP_SAPProveedor" ReturnType="Collection(SICERModel.SP_SAPProveedor_Result)" />
           <EntitySet Name="AprobacionDocumento" EntityType="SICERModel.AprobacionDocumento" />
           <EntitySet Name="Area" EntityType="SICERModel.Area" />
+          <EntitySet Name="Company" EntityType="SICERModel.Company" />
           <EntitySet Name="CONFIG" EntityType="SICERModel.CONFIG" />
           <EntitySet Name="Documento" EntityType="SICERModel.Documento" />
           <EntitySet Name="DocumentoEstadosAuditoria" EntityType="SICERModel.DocumentoEstadosAuditoria" />
           <EntitySet Name="Excepcion" EntityType="SICERModel.Excepcion" />
           <EntitySet Name="GrupoVista" EntityType="SICERModel.GrupoVista" />
-          <EntitySet Name="Invoice" EntityType="SICERModel.Invoice" />
-          <EntitySet Name="InvoiceLine" EntityType="SICERModel.InvoiceLine" />
           <EntitySet Name="NivelAprobacion" EntityType="SICERModel.NivelAprobacion" />
-          <EntitySet Name="OSTC" EntityType="SICERModel.OSTC" />
-          <EntitySet Name="Payment" EntityType="SICERModel.Payment" />
           <EntitySet Name="Rol" EntityType="SICERModel.Rol" />
-          <EntitySet Name="SapBusinessPartner" EntityType="SICERModel.SapBusinessPartner" />
-          <EntitySet Name="SapCentroCosto" EntityType="SICERModel.SapCentroCosto" />
-          <EntitySet Name="SapConcepto" EntityType="SICERModel.SapConcepto" />
-          <EntitySet Name="SapCuentaContable" EntityType="SICERModel.SapCuentaContable" />
-          <EntitySet Name="SapIndicators" EntityType="SICERModel.SapIndicators" />
-          <EntitySet Name="SapMoneda" EntityType="SICERModel.SapMoneda" />
-          <EntitySet Name="SapTipoCambio" EntityType="SICERModel.SapTipoCambio" />
           <EntitySet Name="sysdiagrams" EntityType="SICERModel.sysdiagrams" />
           <EntitySet Name="TipoDocumento" EntityType="SICERModel.TipoDocumento" />
           <EntitySet Name="Usuario" EntityType="SICERModel.Usuario" />
+          <EntitySet Name="UsuarioDocumento" EntityType="SICERModel.UsuarioDocumento" />
           <EntitySet Name="UsuarioNivelAprobacion" EntityType="SICERModel.UsuarioNivelAprobacion" />
           <EntitySet Name="UsuarioRoles" EntityType="SICERModel.UsuarioRoles" />
           <EntitySet Name="Vista" EntityType="SICERModel.Vista" />
@@ -934,33 +580,13 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="AprobacionDocumento" EntitySet="AprobacionDocumento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento___1Sap__7FEAFD3E" Association="SICERModel.FK__Documento___1Sap__7FEAFD3E">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___2Sap__00DF2177" Association="SICERModel.FK__Documento___2Sap__00DF2177">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___3Sap__01D345B0" Association="SICERModel.FK__Documento___3Sap__01D345B0">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___4Sap__02C769E9" Association="SICERModel.FK__Documento___4Sap__02C769E9">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento___5Sap__03BB8E22" Association="SICERModel.FK__Documento___5Sap__03BB8E22">
-            <End Role="SapCentroCosto" EntitySet="SapCentroCosto" />
-            <End Role="Documento" EntitySet="Documento" />
+          <AssociationSet Name="FK_Usuario_Companies" Association="SICERModel.FK_Usuario_Companies">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK__Documento__Apert__7A3223E8" Association="SICERModel.FK__Documento__Apert__7A3223E8">
             <End Role="Documento" EntitySet="Documento" />
             <End Role="Documento1" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__Asoci__04AFB25B" Association="SICERModel.FK__Documento__Asoci__04AFB25B">
-            <End Role="SapCuentaContable" EntitySet="SapCuentaContable" />
-            <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
           <AssociationSet Name="FK__Documento__Creac__078C1F06" Association="SICERModel.FK__Documento__Creac__078C1F06">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -974,36 +600,12 @@
             <End Role="Documento" EntitySet="Documento" />
             <End Role="Documento1" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__Gasto__05A3D694" Association="SICERModel.FK__Documento__Gasto__05A3D694">
-            <End Role="SapCuentaContable" EntitySet="SapCuentaContable" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
           <AssociationSet Name="FK__Documento__Modif__0880433F" Association="SICERModel.FK__Documento__Modif__0880433F">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapBu__7EF6D905" Association="SICERModel.FK__Documento__SapBu__7EF6D905">
-            <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapCo__0697FACD" Association="SICERModel.FK__Documento__SapCo__0697FACD">
-            <End Role="SapConcepto" EntitySet="SapConcepto" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapIn__7D0E9093" Association="SICERModel.FK__Documento__SapIn__7D0E9093">
-            <End Role="SapIndicators" EntitySet="SapIndicators" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Documento__SapMo__7E02B4CC" Association="SICERModel.FK__Documento__SapMo__7E02B4CC">
-            <End Role="SapMoneda" EntitySet="SapMoneda" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
           <AssociationSet Name="FK__Documento__TipoD__7C1A6C5A" Association="SICERModel.FK__Documento__TipoD__7C1A6C5A">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
-            <End Role="Documento" EntitySet="Documento" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Documento_OSTC" Association="SICERModel.FK_Documento_OSTC">
-            <End Role="OSTC" EntitySet="OSTC" />
             <End Role="Documento" EntitySet="Documento" />
           </AssociationSet>
           <AssociationSet Name="FK__Documento__Usuar__69C6B1F5" Association="SICERModel.FK__Documento__Usuar__69C6B1F5">
@@ -1013,14 +615,6 @@
           <AssociationSet Name="FK__Vista__GrupoVist__4BAC3F29" Association="SICERModel.FK__Vista__GrupoVist__4BAC3F29">
             <End Role="GrupoVista" EntitySet="GrupoVista" />
             <End Role="Vista" EntitySet="Vista" />
-          </AssociationSet>
-          <AssociationSet Name="FK__InvoiceLi__Invoi__6166761E" Association="SICERModel.FK__InvoiceLi__Invoi__6166761E">
-            <End Role="Invoice" EntitySet="Invoice" />
-            <End Role="InvoiceLine" EntitySet="InvoiceLine" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Payment__Invoice__6442E2C9" Association="SICERModel.FK__Payment__Invoice__6442E2C9">
-            <End Role="Invoice" EntitySet="Invoice" />
-            <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
           <AssociationSet Name="FK__NivelApro__TipoD__1BC821DD" Association="SICERModel.FK__NivelApro__TipoD__1BC821DD">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
@@ -1041,10 +635,6 @@
           <AssociationSet Name="FK__VistaRol__RolId__4CA06362" Association="SICERModel.FK__VistaRol__RolId__4CA06362">
             <End Role="Rol" EntitySet="Rol" />
             <End Role="VistaRol" EntitySet="VistaRol" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Usuario__SapBusi__45F365D3" Association="SICERModel.FK__Usuario__SapBusi__45F365D3">
-            <End Role="SapBusinessPartner" EntitySet="SapBusinessPartner" />
-            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK__UsuarioNi__Usuar__1F98B2C1" Association="SICERModel.FK__UsuarioNi__Usuar__1F98B2C1">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -1085,6 +675,14 @@
           </Key>
           <Property Name="AreaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DbName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK_Usuario_Companies" FromRole="Company" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="CONFIG">
           <Key>
@@ -1133,27 +731,15 @@
           <Property Name="CreacionUsuarioid" Type="Int32" Nullable="false" />
           <Property Name="ModificacionFecha" Type="DateTime" Precision="3" />
           <Property Name="ModificacionUsuarioid" Type="Int32" />
-          <Property Name="OstcCode" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SapCentroCosto" Relationship="SICERModel.FK__Documento___1Sap__7FEAFD3E" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto1" Relationship="SICERModel.FK__Documento___2Sap__00DF2177" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto2" Relationship="SICERModel.FK__Documento___3Sap__01D345B0" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto3" Relationship="SICERModel.FK__Documento___4Sap__02C769E9" FromRole="Documento" ToRole="SapCentroCosto" />
-          <NavigationProperty Name="SapCentroCosto4" Relationship="SICERModel.FK__Documento___5Sap__03BB8E22" FromRole="Documento" ToRole="SapCentroCosto" />
+          <Property Name="SapOstcCode" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento__Apert__7A3223E8" FromRole="Documento" ToRole="Documento1" />
           <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento__Apert__7A3223E8" FromRole="Documento1" ToRole="Documento" />
-          <NavigationProperty Name="SapCuentaContable" Relationship="SICERModel.FK__Documento__Asoci__04AFB25B" FromRole="Documento" ToRole="SapCuentaContable" />
           <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Documento__Creac__078C1F06" FromRole="Documento" ToRole="Usuario" />
           <NavigationProperty Name="DocumentoEstadosAuditoria" Relationship="SICERModel.FK__Documento__Docum__68D28DBC" FromRole="Documento" ToRole="DocumentoEstadosAuditoria" />
           <NavigationProperty Name="Documento11" Relationship="SICERModel.FK__Documento__Entre__7B264821" FromRole="Documento" ToRole="Documento1" />
           <NavigationProperty Name="Documento3" Relationship="SICERModel.FK__Documento__Entre__7B264821" FromRole="Documento1" ToRole="Documento" />
-          <NavigationProperty Name="SapCuentaContable1" Relationship="SICERModel.FK__Documento__Gasto__05A3D694" FromRole="Documento" ToRole="SapCuentaContable" />
           <NavigationProperty Name="Usuario1" Relationship="SICERModel.FK__Documento__Modif__0880433F" FromRole="Documento" ToRole="Usuario" />
-          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Documento__SapBu__7EF6D905" FromRole="Documento" ToRole="SapBusinessPartner" />
-          <NavigationProperty Name="SapConcepto" Relationship="SICERModel.FK__Documento__SapCo__0697FACD" FromRole="Documento" ToRole="SapConcepto" />
-          <NavigationProperty Name="SapIndicators" Relationship="SICERModel.FK__Documento__SapIn__7D0E9093" FromRole="Documento" ToRole="SapIndicators" />
-          <NavigationProperty Name="SapMoneda" Relationship="SICERModel.FK__Documento__SapMo__7E02B4CC" FromRole="Documento" ToRole="SapMoneda" />
           <NavigationProperty Name="TipoDocumento" Relationship="SICERModel.FK__Documento__TipoD__7C1A6C5A" FromRole="Documento" ToRole="TipoDocumento" />
-          <NavigationProperty Name="OSTC" Relationship="SICERModel.FK_Documento_OSTC" FromRole="Documento" ToRole="OSTC" />
         </EntityType>
         <EntityType Name="DocumentoEstadosAuditoria">
           <Key>
@@ -1190,48 +776,6 @@
           <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Vista" Relationship="SICERModel.FK__Vista__GrupoVist__4BAC3F29" FromRole="GrupoVista" ToRole="Vista" />
         </EntityType>
-        <EntityType Name="Invoice">
-          <Key>
-            <PropertyRef Name="InvoiceId" />
-          </Key>
-          <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DocEntry" Type="Int32" />
-          <Property Name="CardCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Indicator" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ControlAccount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Series" Type="Int32" />
-          <Property Name="DocType" Type="Int32" />
-          <Property Name="DocCurrency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="JOurnalMemo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentMethod" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NumAtCard" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FolioPrefixString" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="FolioNumber" Type="Int32" />
-          <Property Name="DocDate" Type="DateTime" Precision="3" />
-          <Property Name="DocDueDate" Type="DateTime" Precision="3" />
-          <Property Name="TaxDate" Type="DateTime" Precision="3" />
-          <Property Name="DocSubType" Type="Int32" />
-          <NavigationProperty Name="InvoiceLine" Relationship="SICERModel.FK__InvoiceLi__Invoi__6166761E" FromRole="Invoice" ToRole="InvoiceLine" />
-          <NavigationProperty Name="Payment" Relationship="SICERModel.FK__Payment__Invoice__6442E2C9" FromRole="Invoice" ToRole="Payment" />
-        </EntityType>
-        <EntityType Name="InvoiceLine">
-          <Key>
-            <PropertyRef Name="InvoiceLineId" />
-          </Key>
-          <Property Name="InvoiceLineId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InvoiceId" Type="Int32" Nullable="false" />
-          <Property Name="AccountCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TaxCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LineTotal" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="CostingCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CostingCode2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CostingCode3" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CostingCode4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CostingCode5" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Invoice" Relationship="SICERModel.FK__InvoiceLi__Invoi__6166761E" FromRole="InvoiceLine" ToRole="Invoice" />
-        </EntityType>
         <EntityType Name="NivelAprobacion">
           <Key>
             <PropertyRef Name="NivelAprobacionId" />
@@ -1242,33 +786,6 @@
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="TipoDocumento" Relationship="SICERModel.FK__NivelApro__TipoD__1BC821DD" FromRole="NivelAprobacion" ToRole="TipoDocumento" />
           <NavigationProperty Name="UsuarioNivelAprobacion" Relationship="SICERModel.FK__UsuarioNi__Nivel__1EA48E88" FromRole="NivelAprobacion" ToRole="UsuarioNivelAprobacion" />
-        </EntityType>
-        <EntityType Name="OSTC">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK_Documento_OSTC" FromRole="OSTC" ToRole="Documento" />
-        </EntityType>
-        <EntityType Name="Payment">
-          <Key>
-            <PropertyRef Name="PaymentId" />
-          </Key>
-          <Property Name="PaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="InvoiceId" Type="Int32" Nullable="false" />
-          <Property Name="CardCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DocDate" Type="DateTime" Precision="3" />
-          <Property Name="TaxDate" Type="DateTime" Precision="3" />
-          <Property Name="DueDate" Type="DateTime" Precision="3" />
-          <Property Name="TransferDate" Type="DateTime" Precision="3" />
-          <Property Name="DocCurrency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CounterReference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TransferAccount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="JournalRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Invoice" Relationship="SICERModel.FK__Payment__Invoice__6442E2C9" FromRole="Payment" ToRole="Invoice" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -1281,82 +798,6 @@
           <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Usuario__RolId__44FF419A" FromRole="Rol" ToRole="Usuario" />
           <NavigationProperty Name="UsuarioRoles" Relationship="SICERModel.FK__UsuarioRo__RolId__47DBAE45" FromRole="Rol" ToRole="UsuarioRoles" />
           <NavigationProperty Name="VistaRol" Relationship="SICERModel.FK__VistaRol__RolId__4CA06362" FromRole="Rol" ToRole="VistaRol" />
-        </EntityType>
-        <EntityType Name="SapBusinessPartner">
-          <Key>
-            <PropertyRef Name="SapBusinessPartnerCardCode" />
-          </Key>
-          <Property Name="SapBusinessPartnerCardCode" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CardName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CardType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LictradNum" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="validFor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CardCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__SapBu__7EF6D905" FromRole="SapBusinessPartner" ToRole="Documento" />
-          <NavigationProperty Name="Usuario" Relationship="SICERModel.FK__Usuario__SapBusi__45F365D3" FromRole="SapBusinessPartner" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="SapCentroCosto">
-          <Key>
-            <PropertyRef Name="SapCentroCostoOcrCode" />
-          </Key>
-          <Property Name="SapCentroCostoOcrCode" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="OcrCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="OcrName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DimCode" Type="Int32" />
-          <Property Name="Locked" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento___1Sap__7FEAFD3E" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento___2Sap__00DF2177" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento___3Sap__01D345B0" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento3" Relationship="SICERModel.FK__Documento___4Sap__02C769E9" FromRole="SapCentroCosto" ToRole="Documento" />
-          <NavigationProperty Name="Documento4" Relationship="SICERModel.FK__Documento___5Sap__03BB8E22" FromRole="SapCentroCosto" ToRole="Documento" />
-        </EntityType>
-        <EntityType Name="SapConcepto">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_MSS_DSC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_MSS_ACC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__SapCo__0697FACD" FromRole="SapConcepto" ToRole="Documento" />
-        </EntityType>
-        <EntityType Name="SapCuentaContable">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_MSS_DSC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_MSS_IBA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="U_MSS_ACC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__Asoci__04AFB25B" FromRole="SapCuentaContable" ToRole="Documento" />
-          <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento__Gasto__05A3D694" FromRole="SapCuentaContable" ToRole="Documento" />
-        </EntityType>
-        <EntityType Name="SapIndicators">
-          <Key>
-            <PropertyRef Name="Code" />
-          </Key>
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__SapIn__7D0E9093" FromRole="SapIndicators" ToRole="Documento" />
-        </EntityType>
-        <EntityType Name="SapMoneda">
-          <Key>
-            <PropertyRef Name="SapMonedaDocCurrCod" />
-          </Key>
-          <Property Name="SapMonedaDocCurrCod" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CurrName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Locked" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Documento" Relationship="SICERModel.FK__Documento__SapMo__7E02B4CC" FromRole="SapMoneda" ToRole="Documento" />
-        </EntityType>
-        <EntityType Name="SapTipoCambio">
-          <Key>
-            <PropertyRef Name="SapTipoCambioId" />
-          </Key>
-          <Property Name="SapTipoCambioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RateDate" Type="DateTime" Precision="0" />
-          <Property Name="Currency" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Rate" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -1395,16 +836,25 @@
           <Property Name="Password" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="RolId" Type="Int32" Nullable="false" />
           <Property Name="SapBusinessPartnerCardCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="AreaId" Type="Int32" Nullable="false" />
+          <Property Name="AreaId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
           <NavigationProperty Name="AprobacionDocumento" Relationship="SICERModel.FK__Aprobacio__Usuar__31EC6D26" FromRole="Usuario" ToRole="AprobacionDocumento" />
+          <NavigationProperty Name="Company" Relationship="SICERModel.FK_Usuario_Companies" FromRole="Usuario" ToRole="Company" />
           <NavigationProperty Name="Documento1" Relationship="SICERModel.FK__Documento__Creac__078C1F06" FromRole="Usuario" ToRole="Documento" />
           <NavigationProperty Name="Documento2" Relationship="SICERModel.FK__Documento__Modif__0880433F" FromRole="Usuario" ToRole="Documento" />
           <NavigationProperty Name="DocumentoEstadosAuditoria" Relationship="SICERModel.FK__Documento__Usuar__69C6B1F5" FromRole="Usuario" ToRole="DocumentoEstadosAuditoria" />
           <NavigationProperty Name="Rol" Relationship="SICERModel.FK__Usuario__RolId__44FF419A" FromRole="Usuario" ToRole="Rol" />
-          <NavigationProperty Name="SapBusinessPartner" Relationship="SICERModel.FK__Usuario__SapBusi__45F365D3" FromRole="Usuario" ToRole="SapBusinessPartner" />
           <NavigationProperty Name="UsuarioNivelAprobacion" Relationship="SICERModel.FK__UsuarioNi__Usuar__1F98B2C1" FromRole="Usuario" ToRole="UsuarioNivelAprobacion" />
           <NavigationProperty Name="UsuarioRoles" Relationship="SICERModel.FK__UsuarioRo__Creac__46E78A0C" FromRole="Usuario" ToRole="UsuarioRoles" />
           <NavigationProperty Name="UsuarioRoles1" Relationship="SICERModel.FK__UsuarioRo__Usuar__48CFD27E" FromRole="Usuario" ToRole="UsuarioRoles" />
+        </EntityType>
+        <EntityType Name="UsuarioDocumento">
+          <Key>
+            <PropertyRef Name="UsuarioDocumentoId" />
+          </Key>
+          <Property Name="UsuarioDocumentoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="DocumentoId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="UsuarioNivelAprobacion">
           <Key>
@@ -1476,63 +926,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento___1Sap__7FEAFD3E">
-          <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
+        <Association Name="FK_Usuario_Companies">
+          <End Type="SICERModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyId" />
             </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="C_1SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___2Sap__00DF2177">
-          <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="C_2SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___3Sap__01D345B0">
-          <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="C_3SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___4Sap__02C769E9">
-          <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="C_4SapCentroCostoOcrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento___5Sap__03BB8E22">
-          <End Type="SICERModel.SapCentroCosto" Role="SapCentroCosto" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCentroCosto">
-              <PropertyRef Name="SapCentroCostoOcrCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="C_5SapCentroCostoOcrCode" />
+            <Dependent Role="Usuario">
+              <PropertyRef Name="CompanyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1545,18 +947,6 @@
             </Principal>
             <Dependent Role="Documento1">
               <PropertyRef Name="AperturaDocumentoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__Asoci__04AFB25B">
-          <End Type="SICERModel.SapCuentaContable" Role="SapCuentaContable" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCuentaContable">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="AsociadaSapCuentaContableCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1596,18 +986,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__Gasto__05A3D694">
-          <End Type="SICERModel.SapCuentaContable" Role="SapCuentaContable" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapCuentaContable">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="GastoSapCuentaContableCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Documento__Modif__0880433F">
           <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="0..1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
@@ -1620,54 +998,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Documento__SapBu__7EF6D905">
-          <End Type="SICERModel.SapBusinessPartner" Role="SapBusinessPartner" Multiplicity="1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapBusinessPartner">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__SapCo__0697FACD">
-          <End Type="SICERModel.SapConcepto" Role="SapConcepto" Multiplicity="0..1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapConcepto">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapConceptoCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__SapIn__7D0E9093">
-          <End Type="SICERModel.SapIndicators" Role="SapIndicators" Multiplicity="1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapIndicators">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapIndicatorCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Documento__SapMo__7E02B4CC">
-          <End Type="SICERModel.SapMoneda" Role="SapMoneda" Multiplicity="1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapMoneda">
-              <PropertyRef Name="SapMonedaDocCurrCod" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="SapMonedaDocCurrCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Documento__TipoD__7C1A6C5A">
           <End Type="SICERModel.TipoDocumento" Role="TipoDocumento" Multiplicity="1" />
           <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
@@ -1677,18 +1007,6 @@
             </Principal>
             <Dependent Role="Documento">
               <PropertyRef Name="TipoDocumentoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Documento_OSTC">
-          <End Type="SICERModel.OSTC" Role="OSTC" Multiplicity="1" />
-          <End Type="SICERModel.Documento" Role="Documento" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OSTC">
-              <PropertyRef Name="Code" />
-            </Principal>
-            <Dependent Role="Documento">
-              <PropertyRef Name="OstcCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1713,30 +1031,6 @@
             </Principal>
             <Dependent Role="Vista">
               <PropertyRef Name="GrupoVistaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__InvoiceLi__Invoi__6166761E">
-          <End Type="SICERModel.Invoice" Role="Invoice" Multiplicity="1" />
-          <End Type="SICERModel.InvoiceLine" Role="InvoiceLine" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="InvoiceId" />
-            </Principal>
-            <Dependent Role="InvoiceLine">
-              <PropertyRef Name="InvoiceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Payment__Invoice__6442E2C9">
-          <End Type="SICERModel.Invoice" Role="Invoice" Multiplicity="1" />
-          <End Type="SICERModel.Payment" Role="Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Invoice">
-              <PropertyRef Name="InvoiceId" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="InvoiceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1797,18 +1091,6 @@
             </Principal>
             <Dependent Role="VistaRol">
               <PropertyRef Name="RolId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Usuario__SapBusi__45F365D3">
-          <End Type="SICERModel.SapBusinessPartner" Role="SapBusinessPartner" Multiplicity="0..1" />
-          <End Type="SICERModel.Usuario" Role="Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SapBusinessPartner">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="SapBusinessPartnerCardCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1883,6 +1165,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Company">
+            <EntityTypeMapping TypeName="SICERModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="DbName" ColumnName="DbName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="CONFIG">
             <EntityTypeMapping TypeName="SICERModel.CONFIG">
               <MappingFragment StoreEntitySet="CONFIG">
@@ -1895,7 +1185,7 @@
           <EntitySetMapping Name="Documento">
             <EntityTypeMapping TypeName="SICERModel.Documento">
               <MappingFragment StoreEntitySet="Documento">
-                <ScalarProperty Name="OstcCode" ColumnName="OstcCode" />
+                <ScalarProperty Name="SapOstcCode" ColumnName="SapOstcCode" />
                 <ScalarProperty Name="ModificacionUsuarioid" ColumnName="ModificacionUsuarioid" />
                 <ScalarProperty Name="ModificacionFecha" ColumnName="ModificacionFecha" />
                 <ScalarProperty Name="CreacionUsuarioid" ColumnName="CreacionUsuarioid" />
@@ -1969,47 +1259,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Invoice">
-            <EntityTypeMapping TypeName="SICERModel.Invoice">
-              <MappingFragment StoreEntitySet="Invoice">
-                <ScalarProperty Name="DocSubType" ColumnName="DocSubType" />
-                <ScalarProperty Name="TaxDate" ColumnName="TaxDate" />
-                <ScalarProperty Name="DocDueDate" ColumnName="DocDueDate" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="FolioNumber" ColumnName="FolioNumber" />
-                <ScalarProperty Name="FolioPrefixString" ColumnName="FolioPrefixString" />
-                <ScalarProperty Name="NumAtCard" ColumnName="NumAtCard" />
-                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="JOurnalMemo" ColumnName="JOurnalMemo" />
-                <ScalarProperty Name="DocCurrency" ColumnName="DocCurrency" />
-                <ScalarProperty Name="DocType" ColumnName="DocType" />
-                <ScalarProperty Name="Series" ColumnName="Series" />
-                <ScalarProperty Name="ControlAccount" ColumnName="ControlAccount" />
-                <ScalarProperty Name="Indicator" ColumnName="Indicator" />
-                <ScalarProperty Name="CardCode" ColumnName="CardCode" />
-                <ScalarProperty Name="DocEntry" ColumnName="DocEntry" />
-                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="InvoiceLine">
-            <EntityTypeMapping TypeName="SICERModel.InvoiceLine">
-              <MappingFragment StoreEntitySet="InvoiceLine">
-                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
-                <ScalarProperty Name="CostingCode5" ColumnName="CostingCode5" />
-                <ScalarProperty Name="CostingCode4" ColumnName="CostingCode4" />
-                <ScalarProperty Name="CostingCode3" ColumnName="CostingCode3" />
-                <ScalarProperty Name="CostingCode2" ColumnName="CostingCode2" />
-                <ScalarProperty Name="CostingCode" ColumnName="CostingCode" />
-                <ScalarProperty Name="LineTotal" ColumnName="LineTotal" />
-                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
-                <ScalarProperty Name="AccountCode" ColumnName="AccountCode" />
-                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-                <ScalarProperty Name="InvoiceLineId" ColumnName="InvoiceLineId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="NivelAprobacion">
             <EntityTypeMapping TypeName="SICERModel.NivelAprobacion">
               <MappingFragment StoreEntitySet="NivelAprobacion">
@@ -2020,33 +1269,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="OSTC">
-            <EntityTypeMapping TypeName="SICERModel.OSTC">
-              <MappingFragment StoreEntitySet="OSTC">
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Payment">
-            <EntityTypeMapping TypeName="SICERModel.Payment">
-              <MappingFragment StoreEntitySet="Payment">
-                <ScalarProperty Name="JournalRemarks" ColumnName="JournalRemarks" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="TransferAccount" ColumnName="TransferAccount" />
-                <ScalarProperty Name="CounterReference" ColumnName="CounterReference" />
-                <ScalarProperty Name="DocCurrency" ColumnName="DocCurrency" />
-                <ScalarProperty Name="TransferDate" ColumnName="TransferDate" />
-                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
-                <ScalarProperty Name="TaxDate" ColumnName="TaxDate" />
-                <ScalarProperty Name="DocDate" ColumnName="DocDate" />
-                <ScalarProperty Name="CardCode" ColumnName="CardCode" />
-                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
-                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Rol">
             <EntityTypeMapping TypeName="SICERModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
@@ -2054,77 +1276,6 @@
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Codigo" ColumnName="Codigo" />
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SapBusinessPartner">
-            <EntityTypeMapping TypeName="SICERModel.SapBusinessPartner">
-              <MappingFragment StoreEntitySet="SapBusinessPartner">
-                <ScalarProperty Name="CardCode" ColumnName="CardCode" />
-                <ScalarProperty Name="validFor" ColumnName="validFor" />
-                <ScalarProperty Name="LictradNum" ColumnName="LictradNum" />
-                <ScalarProperty Name="CardType" ColumnName="CardType" />
-                <ScalarProperty Name="CardName" ColumnName="CardName" />
-                <ScalarProperty Name="SapBusinessPartnerCardCode" ColumnName="SapBusinessPartnerCardCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SapCentroCosto">
-            <EntityTypeMapping TypeName="SICERModel.SapCentroCosto">
-              <MappingFragment StoreEntitySet="SapCentroCosto">
-                <ScalarProperty Name="Locked" ColumnName="Locked" />
-                <ScalarProperty Name="DimCode" ColumnName="DimCode" />
-                <ScalarProperty Name="OcrName" ColumnName="OcrName" />
-                <ScalarProperty Name="OcrCode" ColumnName="OcrCode" />
-                <ScalarProperty Name="SapCentroCostoOcrCode" ColumnName="SapCentroCostoOcrCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SapConcepto">
-            <EntityTypeMapping TypeName="SICERModel.SapConcepto">
-              <MappingFragment StoreEntitySet="SapConcepto">
-                <ScalarProperty Name="U_MSS_ACC" ColumnName="U_MSS_ACC" />
-                <ScalarProperty Name="U_MSS_DSC" ColumnName="U_MSS_DSC" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SapCuentaContable">
-            <EntityTypeMapping TypeName="SICERModel.SapCuentaContable">
-              <MappingFragment StoreEntitySet="SapCuentaContable">
-                <ScalarProperty Name="U_MSS_ACC" ColumnName="U_MSS_ACC" />
-                <ScalarProperty Name="U_MSS_IBA" ColumnName="U_MSS_IBA" />
-                <ScalarProperty Name="U_MSS_DSC" ColumnName="U_MSS_DSC" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SapIndicators">
-            <EntityTypeMapping TypeName="SICERModel.SapIndicators">
-              <MappingFragment StoreEntitySet="SapIndicators">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SapMoneda">
-            <EntityTypeMapping TypeName="SICERModel.SapMoneda">
-              <MappingFragment StoreEntitySet="SapMoneda">
-                <ScalarProperty Name="Locked" ColumnName="Locked" />
-                <ScalarProperty Name="CurrName" ColumnName="CurrName" />
-                <ScalarProperty Name="SapMonedaDocCurrCod" ColumnName="SapMonedaDocCurrCod" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SapTipoCambio">
-            <EntityTypeMapping TypeName="SICERModel.SapTipoCambio">
-              <MappingFragment StoreEntitySet="SapTipoCambio">
-                <ScalarProperty Name="Rate" ColumnName="Rate" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="RateDate" ColumnName="RateDate" />
-                <ScalarProperty Name="SapTipoCambioId" ColumnName="SapTipoCambioId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2151,6 +1302,7 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="SICERModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="AreaId" ColumnName="AreaId" />
                 <ScalarProperty Name="SapBusinessPartnerCardCode" ColumnName="SapBusinessPartnerCardCode" />
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
@@ -2164,6 +1316,15 @@
                 <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsuarioDocumento">
+            <EntityTypeMapping TypeName="SICERModel.UsuarioDocumento">
+              <MappingFragment StoreEntitySet="UsuarioDocumento">
+                <ScalarProperty Name="DocumentoId" ColumnName="DocumentoId" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="UsuarioDocumentoId" ColumnName="UsuarioDocumentoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

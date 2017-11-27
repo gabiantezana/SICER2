@@ -1,10 +1,10 @@
 ﻿using System;
 using SAPbobsCOM;
-using SAPWS.HELPER;
 using SICER.DATAACCESS;
 using SICER.EXCEPTION;
 using SICER.HELPER;
 using SICER.MODEL;
+using Company = SAPbobsCOM.Company;
 
 namespace SICER.LOGIC
 {
@@ -113,7 +113,6 @@ namespace SICER.LOGIC
         {
             var xml = System.IO.File.ReadAllText(XMLParametersPath);
             CompanyEntity model = SerializeHelper.XMLToObject(xml, typeof(CompanyEntity));
-
             return model;
         }
 
@@ -132,19 +131,19 @@ namespace SICER.LOGIC
     }
     public static class ExtensionHelper
     {
-        public static BoDataServerTypes GetDataServerTypes(this DataContext dataContext)
-        {
-            if (dataContext.Company == null)
-            {
-                dataContext.Company = new SapLogic().ConnectAndGetCurrentCompany();
-            }
-            return dataContext.Company.DbServerType;
-        }
-        public static Company GetAndConnectCurrentCompany(this DataContext dataContext)
-        {
-            dataContext.Company = new SapLogic().ConnectAndGetCurrentCompany();
-            return dataContext.Company;
-        }
+        //public static BoDataServerTypes GetDataServerTypes(this DataContext dataContext)
+        //{
+        //    if (dataContext.Company == null)
+        //    {
+        //        dataContext.Company = new SapLogic().ConnectAndGetCurrentCompany();
+        //    }
+        //    return dataContext.Company.DbServerType;
+        //}
+        //public static Company GetAndConnectCurrentCompany(this DataContext dataContext)
+        //{
+        //    dataContext.Company = new SapLogic().ConnectAndGetCurrentCompany();
+        //    return dataContext.Company;
+        //}
     }
 
 }

@@ -78,6 +78,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Administracion\CompanyLogic.cs" />
     <Compile Include="Administracion\AreaLogic.cs" />
     <Compile Include="Administracion\ConfigLogic.cs" />
     <Compile Include="Administracion\TipoDocumentoLogic.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Sync\SapIndicatorLogic.cs" />
     <Compile Include="Sync\SapMonedaLogic.cs" />
     <Compile Include="Sync\SapTipoCambioLogic.cs" />
-    <Compile Include="Sync\SyncLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SICER.DATAACCESS\SICER.DATAACCESS.csproj">
@@ -113,6 +113,10 @@
     <ProjectReference Include="..\SICER.MODEL\SICER.MODEL.csproj">
       <Project>{7625219e-48b1-4c83-b215-19fe95577f7d}</Project>
       <Name>SICER.MODEL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SICER.SAPUSERMODEL\SICER.SAPUSERMODEL.csproj">
+      <Project>{735FD06B-2987-4C0B-9FAF-6011D4282EA9}</Project>
+      <Name>SICER.SAPUSERMODEL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SICER.VIEWMODEL\SICER.VIEWMODEL.csproj">
       <Project>{30F6D852-5332-4DAC-86E3-10954BE99FB1}</Project>

@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using PagedList;
@@ -25,7 +26,7 @@ namespace SICER.LOGIC.GestionDocumentos
         {
             var model = new ListDocumentoViewModel()
             {
-                PagedList = GetPagedList(dataContext, documentType, query, page),
+                PagedList = GetOpeningPagedList(dataContext, documentType, query, page),
                 Filter = string.Empty,
                 ListDefault = new List<Documento>(),
                 DocumentType = documentType
@@ -33,32 +34,34 @@ namespace SICER.LOGIC.GestionDocumentos
             return model;
         }
 
-        private static IEnumerable<Documento> GetQuery(DataContext dataContext, DocumentType documentType, string filter = null)
+        private static IEnumerable<DocumentoViewModel> GetOpeningList(DataContext dataContext, DocumentType documentType, string filter = null)
         {
-            return new DocumentoDataAccess(dataContext).GetList(documentType, DocumentSubType.Apertura, dataContext.Session.GetIdUsuario(), filter);
+            var defaultList = new DocumentoDataAccess(dataContext).GetOpeningList(documentType, filter);
+
+            return defaultList.Select(item => GetViewModelFromEntity(dataContext, item)).ToList();
         }
 
-        public static IEnumerable<DocumentoViewModel> GetRendicionesList(DataContext dataContext, int? aperturaId, string filter)
+        public static IPagedList<DocumentoViewModel> GetOpeningPagedList(DataContext dataContext, DocumentType documentType, string filter, int? page)
         {
-            var query = new DocumentoDataAccess(dataContext).GetRendicionesList(aperturaId, filter);
+            return GetOpeningList(dataContext, documentType, filter).ToList().ToPagedList(page ?? 1, ConstantHelper.NUMEROFILASPORPAGINA);
+        }
+
+        public static IEnumerable<DocumentoViewModel> GetExpenditureList(DataContext dataContext, int? aperturaId, string filter)
+        {
+            var query = new DocumentoDataAccess(dataContext).GetExpenditureList(aperturaId, filter);
             var list = new List<DocumentoViewModel>();
             foreach (var rendicion in query.ToList())
             {
-                var rendicionModel = GetRendicion(dataContext, rendicion.AperturaDocumentoId, rendicion.DocumentoId);
+                var rendicionModel = GetExpenditure(dataContext, rendicion.AperturaDocumentoId, rendicion.DocumentoId);
                 list.Add(rendicionModel);
             }
             return list;
         }
 
-        public static IPagedList<Documento> GetPagedList(DataContext dataContext, DocumentType documentType, string filter, int? page)
-        {
-            return GetQuery(dataContext, documentType, filter).ToList().ToPagedList(page ?? 1, ConstantHelper.NUMEROFILASPORPAGINA);
-        }
-
         public static IEnumerable<JsonEntity> GetFilterJsonList(DataContext dataContext, DocumentType documentType, string filter)
         {
             //TODO:
-            var query = GetQuery(dataContext, documentType, filter);
+            var query = GetOpeningList(dataContext, documentType, filter);
             if (!string.IsNullOrEmpty(filter))
             {
                 /*
@@ -80,46 +83,36 @@ namespace SICER.LOGIC.GestionDocumentos
 
         #region GetEntity
 
-        public static DocumentoViewModel GetApertura(DataContext dataContext, int? documentoId)
+        public static DocumentoViewModel GetOpening(DataContext dataContext, int? documentoId)
         {
-            var entity = new DocumentoDataAccess(dataContext).GetEntity(documentoId);
-            var model = GetViewModelFromEntity(dataContext, entity);
-            model.SubTipoDocumento = (int)DocumentSubType.Apertura;
-            model.ModoVistaDocumento = GetModoVistaDocumento(dataContext, model.DocumentoId);
+            if (!UserHasSupplier(dataContext))
+                throw new CustomException("No tiene ningún proveedor configurado para gestionar documentos.");
+
+            var model = GetViewModelFromEntity(dataContext, new DocumentoDataAccess(dataContext).GetEntity(documentoId));
             model.UserCanAddRendicion = UserCanAddRendicion(dataContext, model.DocumentoId);
 
             //Carga rendiciones
-            model.RendicionList = GetRendicionesList(dataContext, entity?.DocumentoId, null);
+            model.RendicionList = GetExpenditureList(dataContext, model.DocumentoId, null);
 
             //Fill data inicial 
             if (documentoId == null)
-                FillDataInicialApertura(dataContext, ref model);
+                FillDataInicialOpening(dataContext, ref model);
 
             FillJLists(dataContext, ref model);
             return model;
         }
 
-        public static DocumentoViewModel GetRendicion(DataContext dataContext, int? aperturaDocumentoId, int? documentoId)
+        public static DocumentoViewModel GetExpenditure(DataContext dataContext, int? aperturaDocumentoId, int? documentoId)
         {
-            var aperturaDocumento = new DocumentoDataAccess(dataContext).GetEntity(aperturaDocumentoId);
             var entity = new DocumentoDataAccess(dataContext).GetEntity(documentoId);
-
-            if (aperturaDocumento == null)
-                aperturaDocumento = dataContext.Context.Documento.Find(entity.AperturaDocumentoId);
-
-            if (aperturaDocumento == null) throw new Exception("No se encontró el documento de apertura.");
-
             var model = GetViewModelFromEntity(dataContext, entity);
-            model.AperturaDocumentoId = aperturaDocumento.DocumentoId;
 
-            model.SubTipoDocumento = (int)DocumentSubType.Rendicion;
-            model.FechaSolicitud = DateTime.Now;
-            model.FechaDocumento = DateTime.Now;
-            model.FechaDocumento = DateTime.Now;
-            model.ModoVistaDocumento = GetModoVistaDocumento(dataContext, entity?.DocumentoId);
+            model.ModosVistaDocumentoList = GetModoVistaDocumento(dataContext, documentoId);
 
             if (documentoId == null)
-                FillDataInicialRendicion(dataContext, ref model);
+                FillDataInicialExpenditure(dataContext, ref model, aperturaDocumentoId);
+
+            model.DocumentType = (DocumentType)model.TipoDocumentoId;
 
             FillJLists(dataContext, ref model);
             return model;
@@ -129,43 +122,82 @@ namespace SICER.LOGIC.GestionDocumentos
 
         #region Save
 
-        public static void AddUpdateApertura(DataContext dataContext, DocumentoViewModel model)
+        public static void AddUpdateDocument(DataContext dataContext, DocumentoViewModel model, SubmitType submitType)
+        {
+            if (model.SubTipoDocumento != null)
+            {
+                var documentSubType = (DocumentSubType)model.SubTipoDocumento;
+
+                switch (submitType)
+                {
+                    case SubmitType.Save:
+                        AddUpdateDocument(dataContext, model, documentSubType);
+                        break;
+                    case SubmitType.Send:
+                        if (model.TipoDocumentoId == (int) DocumentType.CajaChica)
+                        {
+                            model.Estado = (int) DocumentState.Aprobado;
+                            model.MigrateToSap = true;
+                        }
+                        else
+                            model.Estado = (int)DocumentState.Pendiente;
+                        AddUpdateDocument(dataContext, model, documentSubType);
+                        break;
+                    case SubmitType.Approve:
+                        ApproveDocument(dataContext, model);
+                        break;
+                    case SubmitType.Refuse:
+                        RefuseDocument(dataContext, model.DocumentoId, model.MotivoRechazo);
+                        break;
+                    case SubmitType.ResendToSap:
+                        //TODO:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(submitType), submitType, null);
+                }
+            }
+            else
+                throw new Exception("Can't recognize the property DocumentSubType for this document.");
+        }
+
+        private static void AddUpdateDocument(DataContext dataContext, DocumentoViewModel model, DocumentSubType documentSubType)
+        {
+            switch (documentSubType)
+            {
+                case DocumentSubType.Apertura:
+                    AddUpdateOpening(dataContext, model);
+                    break;
+                case DocumentSubType.Rendicion:
+                    AddUpdateExpenditure(dataContext, model);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(documentSubType), documentSubType, null);
+            }
+        }
+
+        private static void AddUpdateOpening(DataContext dataContext, DocumentoViewModel model)
         {
             ValidarCamposDocumento(dataContext, model);
-            var esNuevoDocumento = !model.DocumentoId.HasValue;
 
-            if (esNuevoDocumento)
-            {
-                model.SubTipoDocumento = (int)DocumentSubType.Apertura;
+            if (!model.DocumentoId.HasValue)
                 model.Codigo = GenerateCode(dataContext, model.DocumentType);
-                model.SapIndicatorCode = SapIndicatorLogic.GetList(dataContext, null).FirstOrDefault(x => x.Code == ConfigLogic.GetCONFIGValue(dataContext, ConstantHelper.CONFIG.DOC_APER_INDICATOR))?.Code;
-                model.Estado = (int)DocumentState.Pendiente;
-                model.NivelAprobacion = null;
-            }
 
-            if (model.Estado == (int)DocumentState.Rechazado)
-            {
-                model.Estado = (int)DocumentState.Pendiente;
-                model.NivelAprobacion = null;
-            }
-
-            new DocumentoDataAccess(dataContext).AddUpdateApertura(model);
+            new DocumentoDataAccess(dataContext).AddUpdateDocument(model);
         }
 
-        public static void AddUpdateRendicion(DataContext dataContext, DocumentoViewModel model)
+        private static void AddUpdateExpenditure(DataContext dataContext, DocumentoViewModel model)
         {
             ValidarCamposDocumento(dataContext, model);
-            model.SubTipoDocumento = (int)DocumentSubType.Rendicion;
-
-            new DocumentoDataAccess(dataContext).AddUpdateRendicion(model);
+            new DocumentoDataAccess(dataContext).AddUpdateDocument(model);
         }
 
-        public static void ApproveApertura(DataContext dataContext, DocumentoViewModel model)
+        public static void ApproveDocument(DataContext dataContext, DocumentoViewModel model)
         {
-            var nivelPendiente = GetNivelPendienteAprobacionFromApeprtura(dataContext, model.DocumentoId);
+            var nivelPendiente = GetNivelPendienteAprobacion(dataContext, model.DocumentoId);
             if (nivelPendiente == null) throw new Exception("El documento no tiene ningún nivel de aprobación pendiente");
 
             ValidaSiUsuarioTieneNivelAprobacionRequerido(dataContext, nivelPendiente.Value);
+            model.NivelAprobacion = nivelPendiente;
 
             var ultimoNivelAprobacion = NivelAprobacionLogic.GetLastNivelAprobacion(dataContext, model.DocumentType);
             if (nivelPendiente == ultimoNivelAprobacion)
@@ -174,10 +206,10 @@ namespace SICER.LOGIC.GestionDocumentos
                 model.MigrateToSap = true;
             }
 
-            new DocumentoDataAccess(dataContext).AddUpdateApertura(model);
+            new DocumentoDataAccess(dataContext).AddUpdateDocument(model);
         }
 
-        public static void RechazarApertura(DataContext dataContext, int? documentoId, string message)
+        public static void RefuseDocument(DataContext dataContext, int? documentoId, string message)
         {
             new DocumentoDataAccess(dataContext).RechazarApertura(documentoId, message);
         }
@@ -186,36 +218,41 @@ namespace SICER.LOGIC.GestionDocumentos
 
         #region Helper
 
-        private static void FillDataInicialApertura(DataContext dataContext, ref DocumentoViewModel model)
+        private static void FillDataInicialOpening(DataContext dataContext, ref DocumentoViewModel model)
         {
-            if (model.SubTipoDocumento == (int)DocumentSubType.Apertura)
-            {
-                model.ModoVistaDocumento = GetModoVistaDocumento(dataContext, model.DocumentoId);
-                model.FechaSolicitud = DateTime.Now;
-                model.FechaDocumento = DateTime.Now;
-                model.FechaContabilizacion = DateTime.Now;
-                model.CreacionUsuarioid = dataContext.Session.GetIdUsuario();
 
-                //VALIDA
-                var sapBusinessPartnerCardCode = UsuarioLogic.GetUsuario(dataContext, dataContext.Session.GetIdUsuario()).SapBusinessPartnerCardCode;
-                if (string.IsNullOrEmpty(sapBusinessPartnerCardCode)) throw new Exception("No tiene ningún proveedor configurado para crear documentos.");
-                model.SapBusinessPartnerCardCode = sapBusinessPartnerCardCode;
 
-            }
+            model.SubTipoDocumento = (int)DocumentSubType.Apertura;
+            model.SapIndicatorCode = SapIndicatorLogic.GetList(dataContext, null).FirstOrDefault(x => x.Code == ConfigLogic.GetCONFIGValue(dataContext, ConstantHelper.CONFIG.DOC_APER_INDICATOR))?.Code;//TODO:
+
+            model.FechaSolicitud = DateTime.Now;
+            model.FechaDocumento = DateTime.Now;
+            model.FechaContabilizacion = DateTime.Now;
+            model.CreacionUsuarioid = dataContext.Session.GetIdUsuario();
+            model.SapBusinessPartnerCardCode = UsuarioLogic.GetUsuario(dataContext, dataContext.Session.GetIdUsuario())?.SapBusinessPartnerCardCode;
         }
 
-        private static void FillDataInicialRendicion(DataContext dataContext, ref DocumentoViewModel model)
+        private static void FillDataInicialExpenditure(DataContext dataContext, ref DocumentoViewModel model, int? aperturaDocumentoId)
         {
-            if (model.SubTipoDocumento == (int)DocumentSubType.Rendicion)
-            {
-                model.FechaSolicitud = DateTime.Now;
-                model.FechaDocumento = DateTime.Now;
-                model.FechaContabilizacion = DateTime.Now;
-                model.CreacionUsuarioid = dataContext.Session.GetIdUsuario();
-                model.Estado = (int)DocumentState.None;
-            }
-        }
 
+            var aperturaDocumento = new DocumentoDataAccess(dataContext).GetEntity(aperturaDocumentoId);
+            if (aperturaDocumento == null)
+                aperturaDocumento = dataContext.Context.Documento.Find(model.AperturaDocumentoId);
+
+            if (aperturaDocumento == null) throw new Exception("No se encontró el documento de apertura.");
+
+            //---------------------------Hierarchy data from Opening---------------------------
+            model.AperturaDocumentoId = aperturaDocumento.DocumentoId;
+            model.TipoDocumentoId = aperturaDocumento.TipoDocumentoId;
+            //---------------------------Hierarchy data from Opening--------------------------
+
+            model.SubTipoDocumento = (int)DocumentSubType.Rendicion;
+            model.FechaSolicitud = DateTime.Now;
+            model.FechaDocumento = DateTime.Now;
+            model.FechaContabilizacion = DateTime.Now;
+            model.CreacionUsuarioid = dataContext.Session.GetIdUsuario();
+            model.Estado = (int)DocumentState.None;
+        }
 
         private static DocumentoViewModel GetViewModelFromEntity(DataContext dataContext, Documento entity)
         {
@@ -226,9 +263,8 @@ namespace SICER.LOGIC.GestionDocumentos
         public static void FillJLists(DataContext dataContext, ref DocumentoViewModel model)
         {
             //Fill select
+            model.ModosVistaDocumentoList = GetModoVistaDocumento(dataContext, model.DocumentoId);
             model.UsuarioJList = UsuarioLogic.GetUsuariosJsonList(dataContext, model.CreacionUsuarioid);
-            model.AsociadaSapCuentaContableJList = SapCuentaContableLogic.GetJList(dataContext, null);
-            model.GastoSapCuentaContableJList = SapCuentaContableLogic.GetJList(dataContext, null);
 
             if (!string.IsNullOrEmpty(model.SapBusinessPartnerCardCode))
                 model.SapBusinessPartnerJList = SapBusinessPartnerLogic.GetJList(dataContext, model.SapBusinessPartnerCardCode);
@@ -247,13 +283,18 @@ namespace SICER.LOGIC.GestionDocumentos
             model.C_5SapCentroCostoJList = SapCentroCostoLogic.GetJList(dataContext, null, 5);
         }
 
-        private static ModoVistaDocumento GetModoVistaDocumento(DataContext dataContext, int? documentoId)
+        private static IEnumerable<ModoVistaDocumentoApertura> GetModoVistaDocumento(DataContext dataContext, int? documentoId)
         {
-            ModoVistaDocumento modoVistaDocumento = ModoVistaDocumento.Ver;
-
+            var list = new List<ModoVistaDocumentoApertura>();
             var documento = new DocumentoDataAccess(dataContext).GetEntity(documentoId);
-            if (documento == null) return ModoVistaDocumento.Crear;
 
+            if (documento == null)
+            {
+                list.Add(ModoVistaDocumentoApertura.Crear);
+                list.Add(ModoVistaDocumentoApertura.Modificar);
+                list.Add(ModoVistaDocumentoApertura.ModificarYEnviar);
+                return list;
+            }
 
             var userCanApprove = UserCanApproveDocument(dataContext, documentoId);
             var userIsCreator = UserIsCreator(dataContext, documentoId);
@@ -261,22 +302,31 @@ namespace SICER.LOGIC.GestionDocumentos
             switch ((DocumentState)documento.Estado)
             {
                 case DocumentState.None:
-                    modoVistaDocumento = ModoVistaDocumento.Modificar;
-                    break;
-                case DocumentState.Aprobado:
+                    if (userIsCreator)
+                    {
+                        list.Add(ModoVistaDocumentoApertura.Crear);
+                        list.Add(ModoVistaDocumentoApertura.ModificarYEnviar);
+                    }
                     break;
                 case DocumentState.Pendiente:
                     if (userCanApprove)
-                        modoVistaDocumento = ModoVistaDocumento.Aprobar;
+                        list.Add(ModoVistaDocumentoApertura.ModificarYAprobar);
+                    break;
+                case DocumentState.Aprobado:
                     break;
                 case DocumentState.Rechazado:
                     if (userIsCreator)
-                        modoVistaDocumento = ModoVistaDocumento.Modificar;
+                        list.Add(ModoVistaDocumentoApertura.ModificarYEnviar);
+                    break;
+                case DocumentState.AprobadoConErroresDeMigracion:
+                    if (userIsCreator)
+                        list.Add(ModoVistaDocumentoApertura.ModificarYReenviarASap);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            return modoVistaDocumento;
+
+            return list;
         }
 
         private static string GenerateCode(DataContext dataContext, DocumentType documentType)
@@ -319,7 +369,7 @@ namespace SICER.LOGIC.GestionDocumentos
 
         private static bool UserCanApproveDocument(DataContext dataContext, int? documentoId)
         {
-            var proximoNivelAprobacion = GetNivelPendienteAprobacionFromApeprtura(dataContext, documentoId);
+            var proximoNivelAprobacion = GetNivelPendienteAprobacion(dataContext, documentoId);
             if (proximoNivelAprobacion == null) return false;
             int? usuarioId = dataContext.Session.GetIdUsuario();
             var usuarioNivelAprobacion = dataContext.Context.UsuarioNivelAprobacion.FirstOrDefault(x => x.NivelAprobacion.NumeroNivel == proximoNivelAprobacion && x.UsuarioId == usuarioId);
@@ -331,9 +381,8 @@ namespace SICER.LOGIC.GestionDocumentos
             return dataContext.Context.Documento.Find(documentoId)?.CreacionUsuarioid == dataContext.Session.GetIdUsuario();
         }
 
-        public static int? GetNivelPendienteAprobacionFromApeprtura(DataContext dataContext, int? documentoId)
+        public static int? GetNivelPendienteAprobacion(DataContext dataContext, int? documentoId)
         {
-
             var documento = dataContext.Context.Documento.Find(documentoId);
             if (documento == null) return null;
 
@@ -347,13 +396,17 @@ namespace SICER.LOGIC.GestionDocumentos
                 case DocumentState.None:
                 case DocumentState.Aprobado:
                 case DocumentState.Rechazado:
+                case DocumentState.AprobadoConErroresDeMigracion:
                     return null;
                 case DocumentState.Pendiente:
-                    proximoNivel = nivelesDeAprobacion.FirstOrDefault(x => x > (documento.NivelAprobacion == null ? -1 : documento.NivelAprobacion));
+                    proximoNivel = nivelesDeAprobacion.FirstOrDefault(x => x > (documento.NivelAprobacion ?? -1));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            if (proximoNivel == null)
+                throw new CustomException("El documento no tiene ningún nivel de aprobación pendiente.");
             return proximoNivel;
         }
 
@@ -370,6 +423,13 @@ namespace SICER.LOGIC.GestionDocumentos
             }
             return canAddRendicion;
         }
+
+        public static bool UserHasSupplier(DataContext dataContext)
+        {
+            var sapBusinessPartnerCardCode = UsuarioLogic.GetUsuario(dataContext, dataContext.Session.GetIdUsuario()).SapBusinessPartnerCardCode;
+            return !string.IsNullOrEmpty(sapBusinessPartnerCardCode);
+        }
+
 
         public static bool UserCAnApproveRendicion(DataContext dataContext, int? documentoId)
         {

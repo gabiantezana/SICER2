@@ -141,7 +141,7 @@ namespace SICER.EXCEPTION
                 //sessionKeys = sessionKeys.Remove(sessionKeys.Length - 3);//Solo para quitar el ultimo '|' de la cadena.//TODO: REMOVE WHEN NULL IN HANGFIRE
                 excepcion.sessionKeys = sessionKeys;
                 excepcion.timeStamp = timeStamp.ToString();
-                dataContext.Context.Excepcion.Add(excepcion);
+                //dataContext.Context.Excepcion.Add(excepcion);
                 dataContext.Context.SaveChanges();
             }
             catch (Exception intraEx)

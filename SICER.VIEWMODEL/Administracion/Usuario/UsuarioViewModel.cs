@@ -22,8 +22,14 @@ namespace SICER.VIEWMODEL.Administracion.Usuario
 
         [Required]
         [Display(Name = "Área")]
-        public int AreaId { get; set; }
+        public int? AreaId { get; set; }
         public IEnumerable<JsonEntity> AreaJList { get; set; } = new List<JsonEntity>();
+
+        [Required]
+        [Display(Name = "Compañía")]
+        public int? CompanyId { get; set; }
+        public IEnumerable<JsonEntity> CompanyJList { get; set; } = new List<JsonEntity>();
+
 
         [Required]
         public string Nombres { get; set; }
@@ -69,7 +75,6 @@ namespace SICER.VIEWMODEL.Administracion.Usuario
         /// Listado de niveles de aprobación asociados al usuario.
         /// </summary>
         public IEnumerable<int> NivelAprobacionIdList { get; set; } = new List<int>();
-
 
         #endregion
 

@@ -216,9 +216,9 @@ namespace SAPADDON.HELPER
             var iRetVal = -1;
             var sboRec = (SAPbobsCOM.Recordset)company.GetBusinessObject(BoObjectTypes.BoRecordset);
             try
-            {
-                sboRec.DoQuery(new QueryHelper(company.DbServerType).GetUserFieldId());
-                if (!sboRec.EoF) iRetVal = Convert.ToInt32(sboRec.Fields.Item("FieldID").Value.ToString());
+            { //TODO:
+                //sboRec.DoQuery(new QueryHelper(company.DbServerType).GetUserFieldId());
+                //if (!sboRec.EoF) iRetVal = Convert.ToInt32(sboRec.Fields.Item("FieldID").Value.ToString());
             }
             finally
             {

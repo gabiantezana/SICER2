@@ -6,7 +6,8 @@ namespace SICER.VIEWMODEL.GestionDocumentos
 {
     public class ListDocumentoViewModel
     {
-        public IPagedList<MODEL.Documento> PagedList { get; set; }
+        //public IPagedList<MODEL.Documento> PagedList { get; set; }
+        public IPagedList<DocumentoViewModel> PagedList { get; set; }
         public string Filter { get; set; }
 
         /// <summary>

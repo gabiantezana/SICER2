@@ -20,16 +20,40 @@
     <div class="modal-body" style="overflow:hidden;">
         @RenderBody()
     </div>
-
     <div class="modal-footer">
+
         @if (ViewBag.DeshabilitarCerrarFooter == null || !ViewBag.DeshabilitarCerrarFooter)
         {
-        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
         }
-        @if (ViewBag.Form != null)
+
+        @*@if (Model.ModosVistaDocumentoList.Contains(ModoVistaDocumentoApertura.Ver))
+            {
+
+            }*@
+
+        @if (Model.ModosVistaDocumentoList.Contains(ModoVistaDocumentoApertura.Crear)
+                     || Model.ModosVistaDocumentoList.Contains(ModoVistaDocumentoApertura.Modificar))
         {
-        <button type="button" class="btn btn-primary" id="@buttonSaveId"><i class="fa fa-check"></i> Aceptar</button>
+            <button type="button" class="btn btn-primary @buttonSaveId" data-submittype="@SubmitType.Save"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Guardar</button>
         }
+
+        @if (Model.ModosVistaDocumentoList.Contains(ModoVistaDocumentoApertura.ModificarYEnviar))
+        {
+            <button type="button" class="btn btn-primary @buttonSaveId" data-submittype="@SubmitType.Send"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Guardar y enviar</button>
+        }
+
+        @if (Model.ModosVistaDocumentoList.Contains(ModoVistaDocumentoApertura.ModificarYAprobar))
+        {
+            <button type="button" class="btn btn-success @buttonSaveId" data-submittype="@SubmitType.Approve"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Aprobar</button>
+            <button type="button" style="display: none" class="btn btn-success @buttonSaveId" id="@buttonSaveId-btnRefuse" data-submittype="@SubmitType.Refuse"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Aprobar</button>
+            <a class="btn btn-danger" data-mensaje="Ingrese motivo" id="btnConfirm" data-isExpenditure="true" data-formclass="@buttonSaveId" onclick="onClickConfirm(this)">Rechazar<i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+        }
+
+        @*@if (ViewBag.Form != null)
+            {
+                <button type="button" class="btn btn-primary" id="@buttonSaveId"><i class="fa fa-check"></i> Guardar</button>
+            }*@
         @RenderSection("ModalFooter", false)
     </div>
     @if (ViewBag.Form != null)
@@ -46,16 +70,45 @@
 @if (ViewBag.Response == null)
 {
     <script>
+
+
+
+        function onClickConfirm(button) {
+            debugger;
+            var $this = $(button);
+            var message = $this.data('mensaje');
+            alertify.prompt(message,
+                function (evt, value) {
+                    debugger;
+                    if (evt === "") {
+                        alert("Debe ingresar un mensaje");
+                    } else {
+                            debugger;
+                            var idForm = $this.data("formclass");
+                            $("#@ViewBag.GUID input[id=MotivoRechazo]").val(evt);
+                            $("#@buttonSaveId-btnRefuse").click();
+                    }
+                });
+            $('.cancel').addClass('btn');
+            $('.cancel').addClass('btn-default');
+
+            $('.ok').addClass('btn');
+            $('.ok').addClass('btn-primary');
+        };
         var urlModalRedirect = '';
         var urlValidation = '@ViewBag.UrlValidation';
 
+
         $(function () {
             debugger;
-            $('#@buttonSaveId').click(function(e) {
+            //Change rules
+            var $form = $('#@ViewBag.GUID form');
+
+            $('.@buttonSaveId').click(function (e) {
+                var $form = $('#@ViewBag.GUID form');
+                $("#@ViewBag.GUID input[id=SubmitType]").val($(this).data("submittype"));
                 debugger;
                 e.preventDefault();
-                var $form = $('#@ViewBag.GUID form');
-
                 //Validate form
                 $form.validate();
 
@@ -87,33 +140,6 @@
                 }
             });
         });
-        //    console.log('modal');
-        //    $('*[data-plugin="select2"]').select2({
-        //        language: 'es',
-        //        placeholder: "[ -- Seleccione -- ]",
-        //        allowClear: true
-        //    });
-
-        //$('*[data-plugin="select2"]').next('.select2').find('.select2-selection').one('focus', select2Focus).on('blur',
-        //    function() {
-        //        $(this).one('focus', select2Focus);
-        //    });
-
-        //$(".modal").on('hidden.bs.modal', function () {
-        //    $(this).remove();
-        //    $('.pac-container').remove();
-        //    $('iframe[name=gm-master]').remove();
-        //    console.log('modal close');
-        //});
-
-        //$(".fecha").click(function () {
-        //    jQuery.validator.methods["date"] = function (value, element) {
-        //        debugger;
-        //        return true;
-        //    }
-        //});
-
-        //////////////////////77
 
         $(function () {
             var today = new Date();
@@ -185,5 +211,7 @@
         });
     </script>
 }
-@RenderSection("Scripts", false)
+@RenderSection("Scripts", false);
+
 @Scripts.Render("~/bundles/jqueryval");
+@Scripts.Render("~/bundles/expressive");

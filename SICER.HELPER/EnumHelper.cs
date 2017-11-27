@@ -18,6 +18,8 @@ namespace SICER.HELPER
         Rol,
         NombreRol,
         Vistas,
+        CompanyId,
+        CompanyName,
     }
 
     public enum TempDataKey
@@ -37,6 +39,7 @@ namespace SICER.HELPER
     public enum AppRol //TODO: SYNC WITH DATABASE rolId
     {
         SUPERADMIN = 1,
+        SISTEMAS = 36,
         ADMIN = 5,
         GESTORDOCUMENTOS = 7,
         //Creador,
@@ -93,49 +96,50 @@ namespace SICER.HELPER
         Pendiente = 1,
         Aprobado = 2,
         Rechazado = 3,
+        AprobadoConErroresDeMigracion = 4
     }
 
-    public enum SyncEntity
+    public enum QueryFileName
     {
         /// <summary>
         /// CONCEPTOS
         /// </summary>
-        @MSS_SICER_CCPT = 0,
-
-        /// <summary>
-        /// CONFIGURACIÓN DE CUENTAS
-        /// </summary>
-        @MSS_SICER_CONF = 1,
+        MSS_SICER_CCPT_GetList = 0,
 
         /// <summary>
         /// BUSINESS PARTNERS
         /// </summary>
-        OCRD = 2,
+        OCRD_GetList = 2,
 
         /// <summary>
         /// MONEDAS
         /// </summary>
-        OCRN = 3,
+        OCRN_GetList = 3,
 
         /// <summary>
         /// INDICATORS
         /// </summary>
-        OICD = 4,
+        OICD_GetList = 4,
 
         /// <summary>
         /// CENTRO COSTOS
         /// </summary>
-        OOCR = 5,
+        OOCR_GetList = 5,
 
         /// <summary>
         /// TIPOS DE CAMBIO
         /// </summary>
-        ORTT = 6,
+        ORTT_GetList = 6,
 
         /// <summary>
         /// CÓDIGO DE IMPUESTOS
         /// </summary>
-        OSTC =7
+        OSTC_GetList =7,
+
+        /// <summary>
+        /// CONFIGURACIÓN DE CUENTAS
+        /// </summary>
+        MSS_SICER_AACT_GetList = 8,
     }
 
     public enum SourceType
@@ -150,12 +154,32 @@ namespace SICER.HELPER
         Crear = 2,
     }
 
-    public enum ModoVistaDocumento
+    public enum ModoVistaDocumentoApertura
     {
         Ver = 0,
         Crear = 1,
         Modificar = 2,
-        Aprobar = 3
+        ModificarYEnviar = 3,
+        ModificarYAprobar = 4,
+        ModificarYReenviarASap = 5,
+    }
+
+    public enum SubmitType
+    {
+        Save,
+        Send,
+        Approve,
+        Refuse,
+        ResendToSap
+    }
+
+    public enum ModoVistaDocumentoRendicion 
+    {
+        Ver = 0, //No tiene ningún permiso 
+        Crear = 1,
+        Modificar = 2, //Puede modificarla (antes de haber sido enviada)
+        Enviar = 2, //Puede enviarla a flujo
+        Aprobar = 3, //Puede aprobarla o rechazarla
     }
 }
 

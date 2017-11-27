@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using SAPbobsCOM;
 using SICER.MODEL;
 
@@ -16,21 +17,49 @@ namespace SICER.HELPER
         private string SqlQuery { get; set; }
         private string HanaQuery { get; set; }
 
-        public QueryHelper(BoDataServerTypes dBServerType)
+        public QueryHelper()
         {
-            this.SApDbServerType = dBServerType;
-            this.SqlQuery = string.Empty;
-            this.HanaQuery = string.Empty;
+            //this.SApDbServerType = dBServerType;
+            //this.SqlQuery = string.Empty;
+            //this.HanaQuery = string.Empty;
         }
 
 
-        public string GetSyncQuery(SyncEntity syncEntity, CompanyEntity companyEntity) //TODO: CHANGE FOR SAP OR SQL QUERY SYNTAX
+        public string GetQueryString(QueryFileName queryFileName, string companyName) //TODO: CHANGE FOR SAP OR SQL QUERY SYNTAX
         {
-            var resourceFullName = Assembly.GetCallingAssembly().GetManifestResourceNames().ToList().FirstOrDefault(x => x.Contains(syncEntity.ToString()));
-            if (string.IsNullOrEmpty(resourceFullName))
-                throw new Exception("ResourceName not found for: " + syncEntity.ToString());
+            if (string.IsNullOrEmpty(companyName)) throw new Exception("User has not any company associated.");
+            var path = HttpRuntime.AppDomainAppPath + "\\Parameters\\ConnectionParameters.xml";
 
-            string query = string.Empty;
+            var companyEntity = CompanyHelper.GetCompanyEntityFromFile(path, companyName);
+            if (companyEntity == null)
+                throw new Exception("No se encuentra el archivo de configuración para esta compañía.");
+
+            string prefixName;
+            switch (companyEntity.DbServerType)
+            {
+                case BoDataServerTypes.dst_MSSQL:
+                case BoDataServerTypes.dst_MSSQL2005:
+                case BoDataServerTypes.dst_MSSQL2008:
+                case BoDataServerTypes.dst_MSSQL2012:
+                case BoDataServerTypes.dst_MSSQL2014:
+                    prefixName = "Sql.";
+                    break;
+                case BoDataServerTypes.dst_HANADB:
+                    prefixName = "Hana.";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            //GET RESOURCE BY NAME
+            var resourcesList = Assembly.GetCallingAssembly().GetManifestResourceNames().Where(x=> x.Contains(prefixName)).ToList();
+            var resourceFullName = resourcesList.FirstOrDefault(x => x.Contains(queryFileName.ToString()));
+
+            if (string.IsNullOrEmpty(resourceFullName))
+                throw new Exception("ResourceName not found for: " + prefixName + queryFileName.ToString());
+
+            //READ RESOURCE
+            string query;
             using (var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceFullName))
             {
                 if (stream == null) throw new Exception("A problem was encountered while system has reading the file.");
@@ -39,6 +68,8 @@ namespace SICER.HELPER
                     query = reader.ReadToEnd();
                 }
             }
+
+            //REPLACE STRING RESOURCE
             query = query.Replace(ConstantHelper.SBO_TEST001, "[" + companyEntity.CompanyDB + "]");
             return query;
         }

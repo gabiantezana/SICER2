@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.WebPages;
 using System.Xml;
-using System.Xml.Linq;
 using System.Xml.Serialization;
 using SICER.EXCEPTION;
-using SICER.HELPER;
-using ValidationHelper = SICER.HELPER.ValidationHelper;
 
-namespace SAPWS.HELPER
+namespace SICER.HELPER
 {
     public static class SerializeHelper
     {

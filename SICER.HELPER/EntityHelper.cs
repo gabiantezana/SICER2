@@ -32,7 +32,18 @@ namespace SICER.HELPER
         public String Mensaje { get; set; }
     }
 
-    [XmlRoot("object")] //Para deserealizar el xml
+
+
+
+    [XmlRoot("ConnectionParameters")]
+    public class ConnectionParameters
+    {
+        [XmlArray("Companies")]
+        public List<CompanyEntity> Companies { get; set; } = new List<CompanyEntity>();
+
+    }
+
+    [XmlType("Company")]
     public class CompanyEntity
     {
         public bool? XMLAsString { get; set; }
@@ -59,4 +70,9 @@ namespace SICER.HELPER
             Password = String.Empty;
         }
     }
+
+
+
+
+
 }

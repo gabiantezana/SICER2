@@ -16,7 +16,7 @@ namespace SICER.MODEL
         public String CurrentCulture { get; set; }
         public String SystemNameSpace { get; set; }
         public HttpBrowserCapabilitiesBase Browser { get; set; }
-        public Company Company { get; set; }
+        //public Company Company { get; set; }
     }
 
     public enum SapDbServerType

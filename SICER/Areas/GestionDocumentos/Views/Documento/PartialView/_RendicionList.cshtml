@@ -42,13 +42,20 @@
                     <td> @item.SapMonedaDocCurrCode </td>
                     <td> @item.OstcCode </td>
                     <td> @item.Monto </td>
+                    
+                    @if (item.Error!= null)
+                    {
+                        <td style="color:red" data-toggle="tooltip" data-original-title="@item.Error"> @(item.Error.Length > 10 ? item.Error.Substring(0, 9) : item.Error)</td>
+                    }
+                    else
+                    {
+                        <td>-</td>
+                    }
                     <td class="text-nowrap text-center">
                         @switch ((DocumentState)item.Estado)
                         {
                             case DocumentState.None:
-                                <a class="btn btn-xs btn-icon btn-default" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
-                                    <i class="icon wb-copy" aria-hidden="true"></i>Ninguno
-                                </a>
+                                <h6>-</h6>
                                 break;
                             case DocumentState.Pendiente:
                                 <a class="btn btn-xs btn-icon btn-warning" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
@@ -65,34 +72,36 @@
                                     <i class="icon wb-close" aria-hidden="true"></i>Rechazado
                                 </a>
                                 break;
+                            case DocumentState.AprobadoConErroresDeMigracion:
+                                <a class="btn btn-xs btn-icon btn-danger" data-toggle="tooltip" data-original-title="@(((DocumentState)item.Estado).ToString())">
+                                    <i class="icon wb-close" aria-hidden="true"></i>Aprobado/Error SAP
+                                </a>
+                                break;
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
 
                     </td>
                     <td class="text-nowrap text-center">
-                        <button type="button" class="btn btn-outline btn-default btn-xs btnModalDetalle" @Url.ModalHelperFor("ModalRendicion", "Documento", new { documentoId = item.DocumentoId }, ModalSize.Large) data-toggle="tooltip" data-original-title="Modificar"
+                        <button type="button" class="btn btn-outline btn-default btn-xs btnModalDetalle" @Url.ModalHelperFor("ModalRendicion", "Documento", new { documentoId = item.DocumentoId }, ModalSize.Large) data-toggle="tooltip" data-original-title="Ver"
                                 data - id="@item.DocumentoId">
-                            <i class="icon wb-pencil" aria - hidden="true"></i>
+                            <i class="icon wb-eye" aria - hidden="true"></i>
                         </button>
-                       
-                        @switch (item.ModoVistaDocumento)
+
+                        @*@if (item.ModosVistaDocumentoList.Contains(ModoVistaDocumentoApertura.ModificarYEnviar))
                         {
-                            case ModoVistaDocumento.Ver:
-                                break;
-                            case ModoVistaDocumento.Crear:
-                                break;
-                            case ModoVistaDocumento.Modificar:
-                                break;
-                            case ModoVistaDocumento.Aprobar:
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
+                            <button type="button" class="btn btn-outline btn-default btn-xs btnModalDetalle" @Url.ModalHelperFor("ModalRendicion", "Documento", new { documentoId = item.DocumentoId }, ModalSize.Large) data-toggle="tooltip" data-original-title="Modificar"
+                                    data - id="@item.DocumentoId">
+                                <i class="icon wb-pencil" aria - hidden="true">Enviar</i>
+                            </button>
                         }
 
-                    </td>
-                    <td>
-                        <input type="checkbox" class="" />
+                        @if (item.ModosVistaDocumentoList.Contains(ModoVistaDocumentoApertura.ModificarYAprobar))
+                        {
+                            <button type="button" class="btn btn-success buttonsubmit" data-submittype="@SubmitType.Approve"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Aprobar</button>
+                            <button type="button" class="btn btn-success buttonsubmit" data-submittype="@SubmitType.Approve"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp; Rechazar</button>
+                        }*@
+
                     </td>
                 </tr>
                 num++;
@@ -112,7 +121,7 @@
         padding: 4px;
     }
 
-    /*div[role='tooltip'] {
+  /*div[role='tooltip'] {
         position:relative;
         z-index:1;
     }*/

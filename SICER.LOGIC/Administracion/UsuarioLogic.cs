@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using PagedList;
 using SICER.DATAACCESS.Administracion;
-using SICER.DATAACCESS.Sync;
 using SICER.EXCEPTION;
 using SICER.HELPER;
 using SICER.LOGIC.Sync;
@@ -37,13 +36,28 @@ namespace SICER.LOGIC.Administracion
             return GetQueryUsuariosList(dataContext, query).ToList().ToPagedList(page ?? 1, ConstantHelper.NUMEROFILASPORPAGINA);
         }
 
-        private static void FillJLists(DataContext dataContext, ref UsuarioViewModel model)
+        public static void FillJLists(DataContext dataContext, ref UsuarioViewModel model)
         {
-            //Fill select
-            model.RolJList = RolLogic.GetJList(dataContext, RolNivel.Principal);
+            if (dataContext.Session.GetRol() != AppRol.SISTEMAS)
+            {
+                //Fill select
+                model.RolJList = RolLogic.GetJList(dataContext, RolNivel.Principal);
 
-            //Fill all secundary roles
-            model.RolList = new RolDataAccess(dataContext).GetList(RolNivel.Secundario);
+                //Fill all secundary roles
+                model.RolList = new RolDataAccess(dataContext).GetList(RolNivel.Secundario);
+            }
+            else
+            {
+                //Fill select
+                model.RolJList = new List<JsonEntity>()
+                {
+                    new JsonEntity()
+                    {
+                        id = (int)AppRol.ADMIN,
+                        text = AppRol.ADMIN.ToString()
+                    }
+                };
+            }
 
             //Fill all user roles
             model.RolUserList = new UsuarioDataAccess(dataContext).GetUsuarioRolesList(model.UsuarioId);
@@ -51,8 +65,12 @@ namespace SICER.LOGIC.Administracion
             //Fill proveedor asociado
             if (!string.IsNullOrEmpty(model.SapBusinessPartnerCardCode))
                 model.SapBusinessPartnerJList = SapBusinessPartnerLogic.GetJList(dataContext, model.SapBusinessPartnerCardCode);
+
             //Fil áreas
             model.AreaJList = AreaLogic.GetJList(dataContext, null);
+
+            //Fill Companies
+            model.CompanyJList = CompanyLogic.GetJList(dataContext, null);
 
             //Fill list int of Niveles de aprobación
             var usuarioId = model.UsuarioId;
@@ -109,14 +127,23 @@ namespace SICER.LOGIC.Administracion
             UsuarioViewModel model = usuario?.ConvertTo(typeof(UsuarioViewModel));
             model = model ?? new UsuarioViewModel();
 
+            if (usuario == null)
+                FillDataInicial(dataContext, ref model);
             FillJLists(dataContext, ref model);
             return model;
         }
 
+        private static void FillDataInicial(DataContext dataContext, ref UsuarioViewModel model)
+        {
+            if (dataContext.Session.GetRol() == AppRol.ADMIN)
+                model.CompanyId = dataContext.Session.GetCompanyId();
+        }
+
         private static void ValidarDuplicado(DataContext dataContext, UsuarioViewModel model)
         {
-            const string message = "El campo UserName* ya existe para otro usuario.";
+            const string message = "El nombre de usuario ya existe para otro usuario en la misma compañía.";
             var usuario = dataContext.Context.Usuario.FirstOrDefault(x => x.UserName == model.UserName
+                                                                         && x.CompanyId == model.CompanyId
                                                                          && x.UsuarioId != model.UsuarioId
                                                                          );
             if (usuario != null)
@@ -159,7 +186,7 @@ namespace SICER.LOGIC.Administracion
 
         public static IEnumerable<JsonEntity> GetUsuariosJsonList(DataContext dataContext, int? usuarioId)
         {
-            var query = GetQueryUsuariosList(dataContext).Where(x=> x.UsuarioId == usuarioId);
+            var query = GetQueryUsuariosList(dataContext).Where(x => x.UsuarioId == usuarioId);
             var jsonEntities = query?.Select(x => new JsonEntity()
             {
                 id = x.UsuarioId,

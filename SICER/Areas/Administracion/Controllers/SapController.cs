@@ -22,12 +22,12 @@ namespace SICER.Areas.Administracion.Controllers
             try
             {
 
-                var message = SapLogic.GenerateSapDbSchema(GetDataContext().GetAndConnectCurrentCompany());
+                //var message = SapLogic.GenerateSapDbSchema(GetDataContext().GetAndConnectCurrentCompany());
                 return Json(true);
             }
             catch (SapException ex)
             {
-                ex.Message = new SapLogic().GetLastError(GetDataContext().GetAndConnectCurrentCompany());
+                //ex.Message = new SapLogic().GetLastError(GetDataContext().GetAndConnectCurrentCompany());
                 throw ex;
             }
         }
@@ -43,7 +43,7 @@ namespace SICER.Areas.Administracion.Controllers
         {
             while (true)
             {
-                new SyncLogic(GetDataContext()).SyncAll();
+               // new SyncLogic(GetDataContext()).SyncAll();
 
             }
         }
